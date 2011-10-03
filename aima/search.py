@@ -4,16 +4,14 @@ The way to use this code is to subclass Problem to create a class of problems,
 then create problem instances and solve them with calls to the various search
 functions."""
 
-# The future is here, but if you're still in the past, uncomment next line
-# from __future__ import generators
-
+from __future__ import generators
 from utils import *
 import agents
 import math, random, sys, time, bisect, string
 
 #______________________________________________________________________________
 
-class Problem (object):
+class Problem:
     """The abstract class for a formal problem.  You should subclass this and
     implement the method successor, and possibly __init__, goal_test, and
     path_cost. Then you will create instances of your subclass and solve them
@@ -73,8 +71,7 @@ class Node:
         return "<Node %s>" % (self.state,)
     
     def path(self):
-        """Create a list of nodes from the root to this node."""
-        # Isn't this backwards???
+        "Create a list of nodes from the root to this node."
         x, result = self, [self]
         while x.parent:
             result.append(x.parent)
@@ -156,23 +153,23 @@ def depth_first_graph_search(problem):
 
 def depth_limited_search(problem, limit=50):
     "[Fig. 3.12]"
-    # Would this not be more elegant with an exception instead of 'cutoff'?
-    # Or would an exception work better for the _successful_ case? ;-)
     def recursive_dls(node, problem, limit):
+        cutoff_occurred = False
         if problem.goal_test(node.state):
             return node
         elif node.depth == limit:
             return 'cutoff'
         else:
-            cutoff_occurred = False
             for successor in node.expand(problem):
                 result = recursive_dls(successor, problem, limit)
                 if result == 'cutoff':
                     cutoff_occurred = True
                 elif result != None:
                     return result
-            return if_(cutoff_occurred, 'cutoff', None)
-
+        if cutoff_occurred:
+            return 'cutoff'
+        else:
+            return None
     # Body of depth_limited_search:
     return recursive_dls(Node(problem.initial), problem, limit)
 
@@ -190,7 +187,7 @@ def best_first_graph_search(problem, f):
     """Search the nodes with the lowest f scores first.
     You specify the function f(node) that you want to minimize; for example,
     if f is a heuristic estimate to the goal, then we have greedy best
-    first search; if f is node.depth then we have breadth-first search.
+    first search; if f is node.depth then we have depth-first search.
     There is a subtlety: the line "f = memoize(f, 'f')" means that the f
     values will be cached on the nodes as they are computed. So after doing
     a best first search you can examine the f values of the path returned."""
@@ -212,43 +209,35 @@ def astar_search(problem, h=None):
 #______________________________________________________________________________
 ## Other search algorithms
 
-def recursive_best_first_search(problem, h=None):
+def recursive_best_first_search(problem):
     "[Fig. 4.5]"
-    h = h or problem.h
-
     def RBFS(problem, node, flimit):
         if problem.goal_test(node.state): 
-            return node, 0   # (The second value is immaterial)
-        successors = node.expand(problem)
+            return node
+        successors = expand(node, problem)
         if len(successors) == 0:
             return None, infinity
         for s in successors:
-            s.f = max(s.path_cost + h(s), node.f)
+            s.f = max(s.path_cost + s.h, node.f)
         while True:
-            successors.sort(lambda x,y: cmp(x.f, y.f)) # Order by lowest f value
+            successors.sort(lambda x,y: x.f - y.f) # Order by lowest f value
             best = successors[0]
             if best.f > flimit:
                 return None, best.f
-            if len(successors) > 1:
-                alternative = successors[1].f
-            else:
-                alternative = infinity
+            alternative = successors[1]
             result, best.f = RBFS(problem, best, min(flimit, alternative))
             if result is not None:
-                return result, best.f
+                return result
+    return RBFS(Node(problem.initial), infinity)
 
-    node = Node(problem.initial)
-    node.f = h(node)
-    result, bestf = RBFS(problem, node, infinity)
-    return result
 
 def hill_climbing(problem):
     """From the initial node, keep choosing the neighbor with highest value,
     stopping when no neighbor is better. [Fig. 4.11]"""
     current = Node(problem.initial)
     while True:
-        neighbor = argmax(current.expand(problem), Node.value)
-        if neighbor.value() <= current.value():
+        neighbor = argmax(current.expand(problem), problem.value)
+        if problem.value(neighbor) <= problem.value(current):
             return current.state
         current = neighbor
 
@@ -263,7 +252,7 @@ def simulated_annealing(problem, schedule=exp_schedule()):
         T = schedule(t)
         if T == 0:
             return current
-        next = random.choice(current.expand(problem))
+        next = random.choice(current.expand( problem))
         delta_e = next.path_cost - current.path_cost
         if delta_e > 0 or probability(math.exp(delta_e/T)):
             current = next
@@ -461,12 +450,14 @@ class GraphProblem(Problem):
 
 #______________________________________________________________________________
 
+#### NOTE: NQueensProblem not working properly yet.
+
 class NQueensProblem(Problem):
     """The problem of placing N queens on an NxN board with none attacking
-    each other.  A state is represented as an N-element array, where
+    each other.  A state is represented as an N-element array, where the
     a value of r in the c-th entry means there is a queen at column c,
     row r, and a value of None means that the c-th column has not been
-    filled in yet.  We fill in columns left to right."""
+    filled in left.  We fill in columns left to right."""
     def __init__(self, N):
         self.N = N
         self.initial = [None] * N
@@ -474,10 +465,10 @@ class NQueensProblem(Problem):
     def successor(self, state): 
         "In the leftmost empty column, try all non-conflicting rows."
         if state[-1] is not None:
-            return [] # All columns filled; no successors
+            return [] ## All columns filled; no successors
         else:
             def place(col, row):
-                new = state[:] # copy the state
+                new = state[:]
                 new[col] = row
                 return new
             col = state.index(None)
@@ -486,7 +477,7 @@ class NQueensProblem(Problem):
 
     def conflicted(self, state, row, col):
         "Would placing a queen at (row, col) conflict with anything?"
-        for c in range(col): # Fixed subtle bug: range(col-1) is 0..n-2
+        for c in range(col-1):
             if self.conflict(row, col, state[c], c):
                 return True
         return False
@@ -509,7 +500,7 @@ class NQueensProblem(Problem):
 
 #______________________________________________________________________________
 ## Inverse Boggle: Search for a high-scoring Boggle board. A good domain for
-## iterative-repair and related search techniques, as suggested by Justin Boyan.
+## iterative-repair and related search tehniques, as suggested by Justin Boyan.
 
 ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -534,13 +525,13 @@ def print_boggle(board):
     "Print the board in a 2-d array."
     n2 = len(board); n = exact_sqrt(n2)
     for i in range(n2):
-        if i % n == 0 and i > 0: print
+        if i % n == 0: print
         if board[i] == 'Q': print 'Qu',
         else: print str(board[i]) + ' ',
     print
     
 def boggle_neighbors(n2, cache={}):
-    """Return a list of lists, where the i-th element is the list of indexes
+    """"Return a list of lists, where the i-th element is the list of indexes
     for the neighbors of square i."""
     if cache.get(n2):
         return cache.get(n2)
@@ -593,7 +584,6 @@ class Wordlist:
         words[i].startswith(prefix), or is None; the second is
         True iff prefix itself is in the Wordlist."""
         words = self.words
-        if hi is None: hi = len(words)
         i = bisect.bisect_left(words, prefix, lo, hi)
         if i < len(words) and words[i].startswith(prefix): 
             return i, (words[i] == prefix)
@@ -601,7 +591,7 @@ class Wordlist:
             return None, False
 
     def __contains__(self, word): 
-        return self.lookup(word)[1]
+        return self.words[bisect.bisect_left(self.words, word)] == word
 
     def __len__(self): 
         return len(self.words)
@@ -615,7 +605,7 @@ class BoggleFinder:
 
     def __init__(self, board=None):
         if BoggleFinder.wordlist is None:
-            BoggleFinder.wordlist = Wordlist("../data/EN-text/wordlist")
+            BoggleFinder.wordlist = Wordlist("../data/wordlist")
         self.found = {}
         if board:
             self.set_board(board)
@@ -666,7 +656,7 @@ class BoggleFinder:
 
 ##_____________________________________________________________________________
     
-def boggle_hill_climbing(board=None, ntimes=100, verbose=True):
+def boggle_hill_climbing(board=None, ntimes=100, print_it=True):
     """Solve inverse Boggle by hill-climbing: find a high-scoring board by
     starting with a random one and changing it."""
     finder = BoggleFinder()
@@ -678,10 +668,10 @@ def boggle_hill_climbing(board=None, ntimes=100, verbose=True):
         new = len(finder.set_board(board))
         if new > best:
             best = new
-            if verbose: print best, _, board
+            print best, _, board
         else:
             board[i] = oldc ## Change back
-    if verbose:
+    if print_it:
         print_boggle(board)
     return board, best
 
@@ -705,7 +695,7 @@ class InstrumentedProblem(Problem):
         
     def successor(self, state):
         "Return a list of (action, state) pairs reachable from this state."
-        result = self.problem.successor(state)
+        result =  self.problem.successor(state)
         self.succs += 1; self.states += len(result)
         return result
     
@@ -730,7 +720,7 @@ class InstrumentedProblem(Problem):
 def compare_searchers(problems, header, searchers=[breadth_first_tree_search,
                       breadth_first_graph_search, depth_first_graph_search,
                       iterative_deepening_search, depth_limited_search,
-                      astar_search, recursive_best_first_search]):
+                      astar_search]):
     def do(searcher, problem):
         p = InstrumentedProblem(problem)
         searcher(p)
@@ -739,59 +729,8 @@ def compare_searchers(problems, header, searchers=[breadth_first_tree_search,
     print_table(table, header)
 
 def compare_graph_searchers():
-    """Prints a table of results like this:
->>> compare_graph_searchers()
-Searcher                      Romania(A,B)         Romania(O, N)        Australia            
-breadth_first_tree_search     <  21/  22/  59/B>   <1158/1159/3288/N>   <   7/   8/  22/WA>  
-breadth_first_graph_search    <  10/  19/  26/B>   <  19/  45/  45/N>   <   5/   8/  16/WA>  
-depth_first_graph_search      <   9/  15/  23/B>   <  16/  27/  39/N>   <   4/   7/  13/WA>  
-iterative_deepening_search    <  11/  33/  31/B>   < 656/1815/1812/N>   <   3/  11/  11/WA>  
-depth_limited_search          <  54/  65/ 185/B>   < 387/1012/1125/N>   <  50/  54/ 200/WA>  
-astar_search                  <   3/   4/   9/B>   <   8/  10/  22/N>   <   2/   3/   6/WA>  
-recursive_best_first_search   < 200/ 201/ 601/B>   <  71/  72/ 213/N>   <  11/  12/  43/WA>  """
     compare_searchers(problems=[GraphProblem('A', 'B', romania),
                                 GraphProblem('O', 'N', romania),
                                 GraphProblem('Q', 'WA', australia)],
             header=['Searcher', 'Romania(A,B)', 'Romania(O, N)', 'Australia'])
 
-#______________________________________________________________________________
-
-__doc__ += """
->>> ab = GraphProblem('A', 'B', romania)
->>> breadth_first_tree_search(ab).state 
-'B'
->>> breadth_first_graph_search(ab).state 
-'B'
->>> depth_first_graph_search(ab).state 
-'B'
->>> iterative_deepening_search(ab).state 
-'B'
->>> depth_limited_search(ab).state 
-'B'
->>> astar_search(ab).state 
-'B'
->>> recursive_best_first_search(ab).state 
-'B'
->>> [node.state for node in astar_search(ab).path()] 
-['B', 'P', 'R', 'S', 'A']
-
->>> board = list('SARTELNID')
->>> print_boggle(board)
-S  A  R 
-T  E  L 
-N  I  D 
->>> f = BoggleFinder(board)
->>> len(f) 
-206
-"""
-
-__doc__ += random_tests("""
->>> ' '.join(f.words())
-'LID LARES DEAL LIE DIETS LIN LINT TIL TIN RATED ERAS LATEN DEAR TIE LINE INTER STEAL LATED LAST TAR SAL DITES RALES SAE RETS TAE RAT RAS SAT IDLE TILDES LEAST IDEAS LITE SATED TINED LEST LIT RASE RENTS TINEA EDIT EDITS NITES ALES LATE LETS RELIT TINES LEI LAT ELINT LATI SENT TARED DINE STAR SEAR NEST LITAS TIED SEAT SERAL RATE DINT DEL DEN SEAL TIER TIES NET SALINE DILATE EAST TIDES LINTER NEAR LITS ELINTS DENI RASED SERA TILE NEAT DERAT IDLEST NIDE LIEN STARED LIER LIES SETA NITS TINE DITAS ALINE SATIN TAS ASTER LEAS TSAR LAR NITE RALE LAS REAL NITER ATE RES RATEL IDEA RET IDEAL REI RATS STALE DENT RED IDES ALIEN SET TEL SER TEN TEA TED SALE TALE STILE ARES SEA TILDE SEN SEL ALINES SEI LASE DINES ILEA LINES ELD TIDE RENT DIEL STELA TAEL STALED EARL LEA TILES TILER LED ETA TALI ALE LASED TELA LET IDLER REIN ALIT ITS NIDES DIN DIE DENTS STIED LINER LASTED RATINE ERA IDLES DIT RENTAL DINER SENTI TINEAL DEIL TEAR LITER LINTS TEAL DIES EAR EAT ARLES SATE STARE DITS DELI DENTAL REST DITE DENTIL DINTS DITA DIET LENT NETS NIL NIT SETAL LATS TARE ARE SATI'
-
->>> boggle_hill_climbing(list('ABCDEFGHI'), verbose=False)
-(['E', 'P', 'R', 'D', 'O', 'A', 'G', 'S', 'T'], 123)
-
->>> random_weighted_selection(range(10), 3, lambda x: x * x)
-[8, 9, 6]
-""")
