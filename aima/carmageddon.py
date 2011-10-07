@@ -93,6 +93,7 @@ class Driver(Passenger):
       else:
         event = "LeavePassenger"
       current = [c, event]   
+    route.append(current)
 
     route.append([self.getDestination(), "DriverDestination"])
     return route
