@@ -2,6 +2,8 @@
 from utils import *;
 from search import *;
 
+from random import random, randint
+
 # Macros for easy indexation of coor tuples.
 # i.e. a[X] -> xcoor
 X = 0
@@ -9,8 +11,6 @@ Y = 1
 MAX_DIST = 200
 
 def distance(src, dst):
-  print src
-  print dst
   return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
 
 class Passenger(object):
@@ -27,11 +27,24 @@ class Passenger(object):
   def getOrigin(self):
     return (self.__xo, self.__yo)
 
+  def getName(self):
+    return self.__name
+
 class Driver(Passenger):
-  def __init__(self, name, xo, yo, xd, yd, freespace):
+  def __init__(self, name, xo, yo, xd, yd, maxspace):
     Passenger.__init__(self,name,xo,yo,xd,yd)
-    self.__freespace = freespace
+    self.__freespace = maxspace
+    self.__maxspace = maxspace
     self.__passengers = []
+
+  def isEmpty(self):
+    return self.__freespace == self.__maxspace
+
+  def isFull(self):
+    return self.__freespace == 0
+
+  def getPassengers(self):
+    return self.__passengers
 
   def pickupPassenger(self, passenger):
     if self.__freespace == 0:
@@ -74,7 +87,6 @@ class Driver(Passenger):
     for p in self.__passengers:
       checkpoints[p.getOrigin()] = p.getDestination()
 
-    checkpoints[self.getDestination] = None
     current = [self.getOrigin(), "DriverOrigin"]
     while checkpoints:
       # Searching nearst point
@@ -93,8 +105,8 @@ class Driver(Passenger):
       else:
         event = "LeavePassenger"
       current = [c, event]   
-    route.append(current)
 
+    route.append(current)
     route.append([self.getDestination(), "DriverDestination"])
     return route
 
@@ -109,15 +121,54 @@ class Driver(Passenger):
 
 
 class State(object):
-  def __init__(self, nPassenger=16, nMaxDrivers=8, citySize=10000.0, squareSize=100.0):
-    pass 
-    
-  
-  
-  def genRandom():
-    pass
-  
+  def __init__(self, nPassengers=16, nMaxDrivers=8, citySize=10000.0, squareSize=100.0):
 
+    self.__citySize = citySize
+    self.__squareSize = squareSize
+    self.__carmageddons = []
+
+    for d in range(nMaxDrivers):
+      drv = self.genRandomDriver()
+      self.__carmageddons.append(drv)
+
+    for p in range(nPassengers):
+      pss = self.genRandomPassenger()
+      i = 0
+      alloqued = False
+      while not alloqued and i < len(self.__carmageddons):
+        if not self.__carmageddons[i].isFull():
+          alloqued = True
+          self.__carmageddons[i].pickupPassenger(pss)
+        i += 1
+
+      if not alloqued:
+        print "There are more passengers than free space!!!" #TODO raise exception
+      
+  
+  def genRandomDriver(self):
+    d = Driver('D-' + str(random())[2:8], randint(0, self.__citySize), \
+                                          randint(0, self.__citySize), \
+                                          randint(0, self.__citySize), \
+                                          randint(0, self.__citySize), 2)
+    return d
+
+  def genRandomPassenger(self):
+    p = Passenger('P-' + str(random())[2:8], randint(0, self.__citySize), \
+                                             randint(0, self.__citySize), \
+                                             randint(0, self.__citySize), \
+                                             randint(0, self.__citySize))
+    return p
+
+  def __repr__(self):
+    s = ""
+    for c in self.__carmageddons:
+      s += "Driver " + c.getName() + " pickups: \n"
+      if c.isEmpty():
+        s += "None\n"
+      else:
+        for p in c.getPassengers():
+          s += "   " + p.getName() + "\n"
+    return s
 
 class Carmageddon(Problem):
   """ """
@@ -136,9 +187,14 @@ class Carmageddon(Problem):
 
 if __name__ == "__main__":
   print "hola"
-  p = Passenger("joan",1,1,9,9)
-  d = Driver("bernat",0,0,10,10,2)
+  p = Passenger("joan", 1, 1, 9, 9)
+  d = Driver("bernat", 0, 0, 10, 10, 2)
+
   d.pickupPassenger(p)
   r = d.getRoute()
   print r
   print d.getRouteWeight(r)
+
+  s = State()
+  print s
+
