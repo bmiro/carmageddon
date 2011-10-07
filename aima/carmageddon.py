@@ -58,6 +58,7 @@ class Driver(Passenger):
       print "There is no passengers to leave!" #TODO throw CAR_EMPTY exception
     else:
       self.__passengers.remove(passenger)
+      self.__freespace += 1
 
   def getDestinations(self):
     d = []
@@ -121,29 +122,30 @@ class Driver(Passenger):
 
 
 class State(object):
-  def __init__(self, nPassengers=16, nMaxDrivers=8, citySize=10000.0, squareSize=100.0):
+  def __init__(self, nPassengers=12, nMaxDrivers=8, citySize=10000.0, squareSize=100.0):
 
     self.__citySize = citySize
     self.__squareSize = squareSize
-    self.__carmageddons = []
+    self.__carmageddons = {}
+    self.__nPassengers = nPassengers
+    self.__nDrivers = nMaxDrivers
 
     for d in range(nMaxDrivers):
       drv = self.genRandomDriver()
-      self.__carmageddons.append(drv)
+      self.__carmageddons[drv.getName()] = drv
 
     for p in range(nPassengers):
       pss = self.genRandomPassenger()
-      i = 0
+
       alloqued = False
-      while not alloqued and i < len(self.__carmageddons):
-        if not self.__carmageddons[i].isFull():
+      for c in self.__carmageddons.iterkeys():
+        if not self.__carmageddons[c].isFull():
+          self.__carmageddons[c].pickupPassenger(pss)
           alloqued = True
-          self.__carmageddons[i].pickupPassenger(pss)
-        i += 1
+          break
 
       if not alloqued:
         print "There are more passengers than free space!!!" #TODO raise exception
-      
   
   def genRandomDriver(self):
     d = Driver('D-' + str(random())[2:8], randint(0, self.__citySize), \
@@ -159,6 +161,33 @@ class State(object):
                                              randint(0, self.__citySize))
     return p
 
+  def getDrivers(self):
+    return self.__carmageddons
+
+  def getNumPassengers(self):
+    return self.__nPassengers
+
+  def getNumDrivers(self):
+    return self.__nDrivers
+
+  def degradateDriver(self, degradatedDriver, carrierDriver): #TODO posar un nom mes guais
+    if not self.__carmageddons[degradatedDriver].isEmpty():
+      print "Trying to degradeta a not empty driver!\n" #TODO aixecar excepcio
+      return -1
+
+    if self.__carmagaddons[carrierDriver].isFull():
+      print "The carrier driver is full" #TODO aixecar excepcio
+      return -2
+
+    d = self.__carmageddons.pop(degradatedDriver)
+    name = d.getName()
+    name[0] = 'P'
+    p = Passenger(name, d.getOrigin()[0], d.getOrigin()[1], \
+                        d.getDestination()[0], d.getDestintion()[1])
+
+    self.__carmageddons[carrierDriver].pickupPassenger(p)
+    self.__nPassengers += 1
+
   def __repr__(self):
     s = ""
     for c in self.__carmageddons:
@@ -173,10 +202,18 @@ class State(object):
 class Carmageddon(Problem):
   """ """
   def __init__(self, state):
-    pass
+    self.__state = state
   
   def successor(self, state):
-    pass
+    sts = []
+
+    #Gens all the passenger changes
+    for p in passengers:
+      pass
+
+    #Gens all the driver deletions
+    for d in state.getDrivers():
+      pass
 
   def goal_test(self, state):
     pass
