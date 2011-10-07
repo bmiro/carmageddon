@@ -74,6 +74,7 @@ class Driver(Passenger):
     for p in self.__passengers:
       checkpoints[p.getOrigin()] = p.getDestination()
 
+    checkpoints[self.getDestination] = None
     current = [self.getOrigin(), "DriverOrigin"]
     while checkpoints:
       # Searching nearst point
@@ -108,7 +109,7 @@ class Driver(Passenger):
 
 class State(object):
   def __init__(self, nPassenger=16, nMaxDrivers=8, citySize=10000.0, squareSize=100.0):
-    pass
+    pass 
     
   
   
@@ -138,4 +139,5 @@ if __name__ == "__main__":
   d = Driver("bernat",0,0,10,10,2)
   d.pickupPassenger(p)
   r = d.getRoute()
+  print r
   print d.getRouteWeight(r)
