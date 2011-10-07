@@ -92,6 +92,7 @@ class Driver(Passenger):
       else:
         event = "LeavePassenger"
       current = [c, event]   
+    route.append(current)
 
     route.append([self.getDestination(), "DriverDestination"])
     return route
@@ -138,4 +139,5 @@ if __name__ == "__main__":
   d = Driver("bernat",0,0,10,10,2)
   d.pickupPassenger(p)
   r = d.getRoute()
+  print r
   print d.getRouteWeight(r)
