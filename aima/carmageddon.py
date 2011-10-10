@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from utils import *;
-from search import *;
+from utils import *
+from search import *
 
+from copy import deepcopy
 from random import random, randint
 
 # Macros for easy indexation of coor tuples.
@@ -172,12 +173,16 @@ class State(object):
 
   def degradateDriver(self, degradatedDriver, carrierDriver): #TODO posar un nom mes guais
     if not self.__carmageddons[degradatedDriver].isEmpty():
-      print "Trying to degradeta a not empty driver!\n" #TODO aixecar excepcio
+      print "Trying to degradeta a not empty driver!" #TODO aixecar excepció
       return -1
 
     if self.__carmagaddons[carrierDriver].isFull():
-      print "The carrier driver is full" #TODO aixecar excepcio
+      print "The carrier driver is full" #TODO aixecar excepció
       return -2
+
+    if self.__nDrivers == 0:
+      print "You can not degradate the last driver!" # TODO aixecar excepció
+      return -3
 
     d = self.__carmageddons.pop(degradatedDriver)
     name = d.getName()
@@ -186,7 +191,21 @@ class State(object):
                         d.getDestination()[0], d.getDestintion()[1])
 
     self.__carmageddons[carrierDriver].pickupPassenger(p)
+    self.__nDrivers -= 1
     self.__nPassengers += 1
+
+
+  def switchPassenger(self, passenger, newCarrier):
+    #TODO gestionar excepcions
+    self.__carmageddons[self.whoPickuped(passenger)].leavePassenger(passenger)
+    self.__carmageddons[newCarrier.getName()].pickupPassenger(passenger)
+
+  def whoPickuped(self, passenger):
+    for c in self.__carmageddon.itervalues():
+      if passenger in c.getPassengers():
+        return c.getName()
+
+    return -1 #TODO
 
   def __repr__(self):
     s = ""
