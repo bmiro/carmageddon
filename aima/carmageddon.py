@@ -224,13 +224,12 @@ class Carmageddon(Problem):
     self.__state = state
   
   def successor(self, state):
-    sts = []
-
-    #Gens all the passenger changes
+    #Gens all the passenger changes (gens at most nPassengers*nDrivers states)
     for p in passengers:
-      pass
+      
+      
 
-    #Gens all the driver deletions
+    #Gens all the driver deletions (gens at most (nDrivers-1)*(nDrivers-2) )
     for d in state.getDrivers():
       pass
 
