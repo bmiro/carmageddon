@@ -128,12 +128,14 @@ class State(object):
     self.__citySize = citySize
     self.__squareSize = squareSize
     self.__carmageddons = {}
-    self.__nPassengers = nPassengers
-    self.__nDrivers = nMaxDrivers
+    self.__passengers = {}
+    self.__nPassengers = 0
+    self.__nDrivers = 0
 
     for d in range(nMaxDrivers):
       drv = self.genRandomDriver()
       self.__carmageddons[drv.getName()] = drv
+      self.__nDrivers += 1
 
     for p in range(nPassengers):
       pss = self.genRandomPassenger()
@@ -142,6 +144,8 @@ class State(object):
       for c in self.__carmageddons.iterkeys():
         if not self.__carmageddons[c].isFull():
           self.__carmageddons[c].pickupPassenger(pss)
+          self.__passengeres[pss] = c
+          self.__nPassengeres += 1
           alloqued = True
           break
 
@@ -164,6 +168,9 @@ class State(object):
 
   def getDrivers(self):
     return self.__carmageddons
+
+  def getPassengers(self):
+    return self.__passengers
 
   def getNumPassengers(self):
     return self.__nPassengers
@@ -199,13 +206,10 @@ class State(object):
     #TODO gestionar excepcions
     self.__carmageddons[self.whoPickuped(passenger)].leavePassenger(passenger)
     self.__carmageddons[newCarrier.getName()].pickupPassenger(passenger)
+    self.__passengeres[passenger] = newCarrier.getName()
 
   def whoPickuped(self, passenger):
-    for c in self.__carmageddon.itervalues():
-      if passenger in c.getPassengers():
-        return c.getName()
-
-    return -1 #TODO
+    return self.__passengres[passenger]
 
   def __repr__(self):
     s = ""
