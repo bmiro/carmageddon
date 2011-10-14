@@ -120,8 +120,6 @@ class Driver(Passenger):
       current = p[0]
     return w
 
-
-
 class State(object):
   def __init__(self, nPassengers=12, nMaxDrivers=8, citySize=10000.0, squareSize=100.0):
 
@@ -144,8 +142,8 @@ class State(object):
       for c in self.__carmageddons.iterkeys():
         if not self.__carmageddons[c].isFull():
           self.__carmageddons[c].pickupPassenger(pss)
-          self.__passengeres[pss] = c
-          self.__nPassengeres += 1
+          self.__passengers[pss] = c
+          self.__nPassengers += 1
           alloqued = True
           break
 
@@ -198,6 +196,7 @@ class State(object):
                         d.getDestination()[0], d.getDestintion()[1])
 
     self.__carmageddons[carrierDriver].pickupPassenger(p)
+    self.__passengers[p] = self.__carmageddons[carrierDriver]
     self.__nDrivers -= 1
     self.__nPassengers += 1
 
@@ -213,13 +212,19 @@ class State(object):
 
   def __repr__(self):
     s = ""
+    
+    s += "Passenger info:\n"
+    for p in self.__passengers:
+      s += "\t" + p.getName() + " is pickuped by " + self.__passengers[p] + "\n"
+    
+    s += "\nDrivers info:\n"
     for c in self.__carmageddons:
-      s += "Driver " + c.getName() + " pickups: \n"
-      if c.isEmpty():
+      s += "\t" + c + " pickups: \n"
+      if self.__carmageddons[c].isEmpty():
         s += "None\n"
       else:
-        for p in c.getPassengers():
-          s += "   " + p.getName() + "\n"
+        for p in self.__carmageddons[c].getPassengers():
+          s += "\t\t" + p.getName() + "\n"
     return s
 
 class Carmageddon(Problem):
@@ -230,7 +235,7 @@ class Carmageddon(Problem):
   def successor(self, state):
     #Gens all the passenger changes (gens at most nPassengers*nDrivers states)
     for p in passengers:
-      
+      pass
       
 
     #Gens all the driver deletions (gens at most (nDrivers-1)*(nDrivers-2) )
