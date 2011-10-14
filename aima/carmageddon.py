@@ -14,6 +14,7 @@ MAX_DIST = 200
 def distance(src, dst):
   return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
 
+
 class Passenger(object):
   def __init__(self, name, xo, yo, xd, yd):
     self.__name = name
@@ -22,44 +23,57 @@ class Passenger(object):
     self.__xd = xd
     self.__yd = yd
 
+
   def getDestination(self):
     return (self.__xd, self.__yd)
+
 
   def getOrigin(self):
     return (self.__xo, self.__yo)
 
+
   def getName(self):
     return self.__name
+
+
 
 class Driver(Passenger):
   def __init__(self, name, xo, yo, xd, yd, maxspace):
     Passenger.__init__(self,name,xo,yo,xd,yd)
     self.__freespace = maxspace
     self.__maxspace = maxspace
-    self.__passengers = []
+    self.__passengers = {}
+
 
   def isEmpty(self):
     return self.__freespace == self.__maxspace
 
+
   def isFull(self):
     return self.__freespace == 0
+
 
   def getPassengers(self):
     return self.__passengers
 
+
+  """ Recives a passenger object """
   def pickupPassenger(self, passenger):
     if self.__freespace == 0:
       print "The car is full!!" #TODO trow CAR_OVERFLOW exception
     else:
-      self.__passengers.append(passenger)
+      self.__passengers[passenger.getName()] = (passenger, self.getName())
       self.__freespace -= 1
 
+
+  """ Recives a passenger object """
   def leavePassenger(self, passenger):
-    if empty(self.__passengers):
+    if len(self.__passengers) == 0:
       print "There is no passengers to leave!" #TODO throw CAR_EMPTY exception
     else:
-      self.__passengers.remove(passenger)
+      self.__passengers.pop(passenger.getName())
       self.__freespace += 1
+
 
   def getDestinations(self):
     d = []
@@ -86,8 +100,8 @@ class Driver(Passenger):
     route = [] 
 
     # Inserting all origin points
-    for p in self.__passengers:
-      checkpoints[p.getOrigin()] = p.getDestination()
+    for p in self.__passengers.itervalues():
+      checkpoints[p[0].getOrigin()] = p[0].getDestination()
 
     current = [self.getOrigin(), "DriverOrigin"]
     while checkpoints:
@@ -112,7 +126,8 @@ class Driver(Passenger):
     route.append([self.getDestination(), "DriverDestination"])
     return route
 
-  def getRouteWeight(self,route):
+
+  def getRouteWeight(self, route):
     w = 0
     current = route[0][0]
     for p in route:
@@ -120,20 +135,24 @@ class Driver(Passenger):
       current = p[0]
     return w
 
+
+
 class State(object):
-  def __init__(self, nPassengers=12, nMaxDrivers=8, citySize=10000.0, squareSize=100.0):
+  def __init__(self, nPassengers=1, nMaxDrivers=3, citySize=10000.0, squareSize=100.0):
 
     self.__citySize = citySize
     self.__squareSize = squareSize
+    
+    # Dict of drivers, driver name as key pointing to driver obcjet
     self.__carmageddons = {}
+    
+    #  Dict of passengeres, passenger name as key pointing to a tupla
+    # of passenger object and driver name
     self.__passengers = {}
-    self.__nPassengers = 0
-    self.__nDrivers = 0
 
     for d in range(nMaxDrivers):
       drv = self.genRandomDriver()
       self.__carmageddons[drv.getName()] = drv
-      self.__nDrivers += 1
 
     for p in range(nPassengers):
       pss = self.genRandomPassenger()
@@ -142,20 +161,21 @@ class State(object):
       for c in self.__carmageddons.iterkeys():
         if not self.__carmageddons[c].isFull():
           self.__carmageddons[c].pickupPassenger(pss)
-          self.__passengers[pss] = c
-          self.__nPassengers += 1
+          self.__passengers[pss.getName()] = (pss, c)
           alloqued = True
           break
 
       if not alloqued:
         print "There are more passengers than free space!!!" #TODO raise exception
-  
+ 
+ 
   def genRandomDriver(self):
     d = Driver('D-' + str(random())[2:8], randint(0, self.__citySize), \
                                           randint(0, self.__citySize), \
                                           randint(0, self.__citySize), \
                                           randint(0, self.__citySize), 2)
     return d
+
 
   def genRandomPassenger(self):
     p = Passenger('P-' + str(random())[2:8], randint(0, self.__citySize), \
@@ -164,17 +184,22 @@ class State(object):
                                              randint(0, self.__citySize))
     return p
 
+
   def getDrivers(self):
     return self.__carmageddons
+
 
   def getPassengers(self):
     return self.__passengers
 
+
   def getNumPassengers(self):
-    return self.__nPassengers
+    return len(self.__passengers)
+
 
   def getNumDrivers(self):
-    return self.__nDrivers
+    return len(self.__carmageddons)
+
 
   def degradateDriver(self, degradatedDriver, carrierDriver): #TODO posar un nom mes guais
     if not self.__carmageddons[degradatedDriver].isEmpty():
@@ -196,26 +221,29 @@ class State(object):
                         d.getDestination()[0], d.getDestintion()[1])
 
     self.__carmageddons[carrierDriver].pickupPassenger(p)
-    self.__passengers[p] = self.__carmageddons[carrierDriver]
-    self.__nDrivers -= 1
-    self.__nPassengers += 1
-
-
+    self.__passengers[p.getName()] = (p ,self.__carmageddons[carrierDriver])
+    
+    
+  """ Passenger is a passenger name and also newCarrier the new driver name """
   def switchPassenger(self, passenger, newCarrier):
-    #TODO gestionar excepcions
-    self.__carmageddons[self.whoPickuped(passenger)].leavePassenger(passenger)
-    self.__carmageddons[newCarrier.getName()].pickupPassenger(passenger)
-    self.__passengeres[passenger] = newCarrier.getName()
+    #TODO gestionar excepcions]
+    p = self.__passengers[passenger][0]
+    self.__carmageddons[self.whoPickuped(passenger)].leavePassenger(p)
+    self.__carmageddons[newCarrier].pickupPassenger(p)
+    self.__passengers[passenger] = (p, newCarrier)
+    
+
 
   def whoPickuped(self, passenger):
-    return self.__passengres[passenger]
+    return self.__passengers[passenger][1]
+
 
   def __repr__(self):
     s = ""
     
     s += "Passenger info:\n"
     for p in self.__passengers:
-      s += "\t" + p.getName() + " is pickuped by " + self.__passengers[p] + "\n"
+      s += "\t" + p + " is pickuped by " + self.__passengers[p][1] + "\n"
     
     s += "\nDrivers info:\n"
     for c in self.__carmageddons:
@@ -224,30 +252,42 @@ class State(object):
         s += "None\n"
       else:
         for p in self.__carmageddons[c].getPassengers():
-          s += "\t\t" + p.getName() + "\n"
+          s += "\t\t" + p + "\n"
     return s
+    
+    
 
 class Carmageddon(Problem):
   """ """
   def __init__(self, state):
     self.__state = state
   
+  
   def successor(self, state):
     #Gens all the passenger changes (gens at most nPassengers*nDrivers states)
-    for p in passengers:
-      pass
+    for p in state.getPassengers():
+      currentDrv = state.whoPickuped(p)
       
-
+      for d in state.getDrivers().iteritems():
+	if d[0] != currentDrv and not d[1].isFull():
+	  #Switch passenger to this driver
+	  newState = deepcopy(state)
+	  newState.switchPassenger(p, d[0])
+	  yield newState
+      
     #Gens all the driver deletions (gens at most (nDrivers-1)*(nDrivers-2) )
     for d in state.getDrivers():
       pass
 
+
   def goal_test(self, state):
     pass
+    
     
   def value(self, node):
     """Heuristic function"""
     pass
+
 
 if __name__ == "__main__":
   print "hola"
@@ -261,4 +301,10 @@ if __name__ == "__main__":
 
   s = State()
   print s
+  
+  c = Carmageddon(s)
+  for suc in c.successor(s):
+    print(suc)
+  
+  
 
