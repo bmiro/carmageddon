@@ -138,7 +138,7 @@ class Driver(Passenger):
 
 
 class State(object):
-  def __init__(self, nPassengers=1, nMaxDrivers=3, citySize=10000.0, squareSize=100.0):
+  def __init__(self, nPassengers=100, nMaxDrivers=60, citySize=10000.0, squareSize=100.0):
 
     self.__citySize = citySize
     self.__squareSize = squareSize
@@ -201,27 +201,29 @@ class State(object):
     return len(self.__carmageddons)
 
 
+  """ Recives two key for each driver (degradated and carrier) """
   def degradateDriver(self, degradatedDriver, carrierDriver): #TODO posar un nom mes guais
     if not self.__carmageddons[degradatedDriver].isEmpty():
       print "Trying to degradeta a not empty driver!" #TODO aixecar excepció
       return -1
 
-    if self.__carmagaddons[carrierDriver].isFull():
+    if self.__carmageddons[carrierDriver].isFull():
       print "The carrier driver is full" #TODO aixecar excepció
       return -2
 
-    if self.__nDrivers == 0:
+    if self.getNumDrivers() == 0:
       print "You can not degradate the last driver!" # TODO aixecar excepció
       return -3
 
     d = self.__carmageddons.pop(degradatedDriver)
     name = d.getName()
-    name[0] = 'P'
+    name = name.replace('D', 'P')
+    name = name.replace('-', 'D')
     p = Passenger(name, d.getOrigin()[0], d.getOrigin()[1], \
-                        d.getDestination()[0], d.getDestintion()[1])
+                        d.getDestination()[0], d.getDestination()[1])
 
     self.__carmageddons[carrierDriver].pickupPassenger(p)
-    self.__passengers[p.getName()] = (p ,self.__carmageddons[carrierDriver])
+    self.__passengers[p.getName()] = (p, self.__carmageddons[carrierDriver].getName())
     
     
   """ Passenger is a passenger name and also newCarrier the new driver name """
@@ -276,9 +278,14 @@ class Carmageddon(Problem):
 	  yield newState
       
     #Gens all the driver deletions (gens at most (nDrivers-1)*(nDrivers-2) )
-    for d in state.getDrivers():
-      pass
-
+    print "Degradating drivres\n"
+    for d in state.getDrivers().itervalues():
+      if d.isEmpty():
+	for carrier in state.getDrivers().iteritems():
+	  if carrier[0] != d.getName() and not carrier[1].isFull():
+	    newState = deepcopy(state)
+	    newState.degradateDriver(d.getName(), carrier[0])
+	    yield newState
 
   def goal_test(self, state):
     pass
