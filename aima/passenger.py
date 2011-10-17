@@ -19,3 +19,4 @@ class Passenger(object):
 
   def getName(self):
     return self.__name
+

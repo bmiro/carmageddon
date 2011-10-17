@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Search (Chapters 3-4)
 
 The way to use this code is to subclass Problem to create a class of problems,
@@ -252,7 +253,7 @@ def simulated_annealing(problem, schedule=exp_schedule()):
         T = schedule(t)
         if T == 0:
             return current
-        next = random.choice(current.expand( problem))
+        next = random.choice(current.expand(problem))
         delta_e = next.path_cost - current.path_cost
         if delta_e > 0 or probability(math.exp(delta_e/T)):
             current = next

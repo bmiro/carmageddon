@@ -6,7 +6,10 @@ from driver import *
 from random import random, randint
 
 class State(object):
-  def __init__(self, nPassengers=100, nMaxDrivers=60, citySize=10000.0, squareSize=100.0):
+  def __init__(self, nPassengers=3, nMaxDrivers=3, citySize=10000.0, squareSize=100.0):
+
+    self.__driverCount = 0
+    self.__passengerCount = 0
 
     self.__citySize = citySize
     self.__squareSize = squareSize
@@ -38,27 +41,39 @@ class State(object):
  
  
   def genRandomDriver(self):
-    d = Driver('D-' + str(random())[2:8], randint(0, self.__citySize), \
-                                          randint(0, self.__citySize), \
-                                          randint(0, self.__citySize), \
-                                          randint(0, self.__citySize), 2)
+    name = str(self.__driverCount)
+    name = '0'*(4-len(str(name))) + name
+    d = Driver('D-' + name, randint(0, self.__citySize), \
+                            randint(0, self.__citySize), \
+                            randint(0, self.__citySize), \
+                            randint(0, self.__citySize), 2)
+    self.__driverCount += 1
     return d
 
 
   def genRandomPassenger(self):
-    p = Passenger('P-' + str(random())[2:8], randint(0, self.__citySize), \
-                                             randint(0, self.__citySize), \
-                                             randint(0, self.__citySize), \
-                                             randint(0, self.__citySize))
+    name = str(self.__passengerCount)
+    name = '0'*(4-len(str(name))) + name
+    p = Passenger('P-' + name, randint(0, self.__citySize), \
+                               randint(0, self.__citySize), \
+                               randint(0, self.__citySize), \
+                               randint(0, self.__citySize))
+    self.__passengerCount += 1
     return p
 
 
   def getDrivers(self):
     return self.__carmageddons
 
+  def setDrivers(self, d):
+    self.__carmageddons = d
 
   def getPassengers(self):
     return self.__passengers
+
+  def setPassengers(self, p):
+    self.__passengers = p
+
 
 
   def getNumPassengers(self):
@@ -84,12 +99,16 @@ class State(object):
       return -3
 
     d = self.__carmageddons.pop(degradatedDriver)
+    d = copy(d)
     name = d.getName()
     name = name.replace('D', 'P')
     name = name.replace('-', 'D')
     p = Passenger(name, d.getOrigin()[0], d.getOrigin()[1], \
                         d.getDestination()[0], d.getDestination()[1])
 
+
+    newdriver_pick = deepcopy(self.__carmageddons[carrierDriver])
+    self.__carmageddons[carrierDriver] = newdriver_pick
     self.__carmageddons[carrierDriver].pickupPassenger(p)
     self.__passengers[p.getName()] = (p, self.__carmageddons[carrierDriver].getName())
     
@@ -98,8 +117,17 @@ class State(object):
   def switchPassenger(self, passenger, newCarrier):
     #TODO gestionar excepcions]
     p = self.__passengers[passenger][0]
-    self.__carmageddons[self.whoPickuped(passenger)].leavePassenger(p)
+    pname = self.__passengers[passenger][1]
+
+
+    newdriver_leave = deepcopy(self.__carmageddons[pname])
+    self.__carmageddons[pname]=newdriver_leave
+    self.__carmageddons[pname].leavePassenger(p)
+
+    newdriver_pick = deepcopy(self.__carmageddons[newCarrier])
+    self.__carmageddons[newCarrier] = newdriver_pick
     self.__carmageddons[newCarrier].pickupPassenger(p)
+
     self.__passengers[passenger] = (p, newCarrier)
     
 
@@ -124,3 +152,10 @@ class State(object):
         for p in self.__carmageddons[c].getPassengers():
           s += "\t\t" + p + "\n"
     return s
+
+
+  def getKm(self):
+    i = 0
+    for p in self.__carmageddons.itervalues():
+      i += p.getRouteWeight(p.getRoute(self))
+    return i

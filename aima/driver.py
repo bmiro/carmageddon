@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from copy import deepcopy, copy
+
 from passenger import *
 
 # Macros for easy indexation of coor tuples.
@@ -15,7 +17,7 @@ class Driver(Passenger):
     Passenger.__init__(self,name,xo,yo,xd,yd)
     self.__freespace = maxspace
     self.__maxspace = maxspace
-    self.__passengers = {}
+    self.__passengers = []
 
 
   def isEmpty(self):
@@ -29,13 +31,16 @@ class Driver(Passenger):
   def getPassengers(self):
     return self.__passengers
 
+  def setPassengers(self,p):
+    self.__passengers = p
+
 
   """ Recives a passenger object """
   def pickupPassenger(self, passenger):
     if self.__freespace == 0:
       print "The car is full!!" #TODO trow CAR_OVERFLOW exception
     else:
-      self.__passengers[passenger.getName()] = (passenger, self.getName())
+      self.__passengers.append(passenger.getName())
       self.__freespace -= 1
 
 
@@ -44,7 +49,7 @@ class Driver(Passenger):
     if len(self.__passengers) == 0:
       print "There is no passengers to leave!" #TODO throw CAR_EMPTY exception
     else:
-      self.__passengers.pop(passenger.getName())
+      self.__passengers.remove(passenger.getName())
       self.__freespace += 1
 
 
@@ -62,7 +67,7 @@ class Driver(Passenger):
   "    [[55, 65], "LeavePassenger"],
   "    [[57, 70], "DriverDestination"]]
   """
-  def getRoute(self):
+  def getRoute(self,state):
     ## Dictionary of point pointing destinations if exist
     # i.e. { [34, 45] : [22, 56] --> Point is origin
     #        [56, 77] : None }   --> Point is destination
@@ -73,8 +78,8 @@ class Driver(Passenger):
     route = [] 
 
     # Inserting all origin points
-    for p in self.__passengers.itervalues():
-      checkpoints[p[0].getOrigin()] = p[0].getDestination()
+    for p in self.__passengers:
+      checkpoints[state.getPassengers()[p][0].getOrigin()] = state.getPassengers()[p][0].getDestination()
 
     current = [self.getOrigin(), "DriverOrigin"]
     while checkpoints:
