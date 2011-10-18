@@ -6,7 +6,7 @@ from driver import *
 from random import random, randint
 
 class State(object):
-  def __init__(self, nPassengers=3, nMaxDrivers=3, citySize=10000.0, squareSize=100.0):
+  def __init__(self, nPassengers=50, nMaxDrivers=100, citySize=10000.0, squareSize=100.0):
 
     self.__driverCount = 0
     self.__passengerCount = 0

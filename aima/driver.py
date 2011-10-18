@@ -7,7 +7,7 @@ from passenger import *
 # i.e. a[X] -> xcoor
 X = 0
 Y = 1
-MAX_DIST = 200
+MAX_KM = 30
 
 def distance(src, dst):
   return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
@@ -84,7 +84,7 @@ class Driver(Passenger):
     current = [self.getOrigin(), "DriverOrigin"]
     while checkpoints:
       # Searching nearst point
-      d = MAX_DIST
+      d = MAX_KM
       nearest = []
       for c in checkpoints.keys():
         if distance(current[0], c) < d:

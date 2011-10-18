@@ -27,9 +27,10 @@ class Carmageddon(Problem):
           newState.setDrivers(copy(state.getDrivers()))
           newState.setPassengers(copy(state.getPassengers()))
 	  newState.switchPassenger(p, d[0])
-	  yield ("sw",newState)
+	  if newState.getKm() <= MAX_KM:
+	    yield ("sw", newState)
       
-    #Gens all the driver deletions (gens at most (nDrivers-1)*(nDrivers-2) )
+     #Gens all the driver deletions inserting it in the first not full driver.
     print "Degradating drivres\n"
     for d in state.getDrivers().itervalues():
       if d.isEmpty():
@@ -39,8 +40,8 @@ class Carmageddon(Problem):
             newState.setDrivers(copy(state.getDrivers()))
             newState.setPassengers(copy(state.getPassengers()))
 	    newState.degradateDriver(d.getName(), carrier[0])
-	    yield ("dgrd",newState)
-            #break
+	    yield ("dgrd", newState)
+            break
 
   def goal_test(self, state):
     pass
@@ -68,11 +69,11 @@ if __name__ == "__main__":
   s = State()
   print s
   c = Carmageddon(s)
-  for suc in c.successor(s):
-    print(suc)
+#  for suc in c.successor(s):
+#    print(suc)
   f = simulated_annealing(c)
-  print f.getKm()
-  print f
+ # print f.getKm()
+ # print f
   #for d in f.getDrivers().itervalues():
   #  print d.getRouteWeight(d.getRoute(f))
   
