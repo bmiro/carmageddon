@@ -5,11 +5,10 @@ from driver import *
 
 from random import random, randint
 
-from re import match, split
+from re import match, split, compile
 
 class State(object):
   def __init__(self, nPassengers=50, nMaxDrivers=100, citySize=10000.0, squareSize=100.0, cfgfile=None):
-
     self.__driverCount = 0
     self.__passengerCount = 0
     
@@ -27,9 +26,11 @@ class State(object):
     self.__passengers = {}
     
     if cfgfile != None:
-      self.loadStateFromFile(cfgfile)
+      print "Loading form file"
+      self.loadFromFile(cfgfile)
     else:
       self.genRandomState()
+
 
   ##########################################################
   ################ Random generation Methods ###############
@@ -139,7 +140,6 @@ class State(object):
     p = Passenger(name, d.getOrigin()[0], d.getOrigin()[1], \
                         d.getDestination()[0], d.getDestination()[1])
 
-
     newdriver_pick = deepcopy(self.__carmageddons[carrierDriver])
     self.__carmageddons[carrierDriver] = newdriver_pick
     self.__carmageddons[carrierDriver].pickupPassenger(p)
@@ -152,7 +152,6 @@ class State(object):
     p = self.__passengers[passenger][0]
     pname = self.__passengers[passenger][1]
 
-
     newdriver_leave = deepcopy(self.__carmageddons[pname])
     self.__carmageddons[pname]=newdriver_leave
     self.__carmageddons[pname].leavePassenger(p)
@@ -164,7 +163,7 @@ class State(object):
     self.__passengers[passenger] = (p, newCarrier)
 
 
-  def swapPassengers(self,p1name,p2name):
+  def swapPassengers(self, p1name, p2name):
     p1 = self.__passengers[p1name][0]
     d1name = self.__passengers[p1name][1]
 
@@ -234,39 +233,42 @@ class State(object):
     
     
   def loadFromFile(self, srcFile):
-    f =  open(srcFile, 'r')
-    drvRegex = r"driver:\s+(D-\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)"
-    pssRegex = r"passenger:\s+(P[-D]\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)"
-    pckRegex = r"(D-\d+):\s+((P[-D]\d+)\s*)*"    
+    drvRegex = compile(r"driver:\s+(?P<name>D-\d+)\s+(?P<xo>\d+)\s+(?P<yo>\d+)\s+(?P<xd>\d+)\s+(?P<yd>\d+)\s+(?P<maxspace>\d+)")
+    pssRegex = compile(r"passenger:\s+(?P<name>P[-D]\d+)\s+(?P<xo>\d+)\s+(?P<yo>\d+)\s+(?P<xd>\d+)\s+(?P<yd>\d+)\s*")
+    pckRegex = compile(r"(?P<driver>D-\d+):\s+((P[-D]\d+)\s+)*")
     
-    
-    
-    
-    
-    f.close()
- 
-  """ Returns a list of atributes of the readed atributes """
-  def __readDriverCfg(line):
-    return split('\s+', line)[1:6]
- 
-  """ Returns a list of atributes of the readed atributes """
-  def __readPassengerCfg(line):
-    return split('\s+', line)[1:5]
-    
-  """ Returns a diccionary of one element, the key is the driver name
-  and the pointed element the list of passenger names """
-  def __readPickup(line):
-    drvName = split('\s+', line)[0].replace(':', '')
-    passengers = split('\s+', line)[1:]
-    d = {}
-    d[drvName] = passengers
-    return d
+    f =  open(srcFile, 'r')      
+    for line in f:
+      m = drvRegex.match(line)
+      if m:
+	self.__carmageddons[m.group("name")] = Driver(m.group("name"), \
+	                                       int(m.group("xo")), int(m.group("yo")), \
+	                                       int(m.group("xd")), int(m.group("yd")), \
+	                                       int(m.group("maxspace")))
+	self.__driverCount += 1
+	continue
 
+      m = pssRegex.match(line)
+      if m:
+	self.__passengers[m.group("name")] = (Passenger(m.group("name"), \
+	                                      int(m.group("xo")), int(m.group("yo")), \
+	                                      int(m.group("xd")), int(m.group("yd"))), None)
+	self.__passengerCount += 1
+	continue
+	
+      m = pckRegex.match(line)
+      if m:
+	driver = m.group("driver")
+	passengers = split("\s+", line)[1:][:-1]
+	print passengers
+	for p in passengers:
+	  self.__carmageddons[driver].pickupPassenger(self.__passengers[p][0])
+	  self.__passengers[p] = (self.__passengers[p][0], driver)
+	
+    f.close()
 
   def __repr__(self):
-    s = ""
-    
-    s += "Passenger info:\n"
+    s = "Passenger info:\n"
     for p in self.__passengers:
       s += "\t" + p + " is pickuped by " + self.__passengers[p][1] + "\n"
     

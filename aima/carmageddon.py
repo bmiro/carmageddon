@@ -65,8 +65,7 @@ class Carmageddon(Problem):
 
 if __name__ == "__main__":
   s = State(cfgfile="estat.guardat")
-  
-  print s
+  s.saveToFile("estat.guardat2")
   
   #c = Carmageddon(s)
 #  for suc in c.successor(s):
