@@ -7,8 +7,10 @@ from random import random, randint
 
 from re import match, split
 
+MAX_KM = 30000
+
 class State(object):
-  def __init__(self, nPassengers=50, nMaxDrivers=100, citySize=10000.0, squareSize=100.0, cfgfile=None):
+  def __init__(self, nPassengers=100, nMaxDrivers=50, citySize=10000.0, squareSize=100.0, cfgfile=None):
 
     self.__driverCount = 0
     self.__passengerCount = 0
@@ -264,7 +266,12 @@ class State(object):
 
 
   def getKm(self):
-    i = 0
+    i = 0     
     for p in self.__carmageddons.itervalues():
-      i += p.getRouteWeight(p.getRoute(self))
+      incr = p.getRouteWeight(p.getRoute(self))
+      if incr > MAX_KM:
+        i += 1000000000
+      i += incr
     return i
+
+

@@ -59,19 +59,19 @@ class Carmageddon(Problem):
     
   def value(self, node):
     """Heuristic function"""
-    return -node.state.getKm()
+    return -(node.state.getKm()+ node.state.getNumDrivers()*PES_CONDUCTOR)
     pass
 
 
 if __name__ == "__main__":
   s = State()
   
-  s.saveToFile("estat.guardat")
+  #s.saveToFile("estat.guardat")
 
   c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
-  f = simulated_annealing(c)
+  f = hill_climbing(c)
  # print f.getKm()
   print f
   #for d in f.getDrivers().itervalues():
