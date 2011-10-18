@@ -5,6 +5,8 @@ from driver import *
 
 from random import random, randint
 
+from re import match, split
+
 class State(object):
   def __init__(self, nPassengers=50, nMaxDrivers=100, citySize=10000.0, squareSize=100.0, cfgfile=None):
 
@@ -94,10 +96,34 @@ class State(object):
     f.close()
     
     
-  def loadFromFile(self):
-    pass
-    #f =  open(self.)
+  def loadFromFile(self, srcFile):
+    f =  open(srcFile, 'r')
+    drvRegex = r"driver:\s+(D-\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)"
+    pssRegex = r"passenger:\s+(P[-D]\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)"
+    pckRegex = r""    
+    
+    
+    
+    
+    
+    f.close()
  
+  """ Returns a list of atributes of the readed atributes """
+  def __readDriverCfg(line):
+    return split('\s+', line)[1:6]
+ 
+   """ Returns a list of atributes of the readed atributes """
+  def __readPassengerCfg(line):
+    return split('\s+', line)[1:5]
+    
+  """ Returns a diccionary of one element, the key is the driver name
+  and the pointed element the list of passenger names """
+  def __readPickup(line):
+    drvName = split('\s+', line)[0].replace(':', '')
+    passengers = split('\s+', line)[1:]
+    d = {}
+    d[drvName] = passengers
+    return d
  
   def genRandomDriver(self):
     name = str(self.__driverCount)
