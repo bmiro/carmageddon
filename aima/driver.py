@@ -13,15 +13,15 @@ def distance(src, dst):
   return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
 
 class Driver(Passenger):
-  def __init__(self, name, xo, yo, xd, yd, maxspace):
-    Passenger.__init__(self,name,xo,yo,xd,yd)
-    self.__freespace = maxspace
-    self.__maxspace = maxspace
+  def __init__(self, name, xo, yo, xd, yd, maxSpace):
+    Passenger.__init__(self, name, xo, yo, xd, yd)
+    self.__freespace = maxSpace
+    self.__maxSpace = maxSpace
     self.__passengers = []
 
 
   def isEmpty(self):
-    return self.__freespace == self.__maxspace
+    return self.__freespace == self.__maxSpace
 
 
   def isFull(self):
@@ -31,9 +31,11 @@ class Driver(Passenger):
   def getPassengers(self):
     return self.__passengers
 
-  def setPassengers(self,p):
+  def setPassengers(self, p):
     self.__passengers = p
 
+  def getMaxSpace(self):
+    return self.__maxSpace
 
   """ Recives a passenger object """
   def pickupPassenger(self, passenger):

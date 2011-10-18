@@ -54,28 +54,8 @@ class Carmageddon(Problem):
 
 
 if __name__ == "__main__":
-  print "hola"
-  #p = Passenger("joan", 1, 1, 9, 9)
-  #d = Driver("bernat", 0, 0, 10, 10, 2)
-
-
-  #d.pickupPassenger(p)
-  #r = d.getRoute(s)
-  #print r
-  #print d.getRouteWeight(r)
-
-
-  #print s
   s = State()
   print s
-  c = Carmageddon(s)
-#  for suc in c.successor(s):
-#    print(suc)
-  f = simulated_annealing(c)
- # print f.getKm()
- # print f
-  #for d in f.getDrivers().itervalues():
-  #  print d.getRouteWeight(d.getRoute(f))
-  
-  
+  s.saveToFile("estat.guardat")
+
 

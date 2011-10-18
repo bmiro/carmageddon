@@ -6,10 +6,13 @@ from driver import *
 from random import random, randint
 
 class State(object):
-  def __init__(self, nPassengers=50, nMaxDrivers=100, citySize=10000.0, squareSize=100.0):
+  def __init__(self, nPassengers=50, nMaxDrivers=100, citySize=10000.0, squareSize=100.0, cfgfile=None):
 
     self.__driverCount = 0
     self.__passengerCount = 0
+    
+    self.__nPassengers = nPassengers
+    self.__nMaxDrivers = nMaxDrivers
 
     self.__citySize = citySize
     self.__squareSize = squareSize
@@ -20,12 +23,19 @@ class State(object):
     #  Dict of passengeres, passenger name as key pointing to a tupla
     # of passenger object and driver name
     self.__passengers = {}
+    
+    if cfgfile != None:
+      self.loadStateFromFile(cfgfile)
+    else:
+      self.genRandomState()
 
-    for d in range(nMaxDrivers):
+    
+  def genRandomState(self):
+    for d in range(self.__nMaxDrivers):
       drv = self.genRandomDriver()
       self.__carmageddons[drv.getName()] = drv
 
-    for p in range(nPassengers):
+    for p in range(self.__nPassengers):
       pss = self.genRandomPassenger()
 
       alloqued = False
@@ -38,6 +48,55 @@ class State(object):
 
       if not alloqued:
         print "There are more passengers than free space!!!" #TODO raise exception
+    
+    
+  def saveToFile(self, dstFile):
+    f = open(dstFile, 'w')
+    drivers = list(self.__carmageddons)
+    drivers.sort()
+    
+    line = "## Declaring drivers\n"
+    line += "##      name \t x0 \t y0 \t x1 \t y1 \t capacity \n"
+    f.write(line)
+    for drv in drivers:
+      d = self.__carmageddons[drv]
+      ori = d.getOrigin()
+      dst = d.getDestination()
+      line = "driver:\t" + d.getName() + "\t" + str(ori[X]) + "\t" + str(ori[Y])
+      line =                      line + "\t" + str(dst[X]) + "\t" + str(dst[Y]) + "\t"
+      
+      line = line + str(d.getMaxSpace()) + "\n"
+      f.write(line)
+      
+    passengers = list(self.__passengers)
+    passengers.sort()
+    line = "\n\n## Declaring passengers\n"
+    line += "##              name \t x0 \t y0 \t x1 \t y1 \n"
+    f.write(line)
+    for pss in passengers:
+      p = self.__passengers[pss][0]
+      ori = p.getOrigin()
+      dst = p.getDestination()
+      line = "passenger:\t" + p.getName() + "\t" + str(ori[X]) + "\t" + str(ori[Y])
+      line =                         line + "\t" + str(dst[X]) + "\t" + str(dst[Y]) + "\n"
+      f.write(line)
+      
+      
+    line = "\n\n## Who pickups who...\n"
+    f.write(line)
+    for drv in drivers:
+      d = self.__carmageddons[drv]
+      line = d.getName() + ":"
+      for p in d.getPassengers():
+	line += "\t" + p
+      line += "\n"
+      f.write(line)
+    f.close()
+    
+    
+  def loadFromFile(self):
+    pass
+    #f =  open(self.)
  
  
   def genRandomDriver(self):

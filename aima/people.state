@@ -1,0 +1,12 @@
+## The syntax to define new passengers and drivers
+#driver: name xo yo xd yd maxspace
+#passsenger: P-0000 xo yo xd yd
+
+# Example of one driver and one passenger
+driver:    D-0000	0	0	30	24	2 
+passenger: P-0000	1	2	45	124
+passenger: P-0001	1	2	45	124
+
+
+# Establishing who is pickuped
+D-0000: P-0000 P-0001
