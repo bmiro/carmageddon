@@ -112,7 +112,7 @@ class State(object):
   def __readDriverCfg(line):
     return split('\s+', line)[1:6]
  
-   """ Returns a list of atributes of the readed atributes """
+  """ Returns a list of atributes of the readed atributes """
   def __readPassengerCfg(line):
     return split('\s+', line)[1:5]
     
