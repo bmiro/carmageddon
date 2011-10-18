@@ -287,7 +287,6 @@ class State(object):
     return s
 
 
-<<<<<<< HEAD
   def getKm(self):
     i = 0     
     for p in self.__carmageddons.itervalues():
