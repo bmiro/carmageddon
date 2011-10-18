@@ -129,6 +129,30 @@ class State(object):
     self.__carmageddons[newCarrier].pickupPassenger(p)
 
     self.__passengers[passenger] = (p, newCarrier)
+
+  def swapPassengers(self,p1name,p2name):
+    p1 = self.__passengers[p1name][0]
+    d1name = self.__passengers[p1name][1]
+
+    p2 = self.__passengers[p2name][0]
+    d2name = self.__passengers[p2name][1]
+
+    newdriver_leave = deepcopy(self.__carmageddons[d1name])
+    self.__carmageddons[d1name]=newdriver_leave
+    self.__carmageddons[d1name].leavePassenger(p1)
+    self.__carmageddons[d1name].pickupPassenger(p2)
+
+
+    newdriver_pick = deepcopy(self.__carmageddons[d2name])
+    self.__carmageddons[d2name] = newdriver_pick
+    self.__carmageddons[d2name].leavePassenger(p2)
+    self.__carmageddons[d2name].pickupPassenger(p1)
+
+    self.__passengers[p1name] = (p1,d2name)
+    self.__passengers[p2name] = (p2,d1name)
+    
+
+
     
 
 
