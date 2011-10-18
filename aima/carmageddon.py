@@ -64,16 +64,16 @@ class Carmageddon(Problem):
 
 
 if __name__ == "__main__":
-  s = State()
+  s = State(cfgfile="estat.guardat")
   
-  s.saveToFile("estat.guardat")
-
-  c = Carmageddon(s)
+  print s
+  
+  #c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
-  f = simulated_annealing(c)
+  #f = simulated_annealing(c)
  # print f.getKm()
-  print f
+  #print f
   #for d in f.getDrivers().itervalues():
   #  print d.getRouteWeight(d.getRoute(f))
   
