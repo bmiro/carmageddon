@@ -1,9 +1,50 @@
 \section{Modelització del problema}
+La pràctica ha estat desenvolupada en \emph{Python} el qual te una estructura de dades molt optimitzada
+i integrada al llenguatge que es el diccionari.
 
 \subsection{Representació de les dades}
-\subsubsection{Ciutat}
+Per la representació de les dades es fan servir 3 classes: passatger, conductor i estat.
+
+On estat es l'estat requerit per les llibreries del AIMA. Passatger i conductor han estat
+definits per facilitar l'elaboració de la pràctica.
+
 \subsubsection{Passatger}
+Cada passatger ve representat amb un identificador i els punts d'origen i destí tots ells són
+camps invariables durant l'execució.
+
+Assosciat a aquesta classe simplement hi ha els mètodes per obtenir el valors de dits camps.
+
 \subsubsection{Conductor}
+El conductor és una classe que hereda del passatger, així doncs també té el camp que l'identifica
+el seu origen i destí. A més també té una capacitat màxima.
+Per altra banda el conductor també inclou una llista dels noms dels passatgers que transportarà
+durant tota la seva ruta.
+
+Per gestionar aquesta clase són necessaris diveros mètodes més complicats que simples \emph{settes} i \emph{gettes}.
+En primer lloc hi ha una funció \textt{pickupPassenger} per recollir un passatger, aquesta afegeix el passatger
+a la llista de passatgers a transportar i comprova que en cap moment de la ruta es superi la capacitat
+(\texttt{carOverflow}) del vehicle.
+
+Per tal de sabre quina és la ruta que fa el conductor hi ha la funció \texttt{getRoute} la qual
+fa una ordenació dels punts clau (\texttt{checkpoints}) per on es passa i registra a cada punt si es
+l'origen del condcutor, l'origen d'un passatger, el destí del passatger o el destí del condcutor. Així
+doncs un ruta tindria l'aspecte seguent: 
+
+
+TODO ruta
+
+
+Associat a una ruta ens interessa sabre la distància que recorr, per això hi ha la funció \emph{getKm}
+que torna tal valor.
+
+
+
+
+
+\subsubsection{Ciutat}
+La citutat en si no requereix representació, no te perque estar guardara en memòria ja que senzillament
+es pot gardar a cada passatger i conductor el seu punt d'inici i de destí com dues tuples \emph{XY}.
+
 \subsubsection{Estat}
 
 \subsection{Estat inicial}
