@@ -19,6 +19,13 @@ class Driver(Passenger):
     self.__maxSpace = maxSpace
     self.__passengers = []
 
+  def __copy__(self):
+    newone = Driver(self.getName(),self.getOrigin()[0],self.getOrigin()[1],self.getDestination()[0],self.getDestination()[1],self.__maxSpace)
+    newone.__dict__.update(self.__dict__)
+    newone.setPassengers(copy(self.__passengers))
+    return newone
+
+
 
   def isEmpty(self):
     return self.__freespace == self.__maxSpace

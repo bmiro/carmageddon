@@ -8,10 +8,11 @@ from random import random, randint
 from re import match, split, compile
 
 MAX_KM = 30000
-ANIMALADA = 10000000
+ANIMALADA = 1000000000
+PES_VEHICLE = 10000000
 
 class State(object):
-  def __init__(self, nPassengers=100, nMaxDrivers=50, citySize=10000.0, squareSize=100.0, cfgfile=None):
+  def __init__(self, nPassengers=20, nMaxDrivers=15, citySize=10000.0, squareSize=100.0, cfgfile=None):
 
     self.__driverCount = 0
     self.__passengerCount = 0
@@ -144,7 +145,7 @@ class State(object):
     p = Passenger(name, d.getOrigin()[0], d.getOrigin()[1], \
                         d.getDestination()[0], d.getDestination()[1])
 
-    newdriver_pick = deepcopy(self.__carmageddons[carrierDriver])
+    newdriver_pick = copy(self.__carmageddons[carrierDriver])
     self.__carmageddons[carrierDriver] = newdriver_pick
     self.__carmageddons[carrierDriver].pickupPassenger(p)
     self.__passengers[p.getName()] = (p, self.__carmageddons[carrierDriver].getName())
@@ -156,11 +157,11 @@ class State(object):
     p = self.__passengers[passenger][0]
     pname = self.__passengers[passenger][1]
 
-    newdriver_leave = deepcopy(self.__carmageddons[pname])
+    newdriver_leave = copy(self.__carmageddons[pname])
     self.__carmageddons[pname]=newdriver_leave
     self.__carmageddons[pname].leavePassenger(p)
 
-    newdriver_pick = deepcopy(self.__carmageddons[newCarrier])
+    newdriver_pick = copy(self.__carmageddons[newCarrier])
     self.__carmageddons[newCarrier] = newdriver_pick
     self.__carmageddons[newCarrier].pickupPassenger(p)
 
@@ -174,13 +175,13 @@ class State(object):
     p2 = self.__passengers[p2name][0]
     d2name = self.__passengers[p2name][1]
 
-    newdriver_leave = deepcopy(self.__carmageddons[d1name])
+    newdriver_leave = copy(self.__carmageddons[d1name])
     self.__carmageddons[d1name]=newdriver_leave
     self.__carmageddons[d1name].leavePassenger(p1)
     self.__carmageddons[d1name].pickupPassenger(p2)
 
 
-    newdriver_pick = deepcopy(self.__carmageddons[d2name])
+    newdriver_pick = copy(self.__carmageddons[d2name])
     self.__carmageddons[d2name] = newdriver_pick
     self.__carmageddons[d2name].leavePassenger(p2)
     self.__carmageddons[d2name].pickupPassenger(p1)

@@ -7,12 +7,16 @@ from copy import copy
 from passenger import *
 from driver import *
 from state import *
+
+
         
 class Carmageddon(Problem):
   """ """
-  def __init__(self, state):
+  def __init__(self, state, h = "km"):
     self.__state = state
     self.initial = state
+    heuristic_dict = {"km":self.heuristic_km,"veh":self.heuristic_veh}
+    self.value = heuristic_dict[h]
   
   
   def successor(self, state):
@@ -43,14 +47,18 @@ class Carmageddon(Problem):
             yield ("dgrd", newState)
             break
 
-    for p1 in state.getPassengers():
-      for p2 in state.getPassengers():
+    it = 0
+    print "iyy"
+    ltemp = list(state.getPassengers())
+    for p1 in ltemp:
+      for p2 in xrange(it,len(ltemp)):
         newState = copy(state)
         newState.setDrivers(copy(state.getDrivers()))
         newState.setPassengers(copy(state.getPassengers()))
-        newState.swapPassengers(p1,p2)
+        newState.swapPassengers(p1,ltemp[p2])
         #if newState.getKm() <= MAX_KM:
         yield ("swap", newState)
+      it+=1
 
 
   def goal_test(self, state):
@@ -59,16 +67,24 @@ class Carmageddon(Problem):
     
   def value(self, node):
     """Heuristic function"""
-    return -node.state.getKm()
     pass
+
+  def heuristic_km(self, node):
+    """Heuristic function"""
+    return -node.state.getKm()
+
+  def heuristic_veh(self, node):
+    """Heuristic function"""
+    return -(node.state.getKm()+node.state.getNumDrivers()*PES_VEHICLE)
+
 
 
 if __name__ == "__main__":
-  s = State(cfgfile="estat.guardat")
-  s.saveToFile("estat.guardat2")
+  #s = State(cfgfile="estat.guardat")
+  #s.saveToFile("estat.guardat2")
   
   #s.saveToFile("estat.guardat")
-
+  s = State()
   c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
@@ -77,7 +93,8 @@ if __name__ == "__main__":
 #  for suc in c.successor(s):
 #    print(suc)
   #f = simulated_annealing(c)
- # print f.getKm()
+  print f.getKm()
+  print f.getNumDrivers()
   #print f
   #for d in f.getDrivers().itervalues():
   #  print d.getRouteWeight(d.getRoute(f))
