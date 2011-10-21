@@ -15,6 +15,7 @@ def distance(src, dst):
   return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
 
 class Driver(Passenger):
+  t = 0
   def __init__(self, name, xo, yo, xd, yd, maxSpace):
     Passenger.__init__(self, name, xo, yo, xd, yd)
     self.__freespace = maxSpace
@@ -69,11 +70,12 @@ class Driver(Passenger):
   "    [[57, 70], "DriverDestination"]]
   """
   def getRoute(self,state):
-#    temp = datetime.now()
+    
     ## Dictionary of point pointing destinations if exist
     # i.e. { [34, 45] : [22, 56] --> Point is origin
     #        [56, 77] : None }   --> Point is destination
     checkpoints = {}
+    checkpointsDest = {}
 
     ## List of tuples [point, event]
     # i.e. [[34, 45] "PickupPassenger"]
@@ -83,30 +85,49 @@ class Driver(Passenger):
     for p in self.__passengers:
       checkpoints[state.getPassengers()[p][0].getOrigin()] = state.getPassengers()[p][0].getDestination()
 
+
+
     current = (self.getOrigin(), "DriverOrigin")
     npass = 0
-    while checkpoints:
+    temp = datetime.now()
+
+    while checkpoints or checkpointsDest:
       # Searching nearst point
       d = MAX_KM
       nearest = []
-      for c in checkpoints.keys():
+
+      for c in checkpointsDest.keys():
         if distance(current[0], c) < d:
           d = distance(current[0], c)
           nearest = c
+
+      if npass < 2:
+        for c in checkpoints.keys():
+          if distance(current[0], c) < d:
+            d = distance(current[0], c)
+            nearest = c
+
+
           
-      route.append(current)
-      dest = checkpoints.pop(nearest)
-      if dest != None:
-        checkpoints[dest] = None
+
+      if nearest in checkpoints:
+        checkpointsDest[nearest] = True 
+        checkpoints.pop(nearest)
         event = "PickupPassenger"
+        npass += 1
       else:
         event = "LeavePassenger"
-      current = (nearest, event)   
+        checkpointsDest.pop(nearest)
+        npass -= 1
 
-    route.append(current)
+      current = (nearest, event)  
+      route.append(current) 
+    temp =  datetime.now() -temp
+    Driver.t+=temp.microseconds
+
+
     route.append((self.getDestination(), "DriverDestination"))
-#    temp =  datetime.now() -temp
-#    Driver.t+=temp.microseconds
+
     return route
 
 

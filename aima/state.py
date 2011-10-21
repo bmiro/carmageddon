@@ -12,7 +12,7 @@ ANIMALADA = 1000000000
 PES_VEHICLE = 10000000
 
 class State(object):
-  def __init__(self, nPassengers=50 , nMaxDrivers=50, citySize=10000.0, squareSize=100.0, cfgfile=None):
+  def __init__(self, nPassengers=30, nMaxDrivers=30, citySize=10000.0, squareSize=100.0, cfgfile=None):
 
     self.__driverCount = 0
     self.__passengerCount = 0

@@ -9,6 +9,7 @@ from driver import *
 from state import *
 
 import gc
+import datetime
 
 
         
@@ -22,6 +23,9 @@ class Carmageddon(Problem):
   
   
   def successor(self, state):
+    numberOp1 = 0
+    numberOp2 = 0
+    numberOp3 = 0
     #Gens all the passenger changes (gens at most nPassengers*nDrivers states)
     for p in state.getPassengers():
       currentDrv = state.whoPickuped(p)
@@ -34,10 +38,10 @@ class Carmageddon(Problem):
           newState.setPassengers(copy(state.getPassengers()))
           newState.switchPassenger(p, d[0])
           #if newState.getKm() <= MAX_KM:
+          numberOp1+= 1
           yield ("sw", newState)
       
      #Gens all the driver deletions inserting it in the first not full driver.
-    print "Degradating drivres\n"
     for d in state.getDrivers().itervalues():
       if d.isEmpty():
         for carrier in state.getDrivers().iteritems():
@@ -47,20 +51,29 @@ class Carmageddon(Problem):
             newState.setPassengers(copy(state.getPassengers()))
             newState.degradateDriver(d.getName(), carrier[0])
             yield ("dgrd", newState)
+            numberOp2+= 1
             break
 
-#    it = 0
-#    print "iyy"
-#    ltemp = list(state.getPassengers())
-#    for p1 in ltemp:
-#      for p2 in xrange(it,len(ltemp)):
-#        newState = copy(state)
-#        newState.setDrivers(copy(state.getDrivers()))
-#        newState.setPassengers(copy(state.getPassengers()))
-#        newState.swapPassengers(p1,ltemp[p2])
-#        #if newState.getKm() <= MAX_KM:
-#        yield ("swap", newState)
-#      it+=1
+    it = 0
+    print "iyy"
+    ltemp = list(state.getPassengers())
+    for p1 in ltemp:
+      for p2 in xrange(it,len(ltemp)):
+        newState = copy(state)
+        newState.setDrivers(copy(state.getDrivers()))
+        newState.setPassengers(copy(state.getPassengers()))
+        newState.swapPassengers(p1,ltemp[p2])
+        #if newState.getKm() <= MAX_KM:
+        numberOp3+= 1
+        yield ("swap", newState)
+      it+=1
+    print "#######################################"
+    print datetime.datetime.now()
+    print "Nombre d'estats operador 1: ",numberOp1
+    print "Nombre d'estats operador 2: ",numberOp2
+    print "Nombre d'estats operador 3: ",numberOp3
+    print "Nombre d'estats Total     : ",numberOp1+numberOp2+numberOp3
+
 
 
   def goal_test(self, state):
@@ -98,6 +111,7 @@ if __name__ == "__main__":
   #f = simulated_annealing(c)
   print f.getKm()
   print f.getNumDrivers()
+  print Driver.t
   #print f
   #for d in f.getDrivers().itervalues():
   #  print d.getRouteWeight(d.getRoute(f))
