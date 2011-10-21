@@ -3,11 +3,13 @@ from copy import deepcopy, copy
 
 from passenger import *
 
+from datetime import datetime
+
 # Macros for easy indexation of coor tuples.
 # i.e. a[X] -> xcoor
 X = 0
 Y = 1
-MAX_KM = 30
+MAX_KM = 3000000000
 
 def distance(src, dst):
   return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
@@ -31,10 +33,6 @@ class Driver(Passenger):
     return self.__freespace == self.__maxSpace
 
 
-  def isFull(self):
-    return self.__freespace == 0
-
-
   def getPassengers(self):
     return self.__passengers
 
@@ -46,20 +44,14 @@ class Driver(Passenger):
 
   """ Recives a passenger object """
   def pickupPassenger(self, passenger):
-    if self.__freespace == 0:
-      print "The car is full!!" #TODO trow CAR_OVERFLOW exception
-    else:
-      self.__passengers.append(passenger.getName())
-      self.__freespace -= 1
+    self.__passengers.append(passenger.getName())
+    self.__freespace -= 1
 
 
   """ Recives a passenger object """
   def leavePassenger(self, passenger):
-    if len(self.__passengers) == 0:
-      print "There is no passengers to leave!" #TODO throw CAR_EMPTY exception
-    else:
-      self.__passengers.remove(passenger.getName())
-      self.__freespace += 1
+    self.__passengers.remove(passenger.getName())
+    self.__freespace += 1
 
 
   def getDestinations(self):
@@ -77,6 +69,7 @@ class Driver(Passenger):
   "    [[57, 70], "DriverDestination"]]
   """
   def getRoute(self,state):
+#    temp = datetime.now()
     ## Dictionary of point pointing destinations if exist
     # i.e. { [34, 45] : [22, 56] --> Point is origin
     #        [56, 77] : None }   --> Point is destination
@@ -90,7 +83,8 @@ class Driver(Passenger):
     for p in self.__passengers:
       checkpoints[state.getPassengers()[p][0].getOrigin()] = state.getPassengers()[p][0].getDestination()
 
-    current = [self.getOrigin(), "DriverOrigin"]
+    current = (self.getOrigin(), "DriverOrigin")
+    npass = 0
     while checkpoints:
       # Searching nearst point
       d = MAX_KM
@@ -101,16 +95,18 @@ class Driver(Passenger):
           nearest = c
           
       route.append(current)
-      dest = checkpoints.pop(c)
+      dest = checkpoints.pop(nearest)
       if dest != None:
         checkpoints[dest] = None
         event = "PickupPassenger"
       else:
         event = "LeavePassenger"
-      current = [c, event]   
+      current = (nearest, event)   
 
     route.append(current)
-    route.append([self.getDestination(), "DriverDestination"])
+    route.append((self.getDestination(), "DriverDestination"))
+#    temp =  datetime.now() -temp
+#    Driver.t+=temp.microseconds
     return route
 
 

@@ -12,7 +12,7 @@ ANIMALADA = 1000000000
 PES_VEHICLE = 10000000
 
 class State(object):
-  def __init__(self, nPassengers=20, nMaxDrivers=15, citySize=10000.0, squareSize=100.0, cfgfile=None):
+  def __init__(self, nPassengers=50 , nMaxDrivers=50, citySize=10000.0, squareSize=100.0, cfgfile=None):
 
     self.__driverCount = 0
     self.__passengerCount = 0
@@ -50,7 +50,7 @@ class State(object):
 
       alloqued = False
       for c in self.__carmageddons.iterkeys():
-        if not self.__carmageddons[c].isFull():
+        if len(self.__carmageddons[c].getPassengers()) < 2:
           self.__carmageddons[c].pickupPassenger(pss)
           self.__passengers[pss.getName()] = (pss, c)
           alloqued = True
@@ -129,9 +129,6 @@ class State(object):
       print "Trying to degradeta a not empty driver!" #TODO aixecar excepció
       return -1
 
-    if self.__carmageddons[carrierDriver].isFull():
-      print "The carrier driver is full" #TODO aixecar excepció
-      return -2
 
     if self.getNumDrivers() == 0:
       print "You can not degradate the last driver!" # TODO aixecar excepció
@@ -293,7 +290,7 @@ class State(object):
     for p in self.__carmageddons.itervalues():
       incr = p.getRouteWeight(p.getRoute(self))
       if incr > MAX_KM:
-        i += ANIMALADA
+        i += ANIMALADA*incr
       i += incr
     return i
 

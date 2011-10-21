@@ -8,6 +8,8 @@ from passenger import *
 from driver import *
 from state import *
 
+import gc
+
 
         
 class Carmageddon(Problem):
@@ -25,7 +27,7 @@ class Carmageddon(Problem):
       currentDrv = state.whoPickuped(p)
       
       for d in state.getDrivers().iteritems():
-        if d[0] != currentDrv and not d[1].isFull():
+        if d[0] != currentDrv :
 	  #Switch passenger to this driver
           newState = copy(state)
           newState.setDrivers(copy(state.getDrivers()))
@@ -39,7 +41,7 @@ class Carmageddon(Problem):
     for d in state.getDrivers().itervalues():
       if d.isEmpty():
         for carrier in state.getDrivers().iteritems():
-          if carrier[0] != d.getName() and not carrier[1].isFull():
+          if carrier[0] != d.getName() :
             newState = copy(state)
             newState.setDrivers(copy(state.getDrivers()))
             newState.setPassengers(copy(state.getPassengers()))
@@ -47,18 +49,18 @@ class Carmageddon(Problem):
             yield ("dgrd", newState)
             break
 
-    it = 0
-    print "iyy"
-    ltemp = list(state.getPassengers())
-    for p1 in ltemp:
-      for p2 in xrange(it,len(ltemp)):
-        newState = copy(state)
-        newState.setDrivers(copy(state.getDrivers()))
-        newState.setPassengers(copy(state.getPassengers()))
-        newState.swapPassengers(p1,ltemp[p2])
-        #if newState.getKm() <= MAX_KM:
-        yield ("swap", newState)
-      it+=1
+#    it = 0
+#    print "iyy"
+#    ltemp = list(state.getPassengers())
+#    for p1 in ltemp:
+#      for p2 in xrange(it,len(ltemp)):
+#        newState = copy(state)
+#        newState.setDrivers(copy(state.getDrivers()))
+#        newState.setPassengers(copy(state.getPassengers()))
+#        newState.swapPassengers(p1,ltemp[p2])
+#        #if newState.getKm() <= MAX_KM:
+#        yield ("swap", newState)
+#      it+=1
 
 
   def goal_test(self, state):
@@ -80,11 +82,12 @@ class Carmageddon(Problem):
 
 
 if __name__ == "__main__":
-  #s = State(cfgfile="estat.guardat")
+  #s = State(cfgfile="estat.pr")
   #s.saveToFile("estat.guardat2")
   
-  #s.saveToFile("estat.guardat")
   s = State()
+  #s.saveToFile("estat.pr")
+
   c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
