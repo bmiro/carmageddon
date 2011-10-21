@@ -7,8 +7,13 @@ from random import random, randint
 
 from re import match, split, compile
 
+MAX_KM = 30000
+ANIMALADA = 1000000000
+PES_VEHICLE = 10000000
+
 class State(object):
-  def __init__(self, nPassengers=50, nMaxDrivers=100, citySize=10000.0, squareSize=100.0, cfgfile=None):
+  def __init__(self, nPassengers=30, nMaxDrivers=30, citySize=10000.0, squareSize=100.0, cfgfile=None):
+
     self.__driverCount = 0
     self.__passengerCount = 0
     
@@ -45,7 +50,7 @@ class State(object):
 
       alloqued = False
       for c in self.__carmageddons.iterkeys():
-        if not self.__carmageddons[c].isFull():
+        if len(self.__carmageddons[c].getPassengers()) < 2:
           self.__carmageddons[c].pickupPassenger(pss)
           self.__passengers[pss.getName()] = (pss, c)
           alloqued = True
@@ -124,9 +129,6 @@ class State(object):
       print "Trying to degradeta a not empty driver!" #TODO aixecar excepció
       return -1
 
-    if self.__carmageddons[carrierDriver].isFull():
-      print "The carrier driver is full" #TODO aixecar excepció
-      return -2
 
     if self.getNumDrivers() == 0:
       print "You can not degradate the last driver!" # TODO aixecar excepció
@@ -140,7 +142,7 @@ class State(object):
     p = Passenger(name, d.getOrigin()[0], d.getOrigin()[1], \
                         d.getDestination()[0], d.getDestination()[1])
 
-    newdriver_pick = deepcopy(self.__carmageddons[carrierDriver])
+    newdriver_pick = copy(self.__carmageddons[carrierDriver])
     self.__carmageddons[carrierDriver] = newdriver_pick
     self.__carmageddons[carrierDriver].pickupPassenger(p)
     self.__passengers[p.getName()] = (p, self.__carmageddons[carrierDriver].getName())
@@ -152,11 +154,11 @@ class State(object):
     p = self.__passengers[passenger][0]
     pname = self.__passengers[passenger][1]
 
-    newdriver_leave = deepcopy(self.__carmageddons[pname])
+    newdriver_leave = copy(self.__carmageddons[pname])
     self.__carmageddons[pname]=newdriver_leave
     self.__carmageddons[pname].leavePassenger(p)
 
-    newdriver_pick = deepcopy(self.__carmageddons[newCarrier])
+    newdriver_pick = copy(self.__carmageddons[newCarrier])
     self.__carmageddons[newCarrier] = newdriver_pick
     self.__carmageddons[newCarrier].pickupPassenger(p)
 
@@ -170,13 +172,13 @@ class State(object):
     p2 = self.__passengers[p2name][0]
     d2name = self.__passengers[p2name][1]
 
-    newdriver_leave = deepcopy(self.__carmageddons[d1name])
+    newdriver_leave = copy(self.__carmageddons[d1name])
     self.__carmageddons[d1name]=newdriver_leave
     self.__carmageddons[d1name].leavePassenger(p1)
     self.__carmageddons[d1name].pickupPassenger(p2)
 
 
-    newdriver_pick = deepcopy(self.__carmageddons[d2name])
+    newdriver_pick = copy(self.__carmageddons[d2name])
     self.__carmageddons[d2name] = newdriver_pick
     self.__carmageddons[d2name].leavePassenger(p2)
     self.__carmageddons[d2name].pickupPassenger(p1)
@@ -282,5 +284,14 @@ class State(object):
           s += "\t\t" + p + "\n"
     return s
 
+
+  def getKm(self):
+    i = 0     
+    for p in self.__carmageddons.itervalues():
+      incr = p.getRouteWeight(self)
+      if incr > MAX_KM:
+        i += ANIMALADA*incr
+      i += incr
+    return i
 
 
