@@ -1,0 +1,52 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{titlesec}
+% A ses llengües llatines, el primer paràgraf ha d'anar tabulat
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{minted} %wget http://minted.googlecode.com/hg/minted.sty
+
+% aptitude install texlive-fonts-extra
+\usepackage{newcent} %font mes wapa
+
+\graphicspath{{diagrames/}}
+
+% Estil de seccions
+\titleformat{\section}{\large\sectfont}{\thesection}{1em}{}
+\titleformat{\subsection}{\bfseries\sectfont}{\thesubsection}{1em}{}
+% Estil numeracio subseccions http://help-csli.stanford.edu/tex/latex-sections.shtml#number
+%\def\thesubsection{\alph{subsection})}
+
+\title{Pràctica de Cerca Local: \\Carmageddon}
+\author{ Miquel Mas Fiol \thanks{mkelmas a gmail punt com} \\
+	 Bartomeu Miró Mateu \thanks{bartomeumiro a gmail punt com} \\}
+
+\begin{document}
+
+  \maketitle
+
+  \begin{abstract}
+    
+  \end{abstract}
+
+  \newpage
+  \setcounter{page}{2}
+  \tableofcontents
+  \newpage
+
+  \input{interpretacioEnunciat}
+  \input{modelitzacioImplementacio}
+  \input{experimentacio}
+  \input{peu}
+  \include{annexcodi}
+
+\end{document}
