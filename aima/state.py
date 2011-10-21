@@ -288,7 +288,7 @@ class State(object):
   def getKm(self):
     i = 0     
     for p in self.__carmageddons.itervalues():
-      incr = p.getRouteWeight(p.getRoute(self))
+      incr = p.getRouteWeight(self)
       if incr > MAX_KM:
         i += ANIMALADA*incr
       i += incr

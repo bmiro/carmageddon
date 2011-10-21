@@ -21,6 +21,7 @@ class Driver(Passenger):
     self.__freespace = maxSpace
     self.__maxSpace = maxSpace
     self.__passengers = []
+    self.calculatedRouteWeight = None
 
   def __copy__(self):
     newone = Driver(self.getName(),self.getOrigin()[0],self.getOrigin()[1],self.getDestination()[0],self.getDestination()[1],self.__maxSpace)
@@ -47,12 +48,14 @@ class Driver(Passenger):
   def pickupPassenger(self, passenger):
     self.__passengers.append(passenger.getName())
     self.__freespace -= 1
+    self.calculatedRouteWeight = None
 
 
   """ Recives a passenger object """
   def leavePassenger(self, passenger):
     self.__passengers.remove(passenger.getName())
     self.__freespace += 1
+    self.calculatedRouteWeight = None
 
 
   def getDestinations(self):
@@ -131,10 +134,15 @@ class Driver(Passenger):
     return route
 
 
-  def getRouteWeight(self, route):
+  def getRouteWeight(self,state):
+    if self.calculatedRouteWeight != None:
+      return self.calculatedRouteWeight
+
+    route = self.getRoute(state)
     w = 0
     current = route[0][0]
     for p in route:
       w += distance(current, p[0])
       current = p[0]
+    self.calculatedRouteWeight = w
     return w
