@@ -10,14 +10,18 @@ from state import *
 
 import gc
 import datetime
+   
+""" Used only to call heuristic value in carmageddon object """
+class DummyNode(object):
+  def __init__(self, s):
+    self.state = s   
 
-
-        
 class Carmageddon(Problem):
   """ """
   def __init__(self, state, h="km"):
     self.__state = state
     self.initial = state
+    self.__h = h
     heuristic_dict = {"km" : self.heuristic_km, "veh" : self.heuristic_veh}
     self.value = heuristic_dict[h]
   
@@ -73,6 +77,7 @@ class Carmageddon(Problem):
     print "Nombre d'estats operador 2: ", numberOp2
     print "Nombre d'estats operador 3: ", numberOp3
     print "Nombre d'estats Total     : ", numberOp1 + numberOp2 + numberOp3
+    print "Heurístic                 : ", self.printableHeuristic(state)
 
 
   def goal_test(self, state):
@@ -82,10 +87,17 @@ class Carmageddon(Problem):
   def value(self, node):
     """Heuristic function"""
     pass
+  
+  
+  def printableHeuristic(self, state):
+    dn = DummyNode(state)   
+    return -self.value(dn)
 
+      
   def heuristic_km(self, node):
     """Heuristic function"""
     return -node.state.getKm()
+    
 
   def heuristic_veh(self, node):
     """Heuristic function"""
