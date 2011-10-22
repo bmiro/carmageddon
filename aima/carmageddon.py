@@ -109,20 +109,21 @@ if __name__ == "__main__":
   #s = State(cfgfile="estat.pr")
   #s.saveToFile("estat.guardat2")
   
-  s = State()
+  s = State(initialDistribution="allOneFirst")
+  print s
   #s.saveToFile("estat.pr")
 
   c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
-  f = hill_climbing(c)
+  #f = hill_climbing(c)
   #c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
   #f = simulated_annealing(c)
-  print f.getKm()
-  print f.getNumDrivers()
-  print Driver.t
+  #print f.getKm()
+  #print f.getNumDrivers()
+  #print Driver.t
   #print f
   #for d in f.getDrivers().itervalues():
   #  print d.getRouteWeight(d.getRoute(f))

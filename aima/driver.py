@@ -47,16 +47,16 @@ class Driver(Passenger):
     return self.__maxSpace
 
 
-  """ Recives a passenger object """
+  """ Recives a passenger name """
   def pickupPassenger(self, passenger):
-    self.__passengers.append(passenger.getName())
+    self.__passengers.append(passenger)
     self.__freespace -= 1
     self.calculatedRouteWeight = None
 
 
-  """ Recives a passenger object """
+  """ Recives a passenger name """
   def leavePassenger(self, passenger):
-    self.__passengers.remove(passenger.getName())
+    self.__passengers.remove(passenger)
     self.__freespace += 1
     self.calculatedRouteWeight = None
 

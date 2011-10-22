@@ -12,7 +12,10 @@ ANIMALADA = 1000000000
 PES_VEHICLE = 10000000
 
 class State(object):
-  def __init__(self, nPassengers=30, nMaxDrivers=30, citySize=10000.0, squareSize=100.0, cfgfile=None):
+  def __init__(self, nPassengers=40, nMaxDrivers=30, 
+                     citySize=10000.0, squareSize=100.0, 
+                     initialDistribution="fullFirst", 
+                     cfgfile=None):
 
     self.__driverCount = 0
     self.__passengerCount = 0
@@ -34,64 +37,67 @@ class State(object):
       print "Loading form file"
       self.loadFromFile(cfgfile)
     else:
-      self.genRandomState()
+      self.genRandomState(initialDistribution, 3)
 
   ##########################################################
   ################# State generation Methods ###############
-  ##########################################################
-  
+  ########################################################## 
   """ Allocs passengers in drivers, there are two criteria:
   " fullFirst:   that first full a driver before assigning a
   "             passenger to an emtpy driver
   " allOneFirst: that doesn't assing a N+1 passenger to a
   "             driver until all the driers has N passengers
   """
-  def allocPassengers(self, criteria="fullFirst", maxFullFirst=3):
-    if criteria=="fullFirst":
-      allocPassengersFullFirst(maxFullFirst)
-    else:
-      allocPassengersAllOneFirst()
-      
-
   def allocPassengersFullFirst(self, maxFullFirst):
-    aloqued = 0
+    alloqued = 0
     for p in self.__passengers:
       for d in self.__carmageddons.itervalues():
-	if len(d.getPassengers) < maxFullFirst:
+	if len(d.getPassengers()) < maxFullFirst:
 	  d.pickupPassenger(p)
 	  self.__passengers[p][1] = d.getName()
-	  aloqued += 1
+	  alloqued += 1
 	  break
-    if aloqued != len(self.__passengers):
+    if alloqued != len(self.getPassengers()):
       print "There are unalloqued passengers!" #TODO throw exception
   
   
   def allocPassengersAllOneFirst(self):
-    pass
-    
+    alloqued = 0
+    it = 0
+    for p in self.__passengers:
+      for d in self.__carmageddons.itervalues():
+	if len(d.getPassengers()) == it:
+	  d.pickupPassenger(p)
+	  self.__passengers[p][1] = d.getName()
+	  alloqued += 1
+	  break
+      if (alloqued % self.getNumDrivers()) == 0:
+	it += 1
+	
+    if alloqued != len(self.getPassengers()):
+      print "There are unalloqued passengers!" #TODO throw exception
+  
+
 
   ##########################################################
   ################ Random generation Methods ###############
   ##########################################################   
-  def genRandomState(self):
+  def genRandomState(self, criteria="fullFirst", maxFullFirst=3):
     for d in range(self.__nMaxDrivers):
       drv = self.genRandomDriver()
       self.__carmageddons[drv.getName()] = drv
 
     for p in range(self.__nPassengers):
       pss = self.genRandomPassenger()
+      self.__passengers[pss.getName()] = [pss, None] 
 
-      alloqued = False
-      for c in self.__carmageddons.iterkeys():
-        if len(self.__carmageddons[c].getPassengers()) < 2:
-          self.__carmageddons[c].pickupPassenger(pss)
-          self.__passengers[pss.getName()] = [pss, c]
-          alloqued = True
-          break
+    if criteria=="fullFirst":
+      self.allocPassengersFullFirst(maxFullFirst)
+    elif criteria=="allOneFirst":
+      self.allocPassengersAllOneFirst()
+    else:
+      print "The criteria must match fullFrist or allOneFirst" 
 
-      if not alloqued:
-        print "There are more passengers than free space!!!" #TODO raise exception
-    
     
   def genRandomDriver(self):
     name = str(self.__driverCount)
@@ -144,13 +150,16 @@ class State(object):
 
   def whoPickuped(self, passenger):
     return self.__passengers[passenger][1]
-
-
+    
   def getKm(self):
-    i = 0
+    i = 0     
     for p in self.__carmageddons.itervalues():
-      i += p.getRouteWeight(p.getRoute(self))
+      incr = p.getRouteWeight(self)
+      if incr > MAX_KM:
+        i += ANIMALADA*incr
+      i += incr
     return i
+
 
 
   ##########################################################
@@ -177,47 +186,42 @@ class State(object):
 
     newdriver_pick = copy(self.__carmageddons[carrierDriver])
     self.__carmageddons[carrierDriver] = newdriver_pick
-    self.__carmageddons[carrierDriver].pickupPassenger(p)
+    self.__carmageddons[carrierDriver].pickupPassenger(name)
     self.__passengers[p.getName()] = [p, self.__carmageddons[carrierDriver].getName()]
     
     
   """ Passenger is a passenger name and also newCarrier the new driver name """
   def switchPassenger(self, passenger, newCarrier):
-    #TODO gestionar excepcions]
-    p = self.__passengers[passenger][0]
-    pname = self.__passengers[passenger][1]
+    driver = self.__passengers[passenger][1]
 
-    newdriver_leave = copy(self.__carmageddons[pname])
-    self.__carmageddons[pname]=newdriver_leave
-    self.__carmageddons[pname].leavePassenger(p)
+    newdriver_leave = copy(self.__carmageddons[driver])
+    self.__carmageddons[driver] = newdriver_leave
+    self.__carmageddons[driver].leavePassenger(passenger)
 
     newdriver_pick = copy(self.__carmageddons[newCarrier])
     self.__carmageddons[newCarrier] = newdriver_pick
-    self.__carmageddons[newCarrier].pickupPassenger(p)
+    self.__carmageddons[newCarrier].pickupPassenger(passenger)
 
-    self.__passengers[passenger] = [p, newCarrier]
+    self.__passengers[passenger][1] = newCarrier
 
 
   def swapPassengers(self, p1name, p2name):
-    p1 = self.__passengers[p1name][0]
     d1name = self.__passengers[p1name][1]
-
-    p2 = self.__passengers[p2name][0]
     d2name = self.__passengers[p2name][1]
 
-    newdriver_leave = copy(self.__carmageddons[d1name])
-    self.__carmageddons[d1name]=newdriver_leave
-    self.__carmageddons[d1name].leavePassenger(p1)
-    self.__carmageddons[d1name].pickupPassenger(p2)
+    newDriverLeave = copy(self.__carmageddons[d1name])
+    self.__carmageddons[d1name] = newDriverLeave
+    self.__carmageddons[d1name].leavePassenger(p1name)
+    self.__carmageddons[d1name].pickupPassenger(p2name)
 
 
-    newdriver_pick = copy(self.__carmageddons[d2name])
-    self.__carmageddons[d2name] = newdriver_pick
-    self.__carmageddons[d2name].leavePassenger(p2)
-    self.__carmageddons[d2name].pickupPassenger(p1)
+    newDriverPick = copy(self.__carmageddons[d2name])
+    self.__carmageddons[d2name] = newDriverPick
+    self.__carmageddons[d2name].leavePassenger(p2name)
+    self.__carmageddons[d2name].pickupPassenger(p1name)
 
-    self.__passengers[p1name] = [p1, d2name]
-    self.__passengers[p2name] = [p2, d1name]
+    self.__passengers[p1name][1] = d2name
+    self.__passengers[p2name][1] = d1name
 
 
   ####################################################
@@ -297,8 +301,8 @@ class State(object):
 	passengers = split("\s+", line)[1:][:-1]
 	print passengers
 	for p in passengers:
-	  self.__carmageddons[driver].pickupPassenger(self.__passengers[p][0])
-	  self.__passengers[p] = [self.__passengers[p][0], driver]
+	  self.__carmageddons[driver].pickupPassenger(p)
+	  self.__passengers[p][1] = driver
 	
     f.close()
 
@@ -316,15 +320,5 @@ class State(object):
         for p in self.__carmageddons[c].getPassengers():
           s += "\t\t" + p + "\n"
     return s
-
-
-  def getKm(self):
-    i = 0     
-    for p in self.__carmageddons.itervalues():
-      incr = p.getRouteWeight(self)
-      if incr > MAX_KM:
-        i += ANIMALADA*incr
-      i += incr
-    return i
 
 
