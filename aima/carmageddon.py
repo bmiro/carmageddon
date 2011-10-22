@@ -15,10 +15,10 @@ import datetime
         
 class Carmageddon(Problem):
   """ """
-  def __init__(self, state, h = "km"):
+  def __init__(self, state, h="km"):
     self.__state = state
     self.initial = state
-    heuristic_dict = {"km":self.heuristic_km,"veh":self.heuristic_veh}
+    heuristic_dict = {"km" : self.heuristic_km, "veh" : self.heuristic_veh}
     self.value = heuristic_dict[h]
   
   
@@ -69,11 +69,10 @@ class Carmageddon(Problem):
       it+=1
     print "#######################################"
     print datetime.datetime.now()
-    print "Nombre d'estats operador 1: ",numberOp1
-    print "Nombre d'estats operador 2: ",numberOp2
-    print "Nombre d'estats operador 3: ",numberOp3
-    print "Nombre d'estats Total     : ",numberOp1+numberOp2+numberOp3
-
+    print "Nombre d'estats operador 1: ", numberOp1
+    print "Nombre d'estats operador 2: ", numberOp2
+    print "Nombre d'estats operador 3: ", numberOp3
+    print "Nombre d'estats Total     : ", numberOp1 + numberOp2 + numberOp3
 
 
   def goal_test(self, state):
@@ -90,7 +89,7 @@ class Carmageddon(Problem):
 
   def heuristic_veh(self, node):
     """Heuristic function"""
-    return -(node.state.getKm()+node.state.getNumDrivers()*PES_VEHICLE)
+    return -(node.state.getKm() + node.state.getNumDrivers()*PES_VEHICLE)
 
 
 
