@@ -54,7 +54,7 @@ class State(object):
       for d in self.__carmageddons.itervalues():
 	if len(d.getPassengers()) < maxFullFirst:
 	  d.pickupPassenger(p)
-	  self.__passengers[p][1] = d.getName()
+	  self.__passengers[p] = (self.__passengers[p][0], d.getName())
 	  alloqued += 1
 	  break
     if alloqued != len(self.getPassengers()):
@@ -68,7 +68,8 @@ class State(object):
       for d in self.__carmageddons.itervalues():
 	if len(d.getPassengers()) == it:
 	  d.pickupPassenger(p)
-	  self.__passengers[p][1] = d.getName()
+	  
+	  self.__passengers[p] = (self.__passengers[p][0], d.getName())
 	  alloqued += 1
 	  break
       if (alloqued % self.getNumDrivers()) == 0:
@@ -89,7 +90,7 @@ class State(object):
 
     for p in range(self.__nPassengers):
       pss = self.genRandomPassenger()
-      self.__passengers[pss.getName()] = [pss, None] 
+      self.__passengers[pss.getName()] = (pss, None) 
 
     if criteria=="fullFirst":
       self.allocPassengersFullFirst(maxFullFirst)
@@ -187,7 +188,7 @@ class State(object):
     newdriver_pick = copy(self.__carmageddons[carrierDriver])
     self.__carmageddons[carrierDriver] = newdriver_pick
     self.__carmageddons[carrierDriver].pickupPassenger(name)
-    self.__passengers[p.getName()] = [p, self.__carmageddons[carrierDriver].getName()]
+    self.__passengers[p.getName()] = (p, self.__carmageddons[carrierDriver].getName())
     
     
   """ Passenger is a passenger name and also newCarrier the new driver name """
@@ -202,7 +203,7 @@ class State(object):
     self.__carmageddons[newCarrier] = newdriver_pick
     self.__carmageddons[newCarrier].pickupPassenger(passenger)
 
-    self.__passengers[passenger][1] = newCarrier
+    self.__passengers[passenger] = (self.__passengers[passenger][0], newCarrier)
 
 
   def swapPassengers(self, p1name, p2name):
@@ -214,14 +215,13 @@ class State(object):
     self.__carmageddons[d1name].leavePassenger(p1name)
     self.__carmageddons[d1name].pickupPassenger(p2name)
 
-
     newDriverPick = copy(self.__carmageddons[d2name])
     self.__carmageddons[d2name] = newDriverPick
     self.__carmageddons[d2name].leavePassenger(p2name)
     self.__carmageddons[d2name].pickupPassenger(p1name)
 
-    self.__passengers[p1name][1] = d2name
-    self.__passengers[p2name][1] = d1name
+    self.__passengers[p1name] = (self.__passengers[p1name][0], d2name)
+    self.__passengers[p2name] = (self.__passengers[p2name][0], d1name)
 
 
   ####################################################
