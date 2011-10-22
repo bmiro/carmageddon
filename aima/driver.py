@@ -23,12 +23,12 @@ class Driver(Passenger):
     self.__passengers = []
     self.calculatedRouteWeight = None
 
+
   def __copy__(self):
     newone = Driver(self.getName(),self.getOrigin()[0],self.getOrigin()[1],self.getDestination()[0],self.getDestination()[1],self.__maxSpace)
     newone.__dict__.update(self.__dict__)
     newone.setPassengers(copy(self.__passengers))
     return newone
-
 
 
   def isEmpty(self):
@@ -38,11 +38,14 @@ class Driver(Passenger):
   def getPassengers(self):
     return self.__passengers
 
+
   def setPassengers(self, p):
     self.__passengers = p
 
+
   def getMaxSpace(self):
     return self.__maxSpace
+
 
   """ Recives a passenger object """
   def pickupPassenger(self, passenger):
@@ -110,9 +113,6 @@ class Driver(Passenger):
             d = distance(current[0], c)
             nearest = c
 
-
-          
-
       if nearest in checkpoints:
         checkpointsDest[nearest] = True 
         checkpoints.pop(nearest)
@@ -127,7 +127,6 @@ class Driver(Passenger):
       route.append(current) 
     temp =  datetime.now() -temp
     Driver.t+=temp.microseconds
-
 
     route.append((self.getDestination(), "DriverDestination"))
 

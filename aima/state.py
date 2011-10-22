@@ -36,6 +36,39 @@ class State(object):
     else:
       self.genRandomState()
 
+  ##########################################################
+  ################# State generation Methods ###############
+  ##########################################################
+  
+  """ Allocs passengers in drivers, there are two criteria:
+  " fullFirst:   that first full a driver before assigning a
+  "             passenger to an emtpy driver
+  " allOneFirst: that doesn't assing a N+1 passenger to a
+  "             driver until all the driers has N passengers
+  """
+  def allocPassengers(self, criteria="fullFirst", maxFullFirst=3):
+    if criteria=="fullFirst":
+      allocPassengersFullFirst(maxFullFirst)
+    else:
+      allocPassengersAllOneFirst()
+      
+
+  def allocPassengersFullFirst(self, maxFullFirst):
+    aloqued = 0
+    for p in self.__passengers:
+      for d in self.__carmageddons.itervalues():
+	if len(d.getPassengers) < maxFullFirst:
+	  d.pickupPassenger(p)
+	  self.__passengers[p][1] = d.getName()
+	  aloqued += 1
+	  break
+    if aloqued != len(self.__passengers):
+      print "There are unalloqued passengers!" #TODO throw exception
+  
+  
+  def allocPassengersAllOneFirst(self):
+    pass
+    
 
   ##########################################################
   ################ Random generation Methods ###############
@@ -52,7 +85,7 @@ class State(object):
       for c in self.__carmageddons.iterkeys():
         if len(self.__carmageddons[c].getPassengers()) < 2:
           self.__carmageddons[c].pickupPassenger(pss)
-          self.__passengers[pss.getName()] = (pss, c)
+          self.__passengers[pss.getName()] = [pss, c]
           alloqued = True
           break
 
@@ -145,7 +178,7 @@ class State(object):
     newdriver_pick = copy(self.__carmageddons[carrierDriver])
     self.__carmageddons[carrierDriver] = newdriver_pick
     self.__carmageddons[carrierDriver].pickupPassenger(p)
-    self.__passengers[p.getName()] = (p, self.__carmageddons[carrierDriver].getName())
+    self.__passengers[p.getName()] = [p, self.__carmageddons[carrierDriver].getName()]
     
     
   """ Passenger is a passenger name and also newCarrier the new driver name """
@@ -162,7 +195,7 @@ class State(object):
     self.__carmageddons[newCarrier] = newdriver_pick
     self.__carmageddons[newCarrier].pickupPassenger(p)
 
-    self.__passengers[passenger] = (p, newCarrier)
+    self.__passengers[passenger] = [p, newCarrier]
 
 
   def swapPassengers(self, p1name, p2name):
@@ -183,8 +216,8 @@ class State(object):
     self.__carmageddons[d2name].leavePassenger(p2)
     self.__carmageddons[d2name].pickupPassenger(p1)
 
-    self.__passengers[p1name] = (p1,d2name)
-    self.__passengers[p2name] = (p2,d1name)
+    self.__passengers[p1name] = [p1, d2name]
+    self.__passengers[p2name] = [p2, d1name]
 
 
   ####################################################
@@ -265,7 +298,7 @@ class State(object):
 	print passengers
 	for p in passengers:
 	  self.__carmageddons[driver].pickupPassenger(self.__passengers[p][0])
-	  self.__passengers[p] = (self.__passengers[p][0], driver)
+	  self.__passengers[p] = [self.__passengers[p][0], driver]
 	
     f.close()
 
