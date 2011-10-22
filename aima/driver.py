@@ -144,7 +144,7 @@ class Driver(Passenger):
     return route
 
 
-  def permuta(self,lini,npass,lmarques,soltmp,s,npoints):
+  def permuta(self,lini,npass,lmarques,soltmp,s,npoints,dist):
     if len(soltmp) == npoints*2: 
       s.append(soltmp[:])
 
@@ -158,13 +158,17 @@ class Driver(Passenger):
           soltmp.append(lini[x][0])
           lmarques.append(False)
           lini.append((lini[x][1],"fi"))
-          self.permuta(lini,npass+1,lmarques,soltmp,s,npoints)
+          if x == 0:
+            incr = 0
+          else:
+            incr = distance(lini[x-1][X],lini[x-1][Y],lini[x][X],lini[x][Y])
+          self.permuta(lini,npass+1,lmarques,soltmp,s,npoints,dist +incr )
           lmarques.pop()
           lini.pop()
           soltmp.pop()   
         else:
           soltmp.append(lini[x][0])
-          self.permuta(lini,npass-1,lmarques,soltmp,s,npoints)  
+          self.permuta(lini,npass-1,lmarques,soltmp,s,npoints,dist + distance(lini[x-1][X],lini[x-1][Y],lini[x][X],lini[x][Y]))  
           soltmp.pop()
         lmarques[x] = False
 
