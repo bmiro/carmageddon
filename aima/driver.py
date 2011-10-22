@@ -102,7 +102,7 @@ class Driver(Passenger):
     soltmp = []
     soltmp.append(lchecks[0])
 
-    self.permuta(lchecks,0,lmarques,soltmp,sol,len(lchecks),0,MAX_KM)
+    self.permuta(lchecks,0,lmarques,soltmp,sol,len(lchecks),0,MAX_KM,self.getDestination())
     sol = sol[-1]
 
 
@@ -113,14 +113,15 @@ class Driver(Passenger):
     return sol[0]
 
 
-  def permuta(self,lini,npass,lmarques,soltmp,s,npoints,dist,maxim):
+  def permuta(self,lini,npass,lmarques,soltmp,s,npoints,dist,maxim,dest):
     if dist > maxim:
       return
 
     if len(soltmp) == npoints*2 -1: 
-      if dist < maxim:
-        s.append((soltmp[:],dist))
-        maxim = dist
+      distFinal = dist + distance(soltmp[-1],dest)
+      if distFinal < maxim:
+        s.append((soltmp[:],distFinal))
+        maxim = distFinal
 
 
 
@@ -134,13 +135,13 @@ class Driver(Passenger):
           lmarques.append(False)
           lini.append((lini[x][1],"fi"))
           incr = distance(lini[x-1][0],lini[x][0])
-          self.permuta(lini,npass+1,lmarques,soltmp,s,npoints,dist +incr,maxim )
+          self.permuta(lini,npass+1,lmarques,soltmp,s,npoints,dist +incr,maxim,dest )
           lmarques.pop()
           lini.pop()
           soltmp.pop()   
         else:
           soltmp.append(lini[x][0])
-          self.permuta(lini,npass-1,lmarques,soltmp,s,npoints,dist + distance(lini[x-1][0],lini[x][0]),maxim)  
+          self.permuta(lini,npass-1,lmarques,soltmp,s,npoints,dist + distance(lini[x-1][0],lini[x][0]),maxim,dest)  
           soltmp.pop()
         lmarques[x] = False
 
