@@ -14,6 +14,11 @@ MAX_KM = 3000000000
 def distance(src, dst):
   return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
 
+def distanceRara(src,dst):
+  if src[1] == "fi":
+    src = src[0]
+  return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
+
 class Driver(Passenger):
   t = 0
   def __init__(self, name, xo, yo, xd, yd, maxSpace):
@@ -103,7 +108,8 @@ class Driver(Passenger):
     soltmp = []
     soltmp.append(lchecks[0])
 
-    self.permuta(lchecks,0,lmarques,soltmp,sol,len(lchecks),0,MAX_KM,self.getDestination())
+    self.permuta(lchecks,0,lmarques,soltmp,sol,len(lchecks),0,MAX_KM,self.getDestination()) 
+
     sol = sol[-1]
 
     #print sol
@@ -114,10 +120,8 @@ class Driver(Passenger):
     return sol[0]
 
 
-  def permuta(self, lini, npass, lmarques, soltmp, s, npoints, dist, maxim, dest):
-    print soltmp
-    print dest
-    if (dist + distance(soltmp[-1], dest)) > maxim:
+  def permuta(self,lini,npass,lmarques,soltmp,s,npoints,dist,maxim,dest):
+    if dist + distanceRara(soltmp[-1],dest) > maxim:
       return
       
     if len(lini) == 1:
