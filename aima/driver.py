@@ -105,7 +105,7 @@ class Driver(Passenger):
     self.permuta(lchecks,0,lmarques,soltmp,sol,len(lchecks),0,MAX_KM,self.getDestination())
     sol = sol[-1]
 
-
+    #print sol
     sol[0].append((self.getDestination()))
     self.calculatedRouteWeight = sol[1] 
     sol[0][0] = sol[0][0][0]
@@ -115,6 +115,13 @@ class Driver(Passenger):
 
   def permuta(self,lini,npass,lmarques,soltmp,s,npoints,dist,maxim,dest):
     if dist > maxim:
+      return
+    if len(lini) == 1:
+      soltmp.append(lini[0][0])
+      distFinal = dist + distance(soltmp[-1],dest)
+      if distFinal < maxim:
+        s.append((soltmp[:],distFinal))
+        maxim = distFinal
       return
 
     if len(soltmp) == npoints*2 -1: 
@@ -151,10 +158,4 @@ class Driver(Passenger):
       return self.calculatedRouteWeight
 
     route = self.getRoute(state)
-    w = 0
-    current = route[0]
-    for p in route:
-      w += distance(current, p)
-      current = p
-    self.calculatedRouteWeight = w
-    return w
+    return self.calculatedRouteWeight
