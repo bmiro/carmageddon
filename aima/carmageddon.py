@@ -10,15 +10,19 @@ from state import *
 
 import gc
 import datetime
+   
+""" Used only to call heuristic value in carmageddon object """
+class DummyNode(object):
+  def __init__(self, s):
+    self.state = s   
 
-
-        
 class Carmageddon(Problem):
   """ """
-  def __init__(self, state, h = "km"):
+  def __init__(self, state, h="km"):
     self.__state = state
     self.initial = state
-    heuristic_dict = {"km":self.heuristic_km,"veh":self.heuristic_veh}
+    self.__h = h
+    heuristic_dict = {"km" : self.heuristic_km, "veh" : self.heuristic_veh}
     self.value = heuristic_dict[h]
   
   
@@ -69,11 +73,11 @@ class Carmageddon(Problem):
       it+=1
     print "#######################################"
     print datetime.datetime.now()
-    print "Nombre d'estats operador 1: ",numberOp1
-    print "Nombre d'estats operador 2: ",numberOp2
-    print "Nombre d'estats operador 3: ",numberOp3
-    print "Nombre d'estats Total     : ",numberOp1+numberOp2+numberOp3
-
+    print "Nombre d'estats operador 1: ", numberOp1
+    print "Nombre d'estats operador 2: ", numberOp2
+    print "Nombre d'estats operador 3: ", numberOp3
+    print "Nombre d'estats Total     : ", numberOp1 + numberOp2 + numberOp3
+    print "Heurístic                 : ", self.printableHeuristic(state)
 
 
   def goal_test(self, state):
@@ -83,14 +87,21 @@ class Carmageddon(Problem):
   def value(self, node):
     """Heuristic function"""
     pass
+  
+  
+  def printableHeuristic(self, state):
+    dn = DummyNode(state)   
+    return -self.value(dn)
 
+      
   def heuristic_km(self, node):
     """Heuristic function"""
     return -node.state.getKm()
+    
 
   def heuristic_veh(self, node):
     """Heuristic function"""
-    return -(node.state.getKm()+node.state.getNumDrivers()*PES_VEHICLE)
+    return -(node.state.getKm() + node.state.getNumDrivers()*PES_VEHICLE)
 
 
 
@@ -98,20 +109,21 @@ if __name__ == "__main__":
   #s = State(cfgfile="estat.pr")
   #s.saveToFile("estat.guardat2")
   
-  s = State()
+  s = State(initialDistribution="allOneFirst")
+  print s
   #s.saveToFile("estat.pr")
 
   c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
-  f = hill_climbing(c)
+  #f = hill_climbing(c)
   #c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
   #f = simulated_annealing(c)
-  print f.getKm()
-  print f.getNumDrivers()
-  print Driver.t
+  #print f.getKm()
+  #print f.getNumDrivers()
+  #print Driver.t
   #print f
   #for d in f.getDrivers().itervalues():
   #  print d.getRouteWeight(d.getRoute(f))

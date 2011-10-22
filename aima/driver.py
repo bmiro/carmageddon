@@ -23,12 +23,12 @@ class Driver(Passenger):
     self.__passengers = []
     self.calculatedRouteWeight = None
 
+
   def __copy__(self):
     newone = Driver(self.getName(),self.getOrigin()[0],self.getOrigin()[1],self.getDestination()[0],self.getDestination()[1],self.__maxSpace)
     newone.__dict__.update(self.__dict__)
     newone.setPassengers(copy(self.__passengers))
     return newone
-
 
 
   def isEmpty(self):
@@ -38,22 +38,25 @@ class Driver(Passenger):
   def getPassengers(self):
     return self.__passengers
 
+
   def setPassengers(self, p):
     self.__passengers = p
+
 
   def getMaxSpace(self):
     return self.__maxSpace
 
-  """ Recives a passenger object """
+
+  """ Recives a passenger name """
   def pickupPassenger(self, passenger):
-    self.__passengers.append(passenger.getName())
+    self.__passengers.append(passenger)
     self.__freespace -= 1
     self.calculatedRouteWeight = None
 
 
-  """ Recives a passenger object """
+  """ Recives a passenger name """
   def leavePassenger(self, passenger):
-    self.__passengers.remove(passenger.getName())
+    self.__passengers.remove(passenger)
     self.__freespace += 1
     self.calculatedRouteWeight = None
 
@@ -151,6 +154,7 @@ class Driver(Passenger):
           self.permuta(lini,npass-1,lmarques,soltmp,s,npoints,dist + distance(lini[x-1][0],lini[x][0]),maxim,dest)  
           soltmp.pop()
         lmarques[x] = False
+
 
 
   def getRouteWeight(self,state):
