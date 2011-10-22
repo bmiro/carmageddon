@@ -93,8 +93,6 @@ class Driver(Passenger):
       checkpoints[state.getPassengers()[p][0].getOrigin()] = state.getPassengers()[p][0].getDestination()
       lchecks.append((state.getPassengers()[p][0].getOrigin(),state.getPassengers()[p][0].getDestination()))
   
-
-
     current = (self.getOrigin(), "DriverOrigin")
     npass = 0
     temp = datetime.now()
@@ -116,31 +114,31 @@ class Driver(Passenger):
     return sol[0]
 
 
-  def permuta(self,lini,npass,lmarques,soltmp,s,npoints,dist,maxim,dest):
-    if dist > maxim:
+  def permuta(self, lini, npass, lmarques, soltmp, s, npoints, dist, maxim, dest):
+    print soltmp
+    print dest
+    if (dist + distance(soltmp[-1], dest)) > maxim:
       return
+      
     if len(lini) == 1:
       soltmp.append(lini[0][0])
-      distFinal = dist + distance(soltmp[-1],dest)
+      distFinal = dist + distance(soltmp[-1], dest)
       if distFinal < maxim:
-        s.append((soltmp[:],distFinal))
+        s.append((soltmp[:], distFinal))
         maxim = distFinal
       return
 
     if len(soltmp) == npoints*2 -1: 
-      distFinal = dist + distance(soltmp[-1],dest)
+      distFinal = dist + distance(soltmp[-1], dest)
       if distFinal < maxim:
-        s.append((soltmp[:],distFinal))
+        s.append((soltmp[:], distFinal))
         maxim = distFinal
 
-
-
-
-    longitud = len (lini)
+    longitud = len(lini)
     for x in xrange(longitud):
       if not lmarques[x] :
         lmarques[x] = True
-        if lini[x][1]!= "fi" and npass<2:
+        if lini[x][1] != "fi" and npass < 2:
           soltmp.append(lini[x][0])
           lmarques.append(False)
           lini.append((lini[x][1],"fi"))
@@ -154,7 +152,6 @@ class Driver(Passenger):
           self.permuta(lini,npass-1,lmarques,soltmp,s,npoints,dist + distance(lini[x-1][0],lini[x][0]),maxim,dest)  
           soltmp.pop()
         lmarques[x] = False
-
 
 
   def getRouteWeight(self,state):
