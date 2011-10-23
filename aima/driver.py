@@ -144,7 +144,6 @@ class Driver(Passenger):
 
     return route
 
-
   
   def getRouteOptimus(self, state):
     ## Dictionary of point pointing destinations if exist

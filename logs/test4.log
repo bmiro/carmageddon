@@ -1,0 +1,12 @@
+Test finishes at  2011-10-23 23:00:38.373869
+[(100, 50, datetime.timedelta(0, 13, 595452)), (200, 100, datetime.timedelta(0, 116, 476438)), (300, 150, datetime.timedelta(0, 498, 826184)), (400, 200, datetime.timedelta(0, 1790, 725576)), (500, 250, datetime.timedelta(0, 3901, 843665))]
+With N = 100 M = 50 it takes 0:00:13.595452 seconds.
+With N = 200 M = 100 it takes 0:01:56.476438 seconds.
+With N = 300 M = 150 it takes 0:08:18.826184 seconds.
+With N = 400 M = 200 it takes 0:29:50.725576 seconds.
+With N = 500 M = 250 it takes 1:05:01.843665 seconds.
+
+real    105m22.117s
+user    104m15.819s
+sys     0m3.592s
+

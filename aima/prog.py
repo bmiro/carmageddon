@@ -98,7 +98,7 @@ def test2_Inits(operatorSet="1"):
   ############################## Test executions #############################
   ############################################################################
   
-  ###################################  ##################################
+  ################################ allOneFirst ###############################
   i = 0
   op1Time = []
   op1Drivers = []
@@ -117,7 +117,7 @@ def test2_Inits(operatorSet="1"):
     op1Heuristic.append(c.printableHeuristic(finalState))
     i += 1
    
-  ################################### Set 2 ###################################
+  ################################# fullfirst ################################
   i = 0
   op2Time = []
   op2Drivers = []
@@ -172,8 +172,34 @@ def test2_Inits(operatorSet="1"):
 def test3_SimulatedAnnealingParams():
   print "Test 3"
 
-def test4_TemporalEvolution():
-  print "Test 4"
+def test4_TemporalEvolution(operatorSet="1", initDistrib="fullFirst"):
+  print "Starting test at: ", datetime.now()
+  
+  N = 100
+  incn = 100
+  results = []
+  for i in range(5):
+    M = N/2
+    nP = M
+    nD = N-M
+    s = State(nPassengers=nP, nMaxDrivers=nD, initialDistribution=initDistrib)
+    c = Carmageddon(s, "km", operatorSet)
+    
+    to = datetime.now()
+    finalState = c.run("hillClimbing")
+    tf = datetime.now()
+    
+    results.append((N, M, (tf - to)))
+    N += incn
+    print "Iteration ", i, " takes ", results[-1][2], " with N ", N, " M ", M
+
+  print "Test finishes at ", datetime.now()
+  
+  print results
+  
+  for i in results:
+    print "With N = %d M = %d it takes %s seconds." % i
+  
 
 def test5_SecondHeuristicPonderation():
   print "Test 5"
@@ -202,7 +228,6 @@ if __name__ == "__main__":
     
     funcs[int(argv[1])-1]()
     exit()
-	
 
   if len(argv) != 7 and len(argv) != 6:
     print "Usage:"
