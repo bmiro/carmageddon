@@ -10,6 +10,8 @@ from state import *
 
 import gc
 import datetime
+
+import cProfile
    
 """ Used only to call heuristic value in carmageddon object """
 class DummyNode(object):
@@ -116,7 +118,8 @@ if __name__ == "__main__":
   c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
-  f = hill_climbing(c)
+  cProfile.run('f = hill_climbing(c)', 'stats')
+  #f = hill_climbing(c)
   #c = Carmageddon(s)
 #  for suc in c.successor(s):
 #    print(suc)
@@ -124,7 +127,7 @@ if __name__ == "__main__":
   #print f.getKm()
   #print f.getNumDrivers()
   #print Driver.t
-  print f
+#  print f
   #for d in f.getDrivers().itervalues():
   #  print d.getRouteWeight(d.getRoute(f))
   

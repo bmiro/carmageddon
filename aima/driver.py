@@ -7,17 +7,15 @@ from datetime import datetime
 
 # Macros for easy indexation of coor tuples.
 # i.e. a[X] -> xcoor
-X = 0
-Y = 1
 MAX_KM = 3000000000
 
 def distance(src, dst):
-  return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
+  return abs(src[0] - dst[0]) + abs(src[1] - dst[1])
 
 def distanceRara(src,dst):
   if src[1] == "fi":
     src = src[0]
-  return abs(src[X] - dst[X]) + abs(src[Y] - dst[Y])
+  return abs(src[0] - dst[0]) + abs(src[1] - dst[1])
 
 class Driver(Passenger):
   t = 0
@@ -80,8 +78,75 @@ class Driver(Passenger):
   "    [[55, 65], "LeavePassenger"],
   "    [[57, 70], "DriverDestination"]]
   """
-  def getRoute(self,state):
+  def getRoute(self, state):
+    # The optimus one returns a optimus route but it takes too long (NP)...
+    # So we take a very very got aproach in less time
+    return self.getRouteHeuristic(state)
+      
+  
+  def getRouteHeuristic(self, state):
+    ## Dictionary of point pointing destinations if exist
+    # i.e. { [34, 45] : [22, 56] --> Point is origin
+    #        [56, 77] : None }   --> Point is destination
+    checkpoints = {}
+    checkpointsDest = {}
+
+    ## List of tuples [point, event]
+    # i.e. [[34, 45] "PickupPassenger"]
+    route = []
+
+    # Inserting all origin points
+    for p in self.__passengers:
+      checkpoints[state.getPassengers()[p][0].getOrigin()] = state.getPassengers()[p][0].getDestination()
+
+    current = (self.getOrigin(), "DriverOrigin")
+    route.append(current)
+    npass = 0
+    routeDist = 0
+    #temp = datetime.now()
+    while checkpoints or checkpointsDest:
+      # Searching nearst point
+      dmin = MAX_KM
+      nearest = None
+
+      for c in checkpointsDest.keys():
+	d = distance(current[0], c)
+        if d < dmin:
+          dmin = d
+          nearest = c
+
+      if npass < self.__maxSpace:
+        for c in checkpoints.keys():
+          d = distance(current[0], c)
+	  if d < dmin:
+	    dmin = d
+	    nearest = c
+
+      if nearest in checkpoints:
+        checkpointsDest[checkpoints[nearest]] = True
+        checkpoints.pop(nearest)
+        event = "PickupPassenger"
+        npass += 1
+      else:
+        event = "LeavePassenger"
+        checkpointsDest.pop(nearest)
+        npass -= 1
+        
+      routeDist += d
+      current = (nearest, event)
+      route.append(current)
     
+    #temp =  datetime.now() -temp
+    #Driver.t += temp.microseconds
+    
+    route.append((self.getDestination(), "DriverDestination"))
+    self.calculatedRouteWeight = routeDist + distance(route[-2][0], route[-1][0])
+
+    return route
+
+
+  
+  def getRouteOptimus(self, state):
     ## Dictionary of point pointing destinations if exist
     # i.e. { [34, 45] : [22, 56] --> Point is origin
     #        [56, 77] : None }   --> Point is destination

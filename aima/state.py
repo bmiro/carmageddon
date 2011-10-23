@@ -12,7 +12,7 @@ ANIMALADA = 1000000000
 PES_VEHICLE = 10000000
 
 class State(object):
-  def __init__(self, nPassengers=40, nMaxDrivers=30, 
+  def __init__(self, nPassengers=30, nMaxDrivers=30, 
                      citySize=10000.0, squareSize=100.0, 
                      initialDistribution="fullFirst", 
                      cfgfile=None):
@@ -160,8 +160,7 @@ class State(object):
         i += ANIMALADA*incr
       i += incr
     return i
-
-
+    
 
   ##########################################################
   #################### Operators Methods ###################
