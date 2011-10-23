@@ -18,18 +18,63 @@ class DummyNode(object):
 
 class Carmageddon(Problem):
   """ """
-  def __init__(self, state, h="km"):
+  def __init__(self, state, h="km", operatorSet="1"):
     self.__state = state
     self.initial = state
+    self.__operatorSet = operatorSet
     self.__h = h
     heuristic_dict = {"km" : self.heuristic_km, "veh" : self.heuristic_veh}
     self.value = heuristic_dict[h]
   
+  def run(self, alg):
+    if alg == "hillClimbing":
+      return hill_climbing(self)
+    else:
+      return simulated_annealing(self).state
   
   def successor(self, state):
     numberOp1 = 0
     numberOp2 = 0
-    numberOp3 = 0
+
+    if self.__operatorSet == "1":
+      for s in self.genPassengerSwitches(state):
+	numberOp1 += 1
+	yield s
+      for s in self.genSoftDriverDegradations(state):
+	numberOp2 += 1
+	yield s
+	
+    elif self.__operatorSet == "2": 
+      for s in self.genPassengerSwaps(state):
+	numberOp1 += 1
+	yield s
+      for s in self.genHardDriverDegradations(state):
+	numberOp2 += 1
+	yield s
+         
+    print "#######################################"
+    print "Nombre d'estats operador 1: ", numberOp1
+    print "Nombre d'estats operador 2: ", numberOp2
+    print "Nombre d'estats Total     : ", numberOp1 + numberOp2
+    print "Heurístic                 : ", self.printableHeuristic(state)
+
+
+  # Operator
+  def genPassengerSwaps(self, state):    
+    it = 0
+    ltemp = list(state.getPassengers())
+    for p1 in ltemp:
+      for p2 in xrange(it,len(ltemp)):
+        newState = copy(state)
+        newState.setDrivers(copy(state.getDrivers()))
+        newState.setPassengers(copy(state.getPassengers()))
+        newState.swapPassengers(p1,ltemp[p2])
+        #if newState.getKm() <= MAX_KM:
+        yield ("swap", newState)
+      it += 1
+    
+  # Operator
+  def genPassengerSwitches(self, state):
     #Gens all the passenger changes (gens at most nPassengers*nDrivers states)
     for p in state.getPassengers():
       currentDrv = state.whoPickuped(p)
@@ -42,43 +87,42 @@ class Carmageddon(Problem):
           newState.setPassengers(copy(state.getPassengers()))
           newState.switchPassenger(p, d[0])
           #if newState.getKm() <= MAX_KM:
-          numberOp1+= 1
           yield ("sw", newState)
-      
-     #Gens all the driver deletions inserting it in the first not full driver.
+          
+  # Operator
+  def genSoftDriverDegradations(self, state):
+    #Gens all the driver deletions inserting it in the first not full driver.
     for d in state.getDrivers().itervalues():
       if d.isEmpty():
         for carrier in state.getDrivers().iteritems():
-          if carrier[0] != d.getName() :
+          if carrier[0] != d.getName():
             newState = copy(state)
             newState.setDrivers(copy(state.getDrivers()))
             newState.setPassengers(copy(state.getPassengers()))
             newState.degradateDriver(d.getName(), carrier[0])
             yield ("dgrd", newState)
-            numberOp2+= 1
             break
-
-    it = 0
-    print "iyy"
-    ltemp = list(state.getPassengers())
-    for p1 in ltemp:
-      for p2 in xrange(it,len(ltemp)):
-        newState = copy(state)
-        newState.setDrivers(copy(state.getDrivers()))
-        newState.setPassengers(copy(state.getPassengers()))
-        newState.swapPassengers(p1,ltemp[p2])
-        #if newState.getKm() <= MAX_KM:
-        numberOp3+= 1
-        yield ("swap", newState)
-      it+=1
-    print "#######################################"
-    print "Nombre d'estats operador 1: ", numberOp1
-    print "Nombre d'estats operador 2: ", numberOp2
-    print "Nombre d'estats operador 3: ", numberOp3
-    print "Nombre d'estats Total     : ", numberOp1 + numberOp2 + numberOp3
-    print "Heurístic                 : ", self.printableHeuristic(state)
-
-
+            
+  # Operator
+  def genHardDriverDegradations(self, state):
+    #Gens all the driver deletions inserting it in the first not full driver.
+    for d in state.getDrivers().itervalues():
+      for carrier in state.getDrivers():
+	if carrier != d.getName():
+	  newState = copy(state)
+	  newState.setDrivers(copy(state.getDrivers()))
+	  newState.setPassengers(copy(state.getPassengers()))
+	  # Distribution of passengers in other drivers
+	  for p in d.getPassengers():
+	    for anotherDriver in newState.getDrivers():
+	      if anotherDriver != d.getName():
+		newState.switchPassenger(p, anotherDriver)
+	  # Puts the old driver as a passenger with the carrier driver.
+	  newState.degradateDriver(d.getName(), carrier)
+	  yield ("dgrd", newState)
+	  break
+    
+    
   def goal_test(self, state):
     pass
     
@@ -102,47 +146,4 @@ class Carmageddon(Problem):
     """Heuristic function"""
     return -(node.state.getKm() + node.state.getNumDrivers()*PES_VEHICLE)
 
-
-
-if __name__ == "__main__":
-  
-  if len(argv) != 5 and len(argv) != 4:
-    print "Usage:"
-    print " We engourage to use pypy in order to reduce execution time, it can be found at:"
-    print "\t\t http://pypy.org \t https://launchpad.net/~pypy/+archive/ppa"
-    print "\t python carmageddon.py M N InitialDistribution Algorism"
-    print "\t # Where M N are integer that represents the number of user and drivers"
-    print "\t # InitialDistribution can be allOneFirst or fullFirst"
-    print "\t # Algorism can be hillClimbing or simulatedAnnealing"
-    print "\t Example: pypy carmageddon.py 100 100 allOneFirst hillClimbing"
-    print ""
-    print "or"
-    print "\t python carmageddon.py configfile.cfg Algorism"
-    print "\t # Where configfile.cfg is a saved state"
-    print "\t # Algorism can be hillClimbing or simulatedAnnealing"
-    print "\t Example: pypy carmageddon.py states.cfg simulatedAnnealing"
-
-    exit()
-    
-  alg = argv[-1] 
-   
-  if  len(argv) == 5:
-    m = int(argv[1])
-    n = int(argv[2])
-  
-    numDrivers = n
-    numPassengers = m-n 
-    
-    s = State(nPassengers=numPassengers, nMaxDrivers=numDrivers, initialDistribution=argv[3])
-  else:
-    s = State(cfgfile=argv[2])
-    
-  c = Carmageddon(s)
-  
-  if alg == "hillClimbing":
-    resul = hill_climbing(c)
-  else:
-    resul = simulated_annealing(c).state
-  
-  print resul
     
