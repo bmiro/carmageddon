@@ -189,17 +189,16 @@ def test4_TemporalEvolution(operatorSet="1", initDistrib="fullFirst"):
     finalState = c.run("hillClimbing")
     tf = datetime.now()
     
-    results.append((N, M, (tf - to)))
+    results.append((N, M, (tf - to), c.printableHeuristic(finalState), finalState.getNumDrivers()))
     N += incn
-    print "Iteration ", i, " takes ", results[-1][2], " with N ", N, " M ", M
+    print "Iteration ", i, " takes ", results[-1][2], " with N ", N, " M ", M, " optimizit to " , results[-1][3], " and ", results[-1][3], " drivers"
 
   print "Test finishes at ", datetime.now()
-  
-  print results
-  
+    
   for i in results:
-    print "With N = %d M = %d it takes %s seconds." % i
+    print "With N = %d M = %d it takes %s seconds resulting in %d heuristic value and %d drivers" % i
   
+  return results
 
 def test5_SecondHeuristicPonderation():
   print "Test 5"
