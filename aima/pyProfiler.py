@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pstats
 from sys import argv
 

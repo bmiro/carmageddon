@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from search import *
 from sys import argv
 
