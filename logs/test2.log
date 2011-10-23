@@ -1,0 +1,19 @@
+Test 2:
+
+         Average results of "all one first" of operators
+         Average time:            0:01:51.906138
+         Average drivers:                 98
+         Average heuristic:               1030151
+
+
+
+                 Average results of "full first" of operators
+         Average time:            0:02:08.725826
+         Average drivers:                 98
+         Average heuristic:               974543
+The inicialization "fullFirst" is better than operator set "allOneFirst"
+
+real    40m7.092s
+user    39m54.470s
+sys     0m1.144s
+

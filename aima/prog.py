@@ -13,15 +13,10 @@ from datetime import datetime
 
 import prog
 
-ITERATIONS = 2
+ITERATIONS = 10
 
 """ Returns the best operator """
 def test1_Operators():
-  stats = {}
-  stats['exec_time'] = 0
-  stats['heuristic'] = 0
-  stats['drivers'] = 0
-  
   ############################################################################
   ############################## Test executions #############################
   ############################################################################
@@ -98,8 +93,81 @@ def test1_Operators():
   return best
 
   
-def test2_Inits():
-  print "Test 2"
+def test2_Inits(operatorSet="1"):
+  ############################################################################
+  ############################## Test executions #############################
+  ############################################################################
+  
+  ###################################  ##################################
+  i = 0
+  op1Time = []
+  op1Drivers = []
+  op1Heuristic = []
+  for execution in range(ITERATIONS):
+    print "Executing iteration ", i, " of all one first inicialization"
+    s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
+    c = Carmageddon(s, "km", operatorSet)
+    
+    to = datetime.now()
+    finalState = c.run("hillClimbing")
+    tf = datetime.now()    
+    op1Time.append(tf - to)
+    
+    op1Drivers.append(finalState.getNumDrivers())
+    op1Heuristic.append(c.printableHeuristic(finalState))
+    i += 1
+   
+  ################################### Set 2 ###################################
+  i = 0
+  op2Time = []
+  op2Drivers = []
+  op2Heuristic = []
+  for execution in range(ITERATIONS):
+    print "Executing iteration ", i, " of all one first inicialization"
+    s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="fullFirst")
+    c = Carmageddon(s, "km", operatorSet)
+    
+    to = datetime.now()
+    finalState = c.run("hillClimbing")
+    tf = datetime.now()    
+    op2Time.append(tf - to)
+    
+    op2Drivers.append(finalState.getNumDrivers())
+    op2Heuristic.append(c.printableHeuristic(finalState))
+    i += 1
+    
+  ## Stats
+  op1AvrTime = reduce(lambda x, y: x + y, op1Time)/len(op1Time)
+  op1AvrDrivers = reduce(lambda x, y: x + y, op1Drivers)/len(op1Drivers)
+  op1AvrHeuristic = reduce(lambda x, y: x + y, op1Heuristic)/len(op1Heuristic)
+  
+  op2AvrTime = reduce(lambda x, y: x + y, op2Time)/len(op2Time)
+  op2AvrDrivers = reduce(lambda x, y: x + y, op2Drivers)/len(op2Drivers)
+  op2AvrHeuristic = reduce(lambda x, y: x + y, op2Heuristic)/len(op2Heuristic)
+  
+  print "\t\t Average results of \"all one first\" of operators"
+  print "\t Average time: \t\t ", op1AvrTime
+  print "\t Average drivers:\t\t ", op1AvrDrivers
+  print "\t Average heuristic:\t\t ", op1AvrHeuristic
+  print "\n\n"
+  print "\t\t Average results of \"full first\" of operators"
+  print "\t Average time: \t\t ", op2AvrTime
+  print "\t Average drivers:\t\t ", op2AvrDrivers
+  print "\t Average heuristic:\t\t ", op2AvrHeuristic
+  
+  if op1AvrHeuristic == op2AvrHeuristic:
+    print "Both operators has the same heurístic resuluts!!!"
+    return
+  
+  if op1AvrHeuristic < op2AvrHeuristic:
+    best = "allOneFirst"
+    worst = "fullFirst"
+  else:
+    best = "fullFirst"
+    worst = "allOneFirst"
+  print "The inicialization \"%s\" is better than operator set \"%s\"" % (best, worst)
+  return best
+  
 
 def test3_SimulatedAnnealingParams():
   print "Test 3"
