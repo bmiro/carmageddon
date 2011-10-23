@@ -2,17 +2,15 @@
 from utils import *
 from search import *
 
+from sys import argv
 from copy import copy
 
 from passenger import *
 from driver import *
 from state import *
 
-import gc
-import datetime
+#import cProfile
 
-import cProfile
-   
 """ Used only to call heuristic value in carmageddon object """
 class DummyNode(object):
   def __init__(self, s):
@@ -74,7 +72,6 @@ class Carmageddon(Problem):
         yield ("swap", newState)
       it+=1
     print "#######################################"
-    print datetime.datetime.now()
     print "Nombre d'estats operador 1: ", numberOp1
     print "Nombre d'estats operador 2: ", numberOp2
     print "Nombre d'estats operador 3: ", numberOp3
@@ -108,27 +105,44 @@ class Carmageddon(Problem):
 
 
 if __name__ == "__main__":
-  #s = State(cfgfile="estat.pr")
-  #s.saveToFile("estat.guardat2")
   
-  s = State(initialDistribution="allOneFirst")
-  print s
-  #s.saveToFile("estat.pr")
+  if len(argv) != 5 and len(argv) != 4:
+    print "Usage:"
+    print " We engourage to use pypy in order to reduce execution time, it can be found at:"
+    print "\t\t http://pypy.org \t https://launchpad.net/~pypy/+archive/ppa"
+    print "\t python carmageddon.py M N InitialDistribution Algorism"
+    print "\t # Where M N are integer that represents the number of user and drivers"
+    print "\t # InitialDistribution can be allOneFirst or fullFirst"
+    print "\t # Algorism can be hillClimbing or simulatedAnnealing"
+    print "\t Example: pypy carmageddon.py 100 100 allOneFirst hillClimbing"
+    print ""
+    print "or"
+    print "\t python carmageddon.py configfile.cfg Algorism"
+    print "\t # Where configfile.cfg is a saved state"
+    print "\t # Algorism can be hillClimbing or simulatedAnnealing"
+    print "\t Example: pypy carmageddon.py states.cfg simulatedAnnealing"
 
+    exit()
+    
+  alg = argv[-1] 
+   
+  if  len(argv) == 5:
+    m = int(argv[1])
+    n = int(argv[2])
+  
+    numDrivers = n
+    numPassengers = m-n 
+    
+    s = State(nPassengers=numPassengers, nMaxDrivers=numDrivers, initialDistribution=argv[3])
+  else:
+    s = State(cfgfile=argv[2])
+    
   c = Carmageddon(s)
-#  for suc in c.successor(s):
-#    print(suc)
-  cProfile.run('f = hill_climbing(c)', 'stats')
-  #f = hill_climbing(c)
-  #c = Carmageddon(s)
-#  for suc in c.successor(s):
-#    print(suc)
-  #f = simulated_annealing(c)
-  #print f.getKm()
-  #print f.getNumDrivers()
-  #print Driver.t
-#  print f
-  #for d in f.getDrivers().itervalues():
-  #  print d.getRouteWeight(d.getRoute(f))
   
+  if alg == "hillClimbing":
+    resul = hill_climbing(c)
+  else:
+    resul = simulated_annealing(c).state
   
+  print resul
+    
