@@ -1,0 +1,25 @@
+executat amb 10 10, el SA sembla que no aconsegueix solucions bones
+
+                 Average results of "HC - KM" of operators
+         Average time:            0:00:00.478445
+         Average drivers:                 9
+         Average distance:                133570
+         Average heuristic:               133570
+                 Average results of "HC - VEH" of operators
+         Average time:            0:00:00.382017
+         Average drivers:                 8
+         Average distance:                138365
+         Average heuristic:               87138365
+
+
+
+                 Average results of "SA - KM" of operators
+         Average time:            0:00:02.402435
+         Average drivers:                 7
+         Average distance:                142740200217790
+         Average heuristic:               142740200217790
+                 Average results of "SA - VEH" of operators
+         Average time:            0:00:02.988217
+         Average drivers:                 7
+         Average distance:                144448700218096
+         Average heuristic:               144448779218096
