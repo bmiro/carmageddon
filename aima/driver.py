@@ -73,10 +73,10 @@ class Driver(Passenger):
 
   """ Returns the min route that involves all the passengers
   "   i.e. 
-  "   [[[33, 44], "DriverOrigin"],
-  "    [[34, 45], "PickupPassenger"],
-  "    [[55, 65], "LeavePassenger"],
-  "    [[57, 70], "DriverDestination"]]
+  "   [[[33, 44], "DriverOrigin", "D-0000"],
+  "    [[34, 45], "PickupPassenger", "P-00001"],
+  "    [[55, 65], "LeavePassenger", "P-00001"],
+  "    [[57, 70], "DriverDestination", "D-0000"]]
   """
   def getRoute(self, state):
     # The optimus one returns a optimus route but it takes too long (NP)...
@@ -85,14 +85,16 @@ class Driver(Passenger):
       
   
   def getRouteHeuristic(self, state):
-    ## Dictionary of point pointing destinations if exist
-    # i.e. { [34, 45] : [22, 56] --> Point is origin
-    #        [56, 77] : None }   --> Point is destination
+    ## Dictionary of tuplas name-originPoint pointing destinations
+    # i.e. { ("P-0001", [34, 45]) : [22, 56] }
     checkpoints = {}
+    
+    ## Dictionary of carried passengers pointing to their destinations
+    # i.e { ("P-0001" : [22, 56] }
     checkpointsDest = {}
 
-    ## List of tuples [point, event]
-    # i.e. [[34, 45] "PickupPassenger"]
+    ## List of tuples [point, event, name]
+    # i.e. [[34, 45], "PickupPassenger", "P-0001"]
     route = []
 
     # Inserting all origin points
@@ -138,9 +140,6 @@ class Driver(Passenger):
       routeDist += d
       current = (nearest, event, name)
       route.append(current)
-    
-    #temp =  datetime.now() -temp
-    #Driver.t += temp.microseconds
     
     route.append((self.getDestination(), "DriverDestination", self.getName()))
     self.calculatedRouteWeight = routeDist + distance(route[-2][0], route[-1][0])

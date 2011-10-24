@@ -30,6 +30,9 @@
 % Estil numeracio subseccions http://help-csli.stanford.edu/tex/latex-sections.shtml#number
 %\def\thesubsection{\alph{subsection})}
 
+%% Tamany del codi font python inserit amb el minted
+\newcommand{\codeSize}{\footnotesize}
+
 \title{Pràctica de Cerca Local: \\ \huge{Carmageddon}}
 \author{ Miquel Mas Fiol \thanks{mkelmas a gmail punt com} \\
 	 Bartomeu Miró Mateu \thanks{bartomeumiro a gmail punt com} \\}
@@ -39,7 +42,9 @@
   \maketitle
 
   \begin{abstract}
-    
+    \begin{center}
+      \includegraphics[width=0.6\textwidth]{figures/carmageddon-logo.png}
+    \end{center}
   \end{abstract}
 
   \newpage
@@ -48,10 +53,16 @@
   \newpage
 
   \input{interpretacioEnunciat}
+  \newpage
   \input{modelitzacioImplementacio}
+  \newpage
   \input{experimentacio}
+  \newpage
   \input{manual}
+  \newpage
   \input{peu}
+  \newpage
+
   \include{annexcodi}
 
 \end{document}

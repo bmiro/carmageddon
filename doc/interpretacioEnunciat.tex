@@ -5,21 +5,27 @@ tenen un origen i un destí fixat dins la ciutat on han d'arribar i volem sabre 
 transporten a quins passatgers, sabent la ruta que duen a terme.
 
 Tots els passatgers poden ser recollits per un conductor que el portarà al seu destí,
-així doncs un passatger no pot fer el seu tarjecte amb més de un conductor.
+així doncs un passatger no pot fer el seu trajecte amb més de un conductor.
 
 Hem de tenir amb compte que els conductors tenen una capacitat \emph{C} limitada del vehicle que no pot ser
-sobrepassada. Això signfica que en un mateix instant no hi pot haver més de \emph{C} passatgers dins un vehicle,
-no obstant durant tot el recorreut del conductor pot deixar i recollir diversos passatgers arribant a transportar
-més de \emph{C} passatgers.
+sobrepassada. Això significa que en un mateix instant no hi pot haver més de \emph{C} passatgers dins un vehicle,
+no obstant durant tot el recorregut del conductor pot deixar i recollir diversos passatgers arribant a transportar
+més de \emph{C} passatgers (fig. \ref{maxCapaDepenentDeRuta}).
 
+\begin{figure}[H]
+\begin{center} 
+ \includegraphics[width=0.6\textwidth]{figures/maxCapaDepenentDeRuta.png}
+ \caption{Diferents rutes poden saturar o no el cotxe.}
+  \label{maxCapaDepenentDeRuta}
+\end{center}
+\end{figure}
 
-TODO DIAGRAMA
 
 \emph{Tots} els conductors i passatgers han d'arribar \textbf{a temps} al seu destí. Donat que és
 suposa una velocitat \emph{V} constant i que el conductor és l'últim arribar això significa aquest no podrà
-superar més d'una determinada distància. En concret es presenta l'escenar de iniciar la ruta a les 7 del mati
-i acabar a les 8. Això dona una hora re recorregut a velocitat V per el conductor. Si aquesta velocitat es
-de 30km/h tenim que un conductor pot recorrer com a molt 30km en la seva ruta. Notem que en l'àmbit
+superar més d'una determinada distància. En concret es presenta l'escena d'iniciar la ruta a les 7 del mati
+i acabar a les 8. Això dona una hora recorregut a velocitat V per el conductor. Si aquesta velocitat es
+de 30km/h tenim que un conductor pot recórrer com a molt 30km en la seva ruta. Notem que en l'àmbit
 d'aquest problema suposam que el cost temporal de pujar o baixar un passatger és despreciable.
 
 Un conductor pot passar a ser passatger. En tal cas es comportarà com un passatger més. Dit cas
@@ -27,8 +33,8 @@ dependrà de la valoració que es faci d'eliminar un conductor o de si compartei
 conductor amb espai lliure i que per tant així es minimitza la distància recorreguda.
 
 Donat aquest escenari tenim dos criteris de minimització.
-Per una banda volem minimitzar la distància total recorreguda per tots els conductors i per l'altra
-a més de minimitzar la distància també volem minimitzar el número de conductors.
+Per una banda volem minimitzar \textbf{la distància total recorreguda} per tots els conductors i per l'altra
+a més de minimitzar la distància també volem minimitzar el \textbf{número de conductors}.
 
 Hem de tenir amb compte que dins el primer en certa mesura també s'inclou la minimització de conductors
 ja que el còmput de distància es fa per número de conductors i en cas d'haver dos conductors compartint
@@ -40,8 +46,8 @@ de combinar-les o cercar-hi alguna relació.
 
 \section{Paràmetres}
 
-El número de persones total ve determinat per el paràmetre \emph{N}, de les quals \emph{M} són conductors i per
-tant podem definir que \emph{P} és el número de passatgers. 
+El número de persones total ve determinat per el paràmetre $N$, de les quals $M$ no són conductors,
+son passatgers, així doncs el numero de conductors es $N-P$. 
 
 La ciutat és defineix com una matriu de 10x10 Km on cada illeta es de 100x100 m, així doncs
 la ciutat és una matriu de 100x100 illetes.
@@ -50,5 +56,5 @@ La distància \emph{D} entre punts (\emph{o}rigen i \emph{d}estí) de la ciutat 
 $$ D(o,d) = |o_x - d_x| + |o_y - d_y| $$
 
 Hem de tenir amb compte que la ciutat al ser una matriu per anar d'un punt A a un punt B hi ha múltiples
-rutes amb la mateixa distància. Cosa que pot suposar un aventatge ja que així els únics paràmetres
+rutes amb la mateixa distància. Cosa que pot suposar un avantatge ja que així els únics paràmetres
 d'una ruta son el punt d'origen, el destí i la distància.
