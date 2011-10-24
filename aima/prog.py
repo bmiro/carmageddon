@@ -15,8 +15,8 @@ import prog
 
 ITERATIONS = 4
 ITERATIONS = 10
-NP = 10
-ND = 10
+NP = 100
+ND = 100
 
 """ Returns the best operator """
 def test1_Operators():

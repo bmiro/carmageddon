@@ -1,15 +1,1155 @@
-S'ha fixat en nombre d'usuaris a 200 i el nombre de conductors a 100
-S'ha executat 10 cops amb cada un dels conjunts d'operadors.
-
-
-Els resultats son:
-        El conjunt d'operadors 1 produeix millor resultat que el conjunt 2.
-        Suposam que aixo es degut a que l'operador genera mes estats per a cada iteració.
-
-        No hi ha diferencia significativa en el temps d'execució amb els dos conjunts d'operadors (comprovar).
-        Suposam que aquest resultat es degut a que, encara que el conjunt d'operadors 2 genera menys estats
-        que el conjunt 1, les operacions son mes costoses.
 
 
 
-        (TAULA AMB ELS RESULTATS)
+Usage:
+If one parameter is given it executes the corresponding test, the parameter is an   integer form 1 to 7.
+
+If more parameters are given it will execute single
+Executing iteration  0  of Set 1
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  0
+Nombre d'estats Total     :  9900
+Heurístic                 :  329864522
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  1
+Nombre d'estats Total     :  9901
+Heurístic                 :  260624162
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  2
+Nombre d'estats Total     :  9902
+Heurístic                 :  192726688
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  3
+Nombre d'estats Total     :  9903
+Heurístic                 :  143238163
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  4
+Nombre d'estats Total     :  9904
+Heurístic                 :  104764879
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  5
+Nombre d'estats Total     :  9905
+Heurístic                 :  68555777
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  5
+Nombre d'estats Total     :  9905
+Heurístic                 :  41732071
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  6
+Nombre d'estats Total     :  9906
+Heurístic                 :  21249817
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  7
+Nombre d'estats Total     :  9907
+Heurístic                 :  10818450
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  8
+Nombre d'estats Total     :  9908
+Heurístic                 :  6100372
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  8
+Nombre d'estats Total     :  9908
+Heurístic                 :  1854564
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  9
+Nombre d'estats Total     :  9909
+Heurístic                 :  1830518
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  10
+Nombre d'estats Total     :  9910
+Heurístic                 :  1807020
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  11
+Nombre d'estats Total     :  9911
+Heurístic                 :  1785266
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  12
+Nombre d'estats Total     :  9912
+Heurístic                 :  1764794
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  13
+Nombre d'estats Total     :  9913
+Heurístic                 :  1744849
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  14
+Nombre d'estats Total     :  9914
+Heurístic                 :  1725351
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  15
+Nombre d'estats Total     :  9915
+Heurístic                 :  1706059
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  16
+Nombre d'estats Total     :  9916
+Heurístic                 :  1687445
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  16
+Nombre d'estats Total     :  9916
+Heurístic                 :  1669981
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  17
+Nombre d'estats Total     :  9917
+Heurístic                 :  1652701
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  18
+Nombre d'estats Total     :  9918
+Heurístic                 :  1636343
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  19
+Nombre d'estats Total     :  9919
+Heurístic                 :  1620038
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  20
+Nombre d'estats Total     :  9920
+Heurístic                 :  1604048
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  20
+Nombre d'estats Total     :  9920
+Heurístic                 :  1588136
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  21
+Nombre d'estats Total     :  9921
+Heurístic                 :  1572698
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  22
+Nombre d'estats Total     :  9922
+Heurístic                 :  1557603
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  22
+Nombre d'estats Total     :  9922
+Heurístic                 :  1543657
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  23
+Nombre d'estats Total     :  9923
+Heurístic                 :  1529805
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  24
+Nombre d'estats Total     :  9924
+Heurístic                 :  1515971
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  25
+Nombre d'estats Total     :  9925
+Heurístic                 :  1502203
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  26
+Nombre d'estats Total     :  9926
+Heurístic                 :  1489103
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  27
+Nombre d'estats Total     :  9927
+Heurístic                 :  1476311
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  27
+Nombre d'estats Total     :  9927
+Heurístic                 :  1464219
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  28
+Nombre d'estats Total     :  9928
+Heurístic                 :  1452489
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  29
+Nombre d'estats Total     :  9929
+Heurístic                 :  1440889
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  29
+Nombre d'estats Total     :  9929
+Heurístic                 :  1429505
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  29
+Nombre d'estats Total     :  9929
+Heurístic                 :  1418135
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  29
+Nombre d'estats Total     :  9929
+Heurístic                 :  1407232
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  30
+Nombre d'estats Total     :  9930
+Heurístic                 :  1396358
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  31
+Nombre d'estats Total     :  9931
+Heurístic                 :  1386276
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  32
+Nombre d'estats Total     :  9932
+Heurístic                 :  1376330
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9933
+Heurístic                 :  1366553
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9933
+Heurístic                 :  1357013
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9934
+Heurístic                 :  1347625
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9934
+Heurístic                 :  1338355
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9934
+Heurístic                 :  1329249
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9935
+Heurístic                 :  1320169
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9935
+Heurístic                 :  1311147
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9934
+Heurístic                 :  1302539
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9934
+Heurístic                 :  1294101
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9934
+Heurístic                 :  1286355
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9935
+Heurístic                 :  1278614
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9934
+Heurístic                 :  1270936
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9935
+Heurístic                 :  1264308
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1258168
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1252340
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1246742
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1241206
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1235816
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  38
+Nombre d'estats Total     :  9938
+Heurístic                 :  1230760
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1225898
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1221230
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1216948
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1212675
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1207170
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1202984
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1199158
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1195818
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1190702
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9935
+Heurístic                 :  1187438
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1178891
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1176073
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1173289
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1164781
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1162513
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1156755
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9933
+Heurístic                 :  1151255
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9933
+Heurístic                 :  1149239
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9933
+Heurístic                 :  1147149
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9933
+Heurístic                 :  1145175
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9932
+Heurístic                 :  1143319
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9931
+Heurístic                 :  1141655
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9931
+Heurístic                 :  1140091
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9931
+Heurístic                 :  1138569
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9931
+Heurístic                 :  1137138
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9931
+Heurístic                 :  1135748
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9931
+Heurístic                 :  1134415
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9931
+Heurístic                 :  1133085
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9932
+Heurístic                 :  1130655
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9932
+Heurístic                 :  1129358
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9933
+Heurístic                 :  1128026
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9934
+Heurístic                 :  1126821
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9934
+Heurístic                 :  1125737
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9935
+Heurístic                 :  1124404
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9934
+Heurístic                 :  1121218
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9933
+Heurístic                 :  1120498
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9933
+Heurístic                 :  1119838
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9932
+Heurístic                 :  1113344
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9932
+Heurístic                 :  1112070
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9932
+Heurístic                 :  1110364
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9932
+Heurístic                 :  1109376
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9927
+Heurístic                 :  1108823
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  32
+Nombre d'estats Total     :  9926
+Heurístic                 :  1106111
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  32
+Nombre d'estats Total     :  9926
+Heurístic                 :  1105563
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  31
+Nombre d'estats Total     :  9925
+Heurístic                 :  1105169
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  31
+Nombre d'estats Total     :  9925
+Heurístic                 :  1102947
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  31
+Nombre d'estats Total     :  9925
+Heurístic                 :  1097717
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  30
+Nombre d'estats Total     :  9924
+Heurístic                 :  1097344
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  30
+Nombre d'estats Total     :  9924
+Heurístic                 :  1087478
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  30
+Nombre d'estats Total     :  9924
+Heurístic                 :  1087127
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  30
+Nombre d'estats Total     :  9924
+Heurístic                 :  1085917
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  30
+Nombre d'estats Total     :  9924
+Heurístic                 :  1083167
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  31
+Nombre d'estats Total     :  9925
+Heurístic                 :  1078099
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  31
+Nombre d'estats Total     :  9925
+Heurístic                 :  1077804
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  32
+Nombre d'estats Total     :  9926
+Heurístic                 :  1077545
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  32
+Nombre d'estats Total     :  9926
+Heurístic                 :  1077543
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9927
+Heurístic                 :  1065173
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9928
+Heurístic                 :  1063875
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9928
+Heurístic                 :  1063336
+#######################################
+Nombre d'estats operador 1:  9894
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9928
+Heurístic                 :  1062873
+Executing iteration  1  of Set 1
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  0
+Nombre d'estats Total     :  9900
+Heurístic                 :  128113807
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  1
+Nombre d'estats Total     :  9901
+Heurístic                 :  83879141
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  2
+Nombre d'estats Total     :  9902
+Heurístic                 :  41899487
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  3
+Nombre d'estats Total     :  9903
+Heurístic                 :  14277322
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  4
+Nombre d'estats Total     :  9904
+Heurístic                 :  5738313
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  5
+Nombre d'estats Total     :  9905
+Heurístic                 :  1843948
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  6
+Nombre d'estats Total     :  9906
+Heurístic                 :  1823919
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  7
+Nombre d'estats Total     :  9907
+Heurístic                 :  1803989
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  8
+Nombre d'estats Total     :  9908
+Heurístic                 :  1784616
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  9
+Nombre d'estats Total     :  9909
+Heurístic                 :  1765889
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  10
+Nombre d'estats Total     :  9910
+Heurístic                 :  1747206
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  11
+Nombre d'estats Total     :  9911
+Heurístic                 :  1728807
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  12
+Nombre d'estats Total     :  9912
+Heurístic                 :  1710507
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  13
+Nombre d'estats Total     :  9913
+Heurístic                 :  1692687
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  14
+Nombre d'estats Total     :  9914
+Heurístic                 :  1675781
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  15
+Nombre d'estats Total     :  9915
+Heurístic                 :  1658967
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  16
+Nombre d'estats Total     :  9916
+Heurístic                 :  1642209
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  16
+Nombre d'estats Total     :  9916
+Heurístic                 :  1626135
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  17
+Nombre d'estats Total     :  9917
+Heurístic                 :  1610153
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  18
+Nombre d'estats Total     :  9918
+Heurístic                 :  1594348
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  19
+Nombre d'estats Total     :  9919
+Heurístic                 :  1578616
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  20
+Nombre d'estats Total     :  9920
+Heurístic                 :  1562970
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  21
+Nombre d'estats Total     :  9921
+Heurístic                 :  1547418
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  22
+Nombre d'estats Total     :  9922
+Heurístic                 :  1532378
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  23
+Nombre d'estats Total     :  9923
+Heurístic                 :  1517834
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  24
+Nombre d'estats Total     :  9924
+Heurístic                 :  1503332
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  25
+Nombre d'estats Total     :  9925
+Heurístic                 :  1488878
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  26
+Nombre d'estats Total     :  9926
+Heurístic                 :  1474907
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  27
+Nombre d'estats Total     :  9927
+Heurístic                 :  1461159
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  27
+Nombre d'estats Total     :  9927
+Heurístic                 :  1447783
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  28
+Nombre d'estats Total     :  9928
+Heurístic                 :  1434437
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  29
+Nombre d'estats Total     :  9929
+Heurístic                 :  1421139
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  30
+Nombre d'estats Total     :  9930
+Heurístic                 :  1408443
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  31
+Nombre d'estats Total     :  9931
+Heurístic                 :  1395823
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  32
+Nombre d'estats Total     :  9932
+Heurístic                 :  1383849
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  33
+Nombre d'estats Total     :  9933
+Heurístic                 :  1372033
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  34
+Nombre d'estats Total     :  9934
+Heurístic                 :  1360576
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  35
+Nombre d'estats Total     :  9935
+Heurístic                 :  1349205
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1338335
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1327743
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  36
+Nombre d'estats Total     :  9936
+Heurístic                 :  1317275
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1307192
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1297146
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  38
+Nombre d'estats Total     :  9938
+Heurístic                 :  1288336
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  38
+Nombre d'estats Total     :  9938
+Heurístic                 :  1279734
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  38
+Nombre d'estats Total     :  9938
+Heurístic                 :  1272130
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  37
+Nombre d'estats Total     :  9937
+Heurístic                 :  1264857
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  38
+Nombre d'estats Total     :  9938
+Heurístic                 :  1255563
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9939
+Heurístic                 :  1248643
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9939
+Heurístic                 :  1240373
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9939
+Heurístic                 :  1233465
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9940
+Heurístic                 :  1227295
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9940
+Heurístic                 :  1219671
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9940
+Heurístic                 :  1213085
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9939
+Heurístic                 :  1207327
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9940
+Heurístic                 :  1198035
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9939
+Heurístic                 :  1191881
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9939
+Heurístic                 :  1186163
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9940
+Heurístic                 :  1180557
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9939
+Heurístic                 :  1175227
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9940
+Heurístic                 :  1170049
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9941
+Heurístic                 :  1164903
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9941
+Heurístic                 :  1160109
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9941
+Heurístic                 :  1155657
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  42
+Nombre d'estats Total     :  9942
+Heurístic                 :  1151232
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  43
+Nombre d'estats Total     :  9943
+Heurístic                 :  1147247
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  42
+Nombre d'estats Total     :  9942
+Heurístic                 :  1143460
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  42
+Nombre d'estats Total     :  9942
+Heurístic                 :  1138900
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  42
+Nombre d'estats Total     :  9942
+Heurístic                 :  1135437
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9941
+Heurístic                 :  1131322
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9940
+Heurístic                 :  1127981
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9940
+Heurístic                 :  1123833
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9941
+Heurístic                 :  1120661
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9941
+Heurístic                 :  1117673
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9941
+Heurístic                 :  1115351
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9941
+Heurístic                 :  1110634
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9941
+Heurístic                 :  1108475
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  42
+Nombre d'estats Total     :  9942
+Heurístic                 :  1105791
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  43
+Nombre d'estats Total     :  9943
+Heurístic                 :  1103663
+#######################################
+Nombre d'estats operador 1:  9900
+Nombre d'estats operador 2:  43
+Nombre d'estats Total     :  9943
+Heurístic                 :  1101605
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  42
+Nombre d'estats Total     :  9940
+Heurístic                 :  1096657
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9939
+Heurístic                 :  1094781
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1092855
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9939
+Heurístic                 :  1089197
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9939
+Heurístic                 :  1087374
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  42
+Nombre d'estats Total     :  9940
+Heurístic                 :  1085061
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  42
+Nombre d'estats Total     :  9940
+Heurístic                 :  1082593
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  42
+Nombre d'estats Total     :  9940
+Heurístic                 :  1080936
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9939
+Heurístic                 :  1079133
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1077524
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1075376
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1073802
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9939
+Heurístic                 :  1068972
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1067406
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1065178
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9937
+Heurístic                 :  1063778
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1062442
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9937
+Heurístic                 :  1061218
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9937
+Heurístic                 :  1059372
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  38
+Nombre d'estats Total     :  9936
+Heurístic                 :  1058162
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  38
+Nombre d'estats Total     :  9936
+Heurístic                 :  1057104
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9937
+Heurístic                 :  1056188
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  39
+Nombre d'estats Total     :  9937
+Heurístic                 :  1055138
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1054428
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1051018
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1049080
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  41
+Nombre d'estats Total     :  9939
+Heurístic                 :  1048050
+#######################################
+Nombre d'estats operador 1:  9898
+Nombre d'estats operador 2:  40
+Nombre d'estats Total     :  9938
+Heurístic                 :  1046401
+#######################################
