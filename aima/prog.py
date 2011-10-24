@@ -14,8 +14,8 @@ from datetime import datetime
 import prog
 
 ITERATIONS = 10
-NP = 100
-ND = 100
+NP = 10
+ND = 10
 
 """ Returns the best operator """
 def test1_Operators():

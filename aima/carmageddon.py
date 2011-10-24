@@ -67,7 +67,8 @@ class Carmageddon(Problem):
 
 
   # Operator
-  def genPassengerSwaps(self, state):    
+  def genPassengerSwaps(self, state):
+    it = 0
     ltemp = list(state.getPassengers())
     for p1 in ltemp:
       for p2 in xrange(it,len(ltemp)):
@@ -76,6 +77,7 @@ class Carmageddon(Problem):
         newState.setPassengers(copy(state.getPassengers()))
         newState.swapPassengers(p1,ltemp[p2])
         yield ("swap", newState)
+      it += 1
     
   # Operator
   def genPassengerSwitches(self, state):
@@ -119,7 +121,7 @@ class Carmageddon(Problem):
           for p in d.getPassengers():
             for anotherDriver in newState.getDrivers():
               if anotherDriver != d.getName():
-          newState.switchPassenger(p, anotherDriver)
+                newState.switchPassenger(p, anotherDriver)
           # Puts the old driver as a passenger with the carrier driver.
           newState.degradateDriver(d.getName(), carrier)
           yield ("dgrd", newState)
