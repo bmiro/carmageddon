@@ -20,7 +20,10 @@ En cas que sigui un test amb diferents opcions per defecte s'executa amb la opci
 una millor execució. Per tal de canviar dites opcions s'ha d'editar el fitxer prog.py anant
 a la capçalera de la funció i canviant el paràmetre per defecte.
 
-TODO COM CANVIAR CAPÇALERA
+\begin{minted}[fontsize=\small]{python}
+def test4_TemporalEvolution(operatorSet="1", initDistrib="allOneFirst"):
+   ...
+\end{minted}
 
 \subsection{Execució simple}
 Si sols volem executar una una cerca simple tenim dues opcions, una es carregar un fitxer de configuració
@@ -30,7 +33,6 @@ Els paràmetres per a fer una execució simple són:
 
 \begin{minted}[fontsize=\small]{bash}
 pypy prog.py N M inicialitzacio heuristic conjuntOperadors algorismeCerca
-\end{minted}
 
 \small
 \begin{center}

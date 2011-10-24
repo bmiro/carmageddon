@@ -39,6 +39,14 @@ Els resultats són:
 \emph{full first} & 0:02:08 & 98 & 1030151 
 \end{tabular}
 \end{center}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=0.6\textwidth]{figures/test2-gr1.jpg}
+ \label{test3-gr2}
+\caption{Test 2}
+\end{center}
+\end{figure}
                                                                                                                                                                                   
 La estrategia de generació inicial \emph{all one first} produeix millors resultats tant en temps com distància,
 aquest fet es deu a que te els passatgers més repartits en contraposicó al \emph{full first} que els te
@@ -48,15 +56,16 @@ jugar un bon paper amb el \emph{full first}.
 
 \subsection{Se\lgem ecció dels paràmetres del Simulated Anealing}
 Per a determinar els paràmetres que obtenen un millor resultat per a l'execució de l'algorisme \emph{simulated annealing},
-hem executat reiterades vegades, aproximadament 10, l'algorisme amb diferents parametres per a \texttt{lambda} i \texttt{k}, concretament s'ha fet amb
+hem executat reiterades vegades, aproximadament 10, l'algorisme amb diferents parametres per a $\lambda$ i \emph{k}, concretament s'ha fet amb
 \texttt{[0.1,0.01,0.001,0.0001]} i \texttt{[1,5,25,125]} repectivament, fixant el nombre d'iteracions en 2000.
 
-El millor resultat s'ha obtingut amb els parametres k = 5 i lambda = 0.01, com indica el seguent grafic (fig. \ref{test3-gr1}).
+El millor resultat s'ha obtingut amb els parametres $k$ = 5 i $\lambda$ = 0.01, com indica el seguent grafic (fig. \ref{test3-gr1}).
 
 \begin{figure}[H]
 \begin{center} 
  \includegraphics[width=0.6\textwidth]{figures/test3-gr1.jpg}
 \label{test3-gr1}
+\caption{Evolució de $\lambda$}
 \end{center}
 \end{figure}
 
@@ -65,8 +74,9 @@ vegades l'algorisme amb un nombre diferent d'iteracions. Es pot veure (fig. \ref
 
 \begin{figure}[H]
 \begin{center}
- \includegraphics[width=0.6\textwidth]{figures/test3-gr1.jpg}
+ \includegraphics[width=0.6\textwidth]{figures/test3-gr2.jpg}
  \label{test3-gr2}
+\caption{Evolució de \emph{k}}
 \end{center}
 \end{figure}
 
@@ -78,6 +88,7 @@ Aleshores, podem comparar els resultats obtinguts amb simulated Annealing i Hill
 \begin{center} 
  \includegraphics[width=0.6\textwidth]{figures/test3-gr3.jpg}
 \label{test3-gr3}
+\caption{}
 \end{center}
 \end{figure}
 
@@ -86,6 +97,7 @@ Aleshores, podem comparar els resultats obtinguts amb simulated Annealing i Hill
 \begin{center}
  \includegraphics[width=0.6\textwidth]{figures/test3-gr4.jpg}
  \label{test3-gr4}
+\caption{}
 \end{center}
 \end{figure}
 
@@ -97,12 +109,46 @@ Per a l'experiment 4 s'ha fixat el nombre d'usuaris i el nombre de conductors co
 En aquest cas, s'utilitza el conjunt d'operadors 1, i l'algorisme de generacio d'estats inicials \emph{all one first}.
 S'ha executat 10 vegades cada simulacio.
 
-Es pot observar com el temps d'execucio segueix clarament un patró quadràtic ascendent en funció del nombre d'usuaris
+Es pot observar com el temps d'execució segueix clarament un patró quadràtic ascendent en funció del nombre d'usuaris
 del servei.
 
-
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=0.6\textwidth]{figures/test4-gr1.jpg}
+ \label{test4-gr1}
+\caption{Evolució temporal en funció del nombre d'usuaris}
+\end{center}
+\end{figure}
 
 
 \subsection{Se\lgem ecció dels valors de ponderació del segon heurístic}
 
 \subsection{Se\lgem ecció del valor de \emph{M} per millor inicialització del problema}
+Per a realitzar l'eexperiment 7 s'ha se\lgem eccionat un problema de mida 50 usuaris, i s'ha provat per a totes les proporcions
+(de tots conductors fins a un sol conductor), 10 cops cada una.
+
+Es pot observar al següent gràfic que les so\lgem ucions més benevolents s'obtenen aproximadament per a 30 conductors (20 no conductors al gràfic),
+que podem extrapolar aproximadament $\dfrac{3}{5}$ de conductors del total per a qualsevol problema.
+Els valors en que no s'ha trobat so\lgem ució (a partir de 34) no es mostren.
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=0.6\textwidth]{figures/test7-gr1.jpg}
+ \label{test7-gr2}
+\end{center}
+\caption{Evolució del la distància}
+\end{figure}
+
+Per al temps de trobar una so\lgem ució, podem observar que on més temps es tarda es a una proporcio de $\dfrac{2}{5}$ conductors.
+Intuïm que es la zona on es generen mes intercanvis de passatgers, ja que n'hi ha suficients per a generar molts d'estats,
+pero no massa com per a que molts d'estats no siguin valids.
+Amb una proporcio mes alta de passatgers es triga menys temps, pero com hem explicat anteriorment es dificil trobar una solucio que satisfaci les restriccions.
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=0.6\textwidth]{figures/test7-gr2.jpg}
+ \label{test7-gr2}
+\end{center}
+\caption{Evolució del temps}
+\end{figure}
+        
