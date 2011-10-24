@@ -119,7 +119,7 @@ class Carmageddon(Problem):
           for p in d.getPassengers():
             for anotherDriver in newState.getDrivers():
               if anotherDriver != d.getName():
-          newState.switchPassenger(p, anotherDriver)
+                newState.switchPassenger(p, anotherDriver)
           # Puts the old driver as a passenger with the carrier driver.
           newState.degradateDriver(d.getName(), carrier)
           yield ("dgrd", newState)

@@ -1,5 +1,5 @@
-S'ha fixat en nombre d'usuaris a 200 i el nombre de conductors a 100
-S'ha executat 10 cops amb cada un dels conjunts d'operadors.
+Per a realitzar l'experiment 1 ha fixat en nombre d'usuaris a 200 i el nombre de conductors a 100.
+Posteriorment s'ha executat 10 cops amb cada un dels conjunts d'operadors.
 
 
 Els resultats son:

@@ -1,24 +1,24 @@
-Per a determinar els parametres que obtenen un mellor resultat per a l'execució de l'algorisme simulated annealing,
-hem executat reiterades vegades l'algorisme amb diferents parametres per a lambda i k, [0.1,0.01,0.001,0.0001] i [1,5,25,125] repectivament, i fixant el nombre
-d'iteracions en 2000.
+Per a determinar els parametres que obtenen un millor resultat per a l'execució de l'algorisme simulated annealing,
+hem executat reiterades vegades  (aprox 10) l'algorisme amb diferents parametres per a lambda i k, [0.1,0.01,0.001,0.0001] i [1,5,25,125] repectivament,
+i fixant el nombre d'iteracions en 2000.
 El millor resultat s'ha obtingut amb els parametres k = 5 i lambda = 0.01, com indica el seguent grafic.
 
 
 
-(GRAFIC)
+(GRAFIC1)
 
 Fixats aquests dos parametres en els valors que han obtingut millor resultat, s'ha ajustat el nombre d'iteracions executant diverses 
 vegades l'algorisme amb un nombre diferent d'iteracions. Es pot veure en el seguent gràfic el millor valor per al nombre d'iteracions.
 
 
 
-(GRAFIC)
+(GRAFIC2)
 
 Aleshores, podem comparar els resultats obtinguts amb simulated Annealing i Hill climbing.
 
 
 Es pot observar que el Simulated Annealing obte millors resultats que el Hill Climbing. Per contra, te un temps d'execució molt mes elevat.
 
-(GRAFIC)
+(GRAFIC3)
 
-(GRAFIC)
+(GRAFIC4)

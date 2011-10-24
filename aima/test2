@@ -1,4 +1,5 @@
-S'ha fixat el nombre d'usuaris i el nombre de conductors com a lanterior experiment.
+per arealitzar l'experiment 2 s'ha fixat el nombre d'usuaris i el nombre de conductors com a lanterior experiment.
+S'ha executat 10 cops amb cada estrategia de generació inicial.
 
 Els resultats son:
         La estrategia de generació inicial (Repartir tots els conductors) produeix millors resultats.
