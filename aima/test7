@@ -1,0 +1,17 @@
+Pre a realitzar l'eexperiment 7 s'ha seleccionat un problema de mida 50 usuaris, i s'ha provat per a totes les proporcions
+(de tots conductors fins a un sol conductor), 10 cops cada una.
+
+Es pot observar al seguent grafic que les solucions mes benevolents s'obtenen aproximadament per a 30 conductors (20 no conductors al grafic),
+que podem extrapolar aproximadament 3/5 de conductors del total per a qualsevol problema.
+Els valors en que no s'ha trobat solucio (a partir de 34) no es mostren
+
+
+        [grafic km]
+
+Per al temps de trobar una solucio, podem observar que on mes temps es tarda es a una proporcio de 2/5 conductors.
+Intuïm que es la zona on es generen mes intercanvis de passatgers, ja que n'hi ha suficients per a generar molts d'estats,
+pero no massa com per a que molts d'estats no siguin valids.
+Amb una proporcio mes alta de passatgers es triga menys temps, pero com hem explicat anteriorment es dificil trobar una solucio que satisfaci les restriccions.
+
+
+        [grafic temps]
