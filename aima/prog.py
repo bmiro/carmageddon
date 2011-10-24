@@ -13,10 +13,12 @@ from datetime import datetime
 
 import prog
 
-ITERATIONS = 4
+
 ITERATIONS = 10
 NP = 100
 ND = 100
+
+
 
 """ Returns the best operator """
 def test1_Operators():
@@ -114,8 +116,7 @@ def test2_Inits(operatorSet="1"):
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " of all one first inicialization"
     s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution="allOneFirst")
-    c = Carmageddon(s, "km", operatorSet)
-    
+    c = Carmageddon(s, "km", operatorSet)    
     to = datetime.now()
     finalState = c.run("hillClimbing")
     tf = datetime.now()    
