@@ -170,31 +170,30 @@ def test2_Inits(operatorSet="1"):
   
 
 def test3_SimulatedAnnealingParams():
-#  lK = [1,5,25,125]
-#  ll = [0.1,0.01,0.001,0.0001]
-
-#  for kParameter in lK:
-#    for lParameter in ll:
-#      lcost = []
-#      for i in xrange(10):  
-#        s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
-#        c = Carmageddon(s, "km", "1")
-#        finalState = c.run('hillClimbing',kParameter,lParameter,100)
-#        lcost.append(c.printableHeuristic(finalState))
-#      print "Average solution cost for params k = "+str(kParameter)+", lambda = "+str(lParameter)+" :"
-#      print "\t",reduce(lambda x, y: x + y, lcost)/len(lcost)
-#      print ""
-  lIt = [10,100,1000,100000]
-  lcost2 = []
-  for it in xrange(2):
-    for nIter in lIt:
-      s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
-      c = Carmageddon(s, "km", "1")
-      finalState = c.run('hillClimbing',1,0.001,nIter)
-      lcost2.append(c.printableHeuristic(finalState))
-  print "Average solution cost for params k = "+str(kParameter)+", lambda = "+str(lParameter)+" :"
-  print "\t",reduce(lambda x, y: x + y, lcost2)/len(lcost2)
-  print ""
+  lK =  [5,5,25,125]
+  ll = [0.1,0.01,0.001,0.0001]
+  for kParameter in lK:
+    for lParameter in ll:
+      lcost = []
+      for i in xrange(ITERATIONS):  
+        s = State(nPassengers=10, nMaxDrivers=10, initialDistribution="allOneFirst")
+        c = Carmageddon(s, "km", "1")
+        finalState = c.run('simulatedAnnealing',kParameter,lParameter,1000)
+        lcost.append(c.printableHeuristic(finalState))
+      print "Average solution cost for params k = "+str(kParameter)+", lambda = "+str(lParameter)+" :"
+      print "\t",reduce(lambda x, y: x + y, lcost)/len(lcost)
+      print ""
+#  lIt = [10,100,1000,100000]
+#  lcost2 = []
+#  #for it in xrange(10):
+#  for nIter in lIt:
+#    s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
+#    c = Carmageddon(s, "km", "1")
+#    finalState = c.run('simulatedAnnealing',1,0.001,nIter)
+#    lcost2.append(c.printableHeuristic(finalState))
+#  print "Average solution cost for params k = "+str(kParameter)+", lambda = "+str(lParameter)+" :"
+#  print "\t",reduce(lambda x, y: x + y, lcost2)/len(lcost2)
+#  print ""
 
       
        

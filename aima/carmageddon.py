@@ -3,6 +3,7 @@ from utils import *
 from search import *
 
 from sys import argv
+import sys
 from copy import copy
 
 from passenger import *
@@ -26,7 +27,7 @@ class Carmageddon(Problem):
     heuristic_dict = {"km" : self.heuristic_km, "veh" : self.heuristic_veh}
     self.value = heuristic_dict[h]
   
-  def run(self, alg="hillClimbing", k=None, lam=None, lim=None):
+  def run(self, alg="hillClimbing",k=20, lam=0.005, lim=100):
     if alg == "hillClimbing":
       return hill_climbing(self)
     else:
@@ -39,11 +40,12 @@ class Carmageddon(Problem):
 
     if self.__operatorSet == "1":
       for s in self.genPassengerSwitches(state):
-	numberOp1 += 1
-	yield s
+        numberOp1 += 1
+        yield s
       for s in self.genSoftDriverDegradations(state):
-	numberOp2 += 1
-	yield s
+        numberOp2 += 1
+        yield s
+
 	
     elif self.__operatorSet == "2": 
       for s in self.genPassengerSwaps(state):
@@ -147,4 +149,7 @@ class Carmageddon(Problem):
     """Heuristic function"""
     return -(node.state.getKm() + node.state.getNumDrivers()*PES_VEHICLE)
 
-    
+  def path_cost(self, c, state1, action, state2):
+    return sys.maxint - self.printableHeuristic(state2)
+
+
