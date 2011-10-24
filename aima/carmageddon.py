@@ -59,11 +59,11 @@ class Carmageddon(Problem):
 	numberOp2 += 1
 	yield s
          
-    print "#######################################"
-    print "Nombre d'estats operador 1: ", numberOp1
-    print "Nombre d'estats operador 2: ", numberOp2
-    print "Nombre d'estats Total     : ", numberOp1 + numberOp2
-    print "Heurístic                 : ", self.printableHeuristic(state)
+#    print "#######################################"
+#    print "Nombre d'estats operador 1: ", numberOp1
+#    print "Nombre d'estats operador 2: ", numberOp2
+#    print "Nombre d'estats Total     : ", numberOp1 + numberOp2
+#    print "Heurístic                 : ", self.printableHeuristic(state)
 
 
   # Operator

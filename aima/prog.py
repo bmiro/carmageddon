@@ -15,8 +15,8 @@ import prog
 
 
 ITERATIONS = 10
-NP = 100
-ND = 100
+NP = 50
+ND = 50
 
 
 
@@ -390,7 +390,41 @@ def test6_HCvsSA(operatorSet="1", initDistrib="allOneFirst", k=1, lam=0.001, lim
   
 
 def test7_MNproportion():
-  print "Test 7"
+  ############################################################################
+  ############################## Test executions #############################
+  ############################################################################
+  
+  ################################### Set 1 ##################################
+
+
+  for proportion in xrange(ND):
+    op1Time = []
+    op1Drivers = []
+    op1Heuristic = []
+
+    for iteration in xrange(ITERATIONS):
+      s = State(nPassengers=proportion, nMaxDrivers=ND-proportion, initialDistribution="allOneFirst")
+      c = Carmageddon(s, "km", "1") 
+      to = datetime.now()
+      finalState = c.run("hillClimbing")
+      tf = datetime.now()    
+      op1Time.append(tf - to)
+      op1Drivers.append(finalState.getNumDrivers())
+      op1Heuristic.append(c.printableHeuristic(finalState))
+ 
+  
+    op1AvrTime = reduce(lambda x, y: x + y, op1Time)/len(op1Time)
+    op1AvrDrivers = reduce(lambda x, y: x + y, op1Drivers)/len(op1Drivers)
+    op1AvrHeuristic = reduce(lambda x, y: x + y, op1Heuristic)/len(op1Heuristic)
+    
+
+    
+   # print "\t\t Average_results_of_npassengers= ",proportion
+    print "\t Average_time: \t\t ", op1AvrTime
+   # print "\t Average_heuristic:\t\t ", op1AvrHeuristic
+   # print "\n\n"
+
+  
 
 
 if __name__ == "__main__":
