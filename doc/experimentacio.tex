@@ -27,15 +27,15 @@ Conjunt 2 & 0:01:30 & 98 & 1113629 & 5200
                 
 
 El conjunt d'operadors 1 produeix millor resultat que el conjunt 2.
-Suposam que aixo es degut a que l'operador genera mes estats (gairebé el doble) per a cada iteració i simplement a més estats per triar s'agafen més bons.
+Suposam que això és degut a que l'operador genera mes estats (gairebé el doble) per a cada iteració i simplement a més estats per triar s'agafen més bons.
 
 Es pot veure que el conjunt 2 es notablement més ràpid però no en la mateix proporció que els estats generats. Això es deu a que aquests estats
-son més costosos, entre d'altres coses perque un intercanvi implica dues operacions mentre que un canvi només una, entre d'altres detalls d'ambdos operadors.
+son més costosos, entre d'altres coses perquè un intercanvi implica dues operacions mentre que un canvi només una, entre d'altres detalls d'ambdós operadors.
 
 
 \subsection{Se\lgem ecció de la generació de l'estat inicial}
 Per realitzar l'experiment 2 s'ha fixat el nombre d'usuaris i el nombre de conductors com a l'anterior experiment.                                                                                   
-S'ha executat 10 cops amb cada estrategia de generació inicial.
+S'ha executat 10 cops amb cada estratègia de generació inicial.
                                                                                                                                                                                                      
 Els resultats són:
 
@@ -57,18 +57,18 @@ Els resultats són:
 \end{center}
 \end{figure}
                                                                                                                                                                                   
-La estrategia de generació inicial \emph{all one first} produeix millors resultats tant en temps com distància,
-aquest fet es deu a que te els passatgers més repartits en contraposicó al \emph{full first} que els te
-condensants i tarda més en repartir-los de manera adequada. De fet no te gaire sentit que els conductors
+La estratègia de generació inicial \emph{all one first} produeix millors resultats tant en temps com distància,
+aquest fet es deu a que te els passatgers més repartits en contraposició al \emph{full first} que els te
+condensats i tarda més en repartir-los de manera adequada. De fet no te gaire sentit que els conductors
 viatgin buits a l'inici ja que hem descartat el conjunt d'operadors que tal vegada haguessin pogut
 jugar un bon paper amb el \emph{full first}.
 
 \subsection{Se\lgem ecció dels paràmetres del Simulated Anealing}
 Per a determinar els paràmetres que obtenen un millor resultat per a l'execució de l'algorisme \emph{simulated annealing},
-hem executat reiterades vegades, aproximadament 10, l'algorisme amb diferents parametres per a $\lambda$ i \emph{k}, concretament s'ha fet amb
-\texttt{[0.1,0.01,0.001,0.0001]} i \texttt{[1,5,25,125]} repectivament, fixant el nombre d'iteracions en 2000.
+hem executat reiterades vegades, aproximadament 10, l'algorisme amb diferents paràmetres per a $\lambda$ i \emph{k}, concretament s'ha fet amb
+\texttt{[0.1,0.01,0.001,0.0001]} i \texttt{[1,5,25,125]} respectivament, fixant el nombre d'iteracions en 2000.
 
-El millor resultat s'ha obtingut amb els parametres $k$ = 5 i $\lambda$ = 0.01, com indica el seguent grafic (fig. \ref{test3-gr1}).
+El millor resultat s'ha obtingut amb els paràmetres $k$ = 5 i $\lambda$ = 0.01, com indica el següent gràfic (fig. \ref{test3-gr1}).
 
 \begin{figure}[H]
 \begin{center} 
@@ -79,7 +79,7 @@ El millor resultat s'ha obtingut amb els parametres $k$ = 5 i $\lambda$ = 0.01, 
 \end{figure}
 
 Fixats aquests dos paràmetres en els valors que han obtingut millor resultat, s'ha ajustat el nombre d'iteracions executant diverses 
-vegades l'algorisme amb un nombre diferent d'iteracions. Es pot veure (fig. \ref{test3-gr2}) en el seguent gràfic el millor valor per al nombre d'iteracions.
+vegades l'algorisme amb un nombre diferent d'iteracions. Es pot veure (fig. \ref{test3-gr2}) en el següent gràfic el millor valor per al nombre d'iteracions.
 
 \begin{figure}[H]
 \begin{center}
@@ -110,13 +110,13 @@ Aleshores, podem comparar els resultats obtinguts amb simulated Annealing i Hill
 \end{center}
 \end{figure}
 
-Es pot observar que el Simulated Annealing obte millors resultats que el Hill Climbing. Per contra, té un temps d'execució molt més elevat.
+Es pot observar que el Simulated Annealing obté millors resultats que el Hill Climbing. Per contra, té un temps d'execució molt més elevat.
 
 
 \subsection{Observació de l'evolució temporal del Hill Climbing}
 Per a l'experiment 4 s'ha fixat el nombre d'usuaris i el nombre de conductors com a l'experiment inicial.
-En aquest cas, s'utilitza el conjunt d'operadors 1, i l'algorisme de generacio d'estats inicials \emph{all one first}.
-S'ha executat 10 vegades cada simulacio.
+En aquest cas, s'utilitza el conjunt d'operadors 1, i l'algorisme de generació d'estats inicials \emph{all one first}.
+S'ha executat 10 vegades cada simulació.
 
 Es pot observar com el temps d'execució segueix clarament un patró quadràtic ascendent en funció del nombre d'usuaris
 del servei.
@@ -152,15 +152,15 @@ heurístic  & 549300   & 386556103 & 857856    & 500891356
 \end{center}
 \end{figure}
 
-D'aquests resultats observam que l'algorisme Hill Climbing troba millors solucions que el Simulated Annealing si disposa d'un temps similar.
-Suposam que aumentant el nombre d'iteracions del Simulated Annealing podriem aconseguir millors resultats que amb el Hill climbing.
+D'aquests resultats observam que l'algorisme \emph{Hill Climbing} troba millors solucions que el \emph{Simulated Annealing} si disposa d'un temps similar.
+Suposam que augmentant el nombre d'iteracions del \emph{Simulated Annealing} podríem aconseguir millors resultats que amb el \emph{Hill climbing}.
 
 
-S'observa també que els dos heuristics funcionen com esperavem en el cas de Hill Climbing,(disminuint el nombre de km en un cas
-i el nombre de km i conductors en l'altre), pero en el Simulated Annealing s'obté un resultat similar.
-Es possible que aixo sigui degut a que els heuristics s'han ponderat utilitzat Hill Climbing.
+S'observa també que els dos heurístics funcionen com esperàvem en el cas de \emph{Hill Climbing},(disminuint el nombre de km en un cas
+i el nombre de km i conductors en l'altre), però en el \emph{Simulated Annealing} s'obté un resultat similar.
+Es possible que això sigui degut a que els heurístics s'han ponderat utilitzat \emph{Hill Climbing}.
 
-En aquest experiment sembla que ens decantariem en favor de Hill Climbing.
+En aquest experiment sembla que ens decantaríem en favor de \emph{Hill Climbing}.
 
 
 
@@ -168,7 +168,7 @@ En aquest experiment sembla que ens decantariem en favor de Hill Climbing.
 
 
 \subsection{Se\lgem ecció del valor de \emph{M} per millor inicialització del problema}
-Per a realitzar l'eexperiment 7 s'ha se\lgem eccionat un problema de mida 50 usuaris, i s'ha provat per a totes les proporcions
+Per a realitzar l'experiment 7 s'ha se\lgem eccionat un problema de mida 50 usuaris, i s'ha provat per a totes les proporcions
 (de tots conductors fins a un sol conductor), 10 cops cada una.
 
 Es pot observar al següent gràfic que les so\lgem ucions més benevolents s'obtenen aproximadament per a 30 conductors (20 no conductors al gràfic),
@@ -183,10 +183,10 @@ Els valors en que no s'ha trobat so\lgem ució (a partir de 34) no es mostren.
 \caption{Evolució del la distància}
 \end{figure}
 
-Per al temps de trobar una so\lgem ució, podem observar que on més temps es tarda es a una proporcio de $\dfrac{2}{5}$ conductors.
+Per al temps de trobar una so\lgem ució, podem observar que on més temps es tarda es a una proporció de $\dfrac{2}{5}$ conductors.
 Intuïm que es la zona on es generen mes intercanvis de passatgers, ja que n'hi ha suficients per a generar molts d'estats,
-pero no massa com per a que molts d'estats no siguin valids.
-Amb una proporcio mes alta de passatgers es triga menys temps, pero com hem explicat anteriorment es dificil trobar una solucio que satisfaci les restriccions.
+però no massa com per a que molts d'estats no siguin vàlids.
+Amb una proporció més alta de passatgers es triga menys temps, però com hem explicat anteriorment es difícil trobar una so\lgem ució que satisfaci les restriccions.
 
 \begin{figure}[H]
 \begin{center}
