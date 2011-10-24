@@ -13,6 +13,7 @@ from datetime import datetime
 
 import prog
 
+ITERATIONS = 4
 ITERATIONS = 10
 NP = 10
 ND = 10
@@ -30,6 +31,7 @@ def test1_Operators():
   op1Heuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " of Set 1"
+
     s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution="allOneFirst")
     c = Carmageddon(s, "km", "1")
     
@@ -50,7 +52,9 @@ def test1_Operators():
   op2Heuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " of Set 2"
+
     s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution="allOneFirst")
+
     c = Carmageddon(s, "km", "2")
     
     to = datetime.now()
@@ -176,30 +180,44 @@ def test2_Inits(operatorSet="1"):
   
 
 def test3_SimulatedAnnealingParams():
-  lK =  [5,5,25,125]
-  ll = [0.1,0.01,0.001,0.0001]
-  for kParameter in lK:
-    for lParameter in ll:
-      lcost = []
-      for i in xrange(ITERATIONS):  
-        s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution="allOneFirst")
-        c = Carmageddon(s, "km", "1")
-        finalState = c.run('simulatedAnnealing',kParameter,lParameter,1000)
-        lcost.append(c.printableHeuristic(finalState))
-      print "Average solution cost for params k = "+str(kParameter)+", lambda = "+str(lParameter)+" :"
-      print "\t",reduce(lambda x, y: x + y, lcost)/len(lcost)
-      print ""
-#  lIt = [10,100,1000,100000]
-#  lcost2 = []
-#  #for it in xrange(10):
-#  for nIter in lIt:
-#    s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
-#    c = Carmageddon(s, "km", "1")
-#    finalState = c.run('simulatedAnnealing',1,0.001,nIter)
-#    lcost2.append(c.printableHeuristic(finalState))
-#  print "Average solution cost for params k = "+str(kParameter)+", lambda = "+str(lParameter)+" :"
-#  print "\t",reduce(lambda x, y: x + y, lcost2)/len(lcost2)
-#  print ""
+
+#  lK =  [1,5,25,125]
+#  ll = [0.1,0.01,0.001,0.0001]
+#  for kParameter in lK:
+#    for lParameter in ll:
+#      print "Other params"
+#      lcost = []
+#      for i in xrange(ITERATIONS):  
+#        s = State(nPassengers=20, nMaxDrivers=20, initialDistribution="allOneFirst")
+#        c = Carmageddon(s, "km_an", "1")
+#        finalState = c.run('simulatedAnnealing',kParameter,lParameter,2000)
+#        lcost.append(c.printableHeuristic(finalState))
+#      print "Average solution cost for params k = "+str(kParameter)+", lambda = "+str(lParameter)+" :"
+#      print "\t",reduce(lambda x, y: x + y, lcost)/len(lcost)
+#      print ""
+
+  lIt = [2000]
+   
+  kParameter = 5
+  lParameter = 0.01
+  for nIter in lIt:
+    lcost2 = []
+    ltime = []
+    for it in xrange(ITERATIONS):
+      t = datetime.now()
+      s = State(nPassengers=20, nMaxDrivers=20, initialDistribution="allOneFirst")
+      c = Carmageddon(s, "km_an", "1")
+      finalState = c.run('simulatedAnnealing',kParameter,lParameter,nIter)
+      lcost2.append(c.printableHeuristic(finalState))
+      ltime.append(datetime.now() -t)
+
+    print "Average solution cost for params k = "+str(kParameter)+", lambda = "+str(lParameter)+"with "+str(nIter)+" iterationr :"
+
+    print "\t",reduce(lambda x, y: x + y, lcost2)/len(lcost2)
+    print "Average time:"
+    print "\t",reduce(lambda x, y: x + y, ltime)/len(ltime)
+    print ""
+
 
       
        

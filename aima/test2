@@ -1,0 +1,11 @@
+S'ha fixat el nombre d'usuaris i el nombre de conductors com a lanterior experiment.
+
+Els resultats son:
+        La estrategia de generació inicial (Repartir tots els conductors) produeix millors resultats.
+
+        No existeix diferencia en el cost temporal de generacio de les solucions inicials, ja que
+        ambdues estrategies son molt simples asimptoticament theta(n)
+
+
+
+        (TAULA AMB ELS RESULTATS)

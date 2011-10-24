@@ -8,7 +8,9 @@ from random import random, randint
 from re import match, split, compile
 
 MAX_KM = 30000
-HUGE_VALUE = 1000000000
+
+HUGE_VALUE = 10000
+
 PES_VEHICLE = 10000000
 
 class State(object):
@@ -157,8 +159,16 @@ class State(object):
     for p in self.__carmageddons.itervalues():
       incr = p.getRouteWeight(self)
       if incr > MAX_KM:
-        i += HUGE_VALUE
+        i += HUGE_VALUE*(incr-MAX_KM)
       i += incr
+    return i
+
+  def getKm_an(self):
+    i = 0     
+    for p in self.__carmageddons.itervalues():
+      incr = p.getRouteWeight(self)
+      if incr > MAX_KM:
+        i += HUGE_VALUE*(incr-MAX_KM)
     return i
     
   def isGood(self):

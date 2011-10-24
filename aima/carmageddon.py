@@ -24,7 +24,7 @@ class Carmageddon(Problem):
     self.initial = state
     self.__operatorSet = operatorSet
     self.__h = h
-    heuristic_dict = {"km" : self.heuristic_km, "veh" : self.heuristic_veh}
+    heuristic_dict = {"km" : self.heuristic_km, "veh" : self.heuristic_veh, "km_an":self.heuristic_km_annealing}
     self.value = heuristic_dict[h]
   
   def run(self, alg="hillClimbing", k=None, lam=None, lim=None):
@@ -145,6 +145,10 @@ class Carmageddon(Problem):
   def heuristic_km(self, node):
     """Heuristic function"""
     return -node.state.getKm()
+
+  def heuristic_km_annealing(self, node):
+    """Heuristic function"""
+    return -node.state.getKm_an()
     
 
   def heuristic_veh(self, node):

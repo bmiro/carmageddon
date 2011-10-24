@@ -1,0 +1,8 @@
+S'ha fixat el nombre d'usuaris i el nombre de conductors com a lexperiment inicial.
+En aquest cas, s'utilitza el conjunt d'operadors 1, i l'algorisme de generacio d'estats inicials 1.
+S'ha executat 10 vegades cada simulacio.
+
+        Es pot observar com el temps d'execucio segueix un patró quadràtic en funció del nombre d'usuaris
+        del servei
+
+                [GRAFIC 5]
