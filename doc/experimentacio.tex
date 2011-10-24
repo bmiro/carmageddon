@@ -38,24 +38,45 @@ Per a determinar els paràmetres que obtenen un millor resultat per a l'execuci�
 hem executat reiterades vegades, aproximadament 10, l'algorisme amb diferents parametres per a \texttt{lambda} i \texttt{k}, concretament s'ha fet amb
 \texttt{[0.1,0.01,0.001,0.0001]} i \texttt{[1,5,25,125]} repectivament, fixant el nombre d'iteracions en 2000.
 
-El millor resultat s'ha obtingut amb els parametres k = 5 i lambda = 0.01, com indica el seguent grafic.
+El millor resultat s'ha obtingut amb els parametres k = 5 i lambda = 0.01, com indica el seguent grafic (fig. \ref{test3-gr1}).
 
-(GRAFIC)
+\begin{figure}[H]
+\begin{center} 
+ \includegraphics[width=0.6\textwidth]{figures/test3-gr1.jpg}
+\label{test3-gr1}
+\end{center}
+\end{figure}
 
 Fixats aquests dos paràmetres en els valors que han obtingut millor resultat, s'ha ajustat el nombre d'iteracions executant diverses 
-vegades l'algorisme amb un nombre diferent d'iteracions. Es pot veure en el seguent gràfic el millor valor per al nombre d'iteracions.
+vegades l'algorisme amb un nombre diferent d'iteracions. Es pot veure (fig. \ref{test3-gr2}) en el seguent gràfic el millor valor per al nombre d'iteracions.
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=0.6\textwidth]{figures/test3-gr1.jpg}
+ \label{test3-gr2}
+\end{center}
+\end{figure}
 
 
-
-(GRAFIC)
 
 Aleshores, podem comparar els resultats obtinguts amb simulated Annealing i Hill climbing.
 
-Es pot observar que el Simulated Annealing obte millors resultats que el Hill Climbing. Per contra, te un temps d'execució molt mes elevat.
+Es pot observar (fig. \ref{test3-gr3} i \ref{test3-gr4}) que el Simulated Annealing obte millors resultats que el Hill Climbing. Per contra, te un temps d'execució molt mes elevat.
 
-(GRAFIC)
+\begin{figure}[H]
+\begin{center} 
+ \includegraphics[width=0.6\textwidth]{figures/test3-gr3.jpg}
+\label{test3-gr3}
+\end{center}
+\end{figure}
 
-(GRAFIC)
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=0.6\textwidth]{figures/test3-gr4.jpg}
+ \label{test3-gr4}
+\end{center}
+\end{figure}
 
 
 \subsection{Observació de l'evolució temporal del Hill Climbing}

@@ -10,11 +10,15 @@ així doncs un passatger no pot fer el seu trajecte amb més de un conductor.
 Hem de tenir amb compte que els conductors tenen una capacitat \emph{C} limitada del vehicle que no pot ser
 sobrepassada. Això significa que en un mateix instant no hi pot haver més de \emph{C} passatgers dins un vehicle,
 no obstant durant tot el recorregut del conductor pot deixar i recollir diversos passatgers arribant a transportar
-més de \emph{C} passatgers\cite{maxCapaDepenentDeRuta}.
+més de \emph{C} passatgers (fig. \ref{maxCapaDepenentDeRuta}).
 
-\begin{center}[H] \ref{maxCapaDepenentDeRuta}
+\begin{figure}[H]
+\begin{center} 
  \includegraphics[width=0.6\textwidth]{figures/maxCapaDepenentDeRuta.png}
+ \caption{Diferents rutes poden saturar o no el cotxe.}
+  \label{maxCapaDepenentDeRuta}
 \end{center}
+\end{figure}
 
 
 \emph{Tots} els conductors i passatgers han d'arribar \textbf{a temps} al seu destí. Donat que és
@@ -30,7 +34,7 @@ conductor amb espai lliure i que per tant així es minimitza la distància recor
 
 Donat aquest escenari tenim dos criteris de minimització.
 Per una banda volem minimitzar \textbf{la distància total recorreguda} per tots els conductors i per l'altra
-a més de minimitzar la distància també volem minimitzar el \texttt{número de conductors}.
+a més de minimitzar la distància també volem minimitzar el \textbf{número de conductors}.
 
 Hem de tenir amb compte que dins el primer en certa mesura també s'inclou la minimització de conductors
 ja que el còmput de distància es fa per número de conductors i en cas d'haver dos conductors compartint

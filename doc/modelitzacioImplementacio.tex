@@ -1,6 +1,6 @@
 \section{Modelització del problema}
 La pràctica ha estat desenvolupada en \emph{Python} el qual te una estructura de dades molt optimitzada
-i integrada al llenguatge que és el diccionari\footnote{\url{http:\/\/docs.python.org\/library\/stdtypes.html\#dict}}
+i integrada al llenguatge que és el diccionari\footnote{\url{http://docs.python.org/library/stdtypes.html\#dict}}
 el qual dona suport a la majoria d'estructura de dades de la pràctica.
 
 \subsection{Representació de les dades}
@@ -64,7 +64,7 @@ abans d'anar a cercar-ne un de nou.
     ## Dictionary of tuplas name-originPoint pointing destinations
     # i.e. { ("P-0001", [34, 45]) : [22, 56] }
     checkpoints = {}
-    
+
     ## Dictionary of carried passengers pointing to their destinations
     # i.e { ("P-0001" : [22, 56] }
     checkpointsDest = {}
@@ -119,7 +119,6 @@ abans d'anar a cercar-ne un de nou.
     
     route.append((self.getDestination(), "DriverDestination", self.getName()))
     self.calculatedRouteWeight = routeDist + distance(route[-2][0], route[-1][0])
-
     return route
 \end{minted}
 
@@ -144,7 +143,7 @@ es pot guardar a cada passatger i conductor el seu punt d'inici i de destí com 
 Per tant la so\lgem ució no és més que el conjunt de rutes dels conductors que formen part de l'estat.
 
 \subsubsection{Estat}
-L'estat ve determinat per un diccionari de conductors i un de passatgers\ref{maxCapaDepenentDeRuta}.
+L'estat ve determinat per un diccionari de conductors i un de passatgers (fig. \ref{diccionarisPssDrv}).
 Ambdós diccionars estan indexats per els noms de passatger i conductor respectivament però contenen coses diferents.
 
 El diccionari de conductors conté un punter a cada objecte conductor mentre el diccionari
@@ -154,10 +153,13 @@ El fet de tenir un diccionari de passatgers es informació redundant però així
 amb qui va un passatger en temps mig de $O(1)$ en lloc de $O((n_{passatgers} + n_{conductors})/2)$ 
 si haguéssim de recorrer tots els conductors i comprovar tots els passatgers que transporten.
 
-\begin{center}[H]\label{maxCapaDepenentDeRuta}
+\begin{figure}[H]
+\begin{center}
  \includegraphics[width=0.6\textwidth]{figures/diccionarisPssDrv.png}
  \caption{Estructures de dades dins l'estat}
+ \label{diccionarisPssDrv}
 \end{center}
+\end{figure}
 
 
 \subsection{Estat inicial}
@@ -169,7 +171,7 @@ També en ambdós casos l'assignació d'un passatger a un conductor és aleatori
 
 A continuació trobm les dues maneres d'inicialitzar el problema.
 
-\subsubsection{Per saturació de conductors}
+\subsubsection{Per saturació de conductors - \emph{fullFirst}}
 En aquesta inicialització del problema es recorren tots els passatgers assignant-los a conductors. No es passa
 al següent conductor fins que aquest no arriba a un determinat nombre prefixat. Així doncs a un conductor no se
 li assignara un passatger fins que tots els anteriors no siguin \emph{saturats}. Més endavant veurem
@@ -177,10 +179,12 @@ que el control de si el cotxe esta massa ple en algun instant es detectat per l'
 durant l'execució de la pràctica hi poden haver conductors que transportin més passatgers dels que
 caben al vehicle.
 
-\begin{center}[H]\label{maxCapaDepenentDeRuta}
- \includegraphics[width=0.6\textwidth]{figures/fullFirst.png}
- \caption{Inicialització full first}
-\end{center}
+% \begin{figure}[H]
+% \begin{center}\label{fullFirst}
+%  \includegraphics[width=0.6\textwidth]{figures/fullFirst.png}
+%  \caption{Inicialització full first}
+% \end{center}
+% \end{figure}
 
 
 Amb aquesta inicialització cap passatger queda sense transport, molt possiblement els condcutros escedeixin
@@ -188,7 +192,7 @@ la seva distància màxima i gairebé sempre hi haurà conductors que no transpo
 Dit esces de la capacitat màxima es veura reflectit molt negativament a l'heurístic.
 
 
-\subsubsection{Evitant deixar conductors buits}
+\subsubsection{Evitant deixar conductors buits - \emph{allOneFirst}}
 L'altre alternativa plantejada per la inicialització és recórrer tots els passatgers i assignar-los a conductors
 de tal manera que no s'assigni un segon passatger a un conductor mentre hi hagin conductors buits.
 D'aqueta manera s'afavoreix que les rutes dels conductors siguin més curtes i que hagi més
