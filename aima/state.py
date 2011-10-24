@@ -254,7 +254,7 @@ class State(object):
       ori = d.getOrigin()
       dst = d.getDestination()
       line = "driver:\t" + d.getName() + "\t" + str(ori[0]) + "\t" + str(ori[1])
-      line +=                          + "\t" + str(dst[0]) + "\t" + str(dst[1])
+      line +=                            "\t" + str(dst[0]) + "\t" + str(dst[1])
       line += "\t"
       
       line = line + str(d.getMaxSpace()) + "\n"
