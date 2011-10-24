@@ -1,3 +1,11 @@
+Per a estimar la diferencia entre la distancia total recorreguda per a Hill Climbing i Simulated Annealing per als dos heuristics,
+hem realitzat 4 tests, cada un amb un heuristic i algorisme de cerca diferent, i l'hem executat 10 cops cada un.
+Podem observar la taula amb els resultats (TAULA X:X):
+
+
+
+
+
 D'aquests resultats observam que l'algorisme Hill Climbing troba millors solucions que el Simulated Annealing si disposa d'un temps similar.
 Suposam que aumentant el nombre d'iteracions del Simulated Annealing podriem aconseguir millors resultats que amb el Hill climbing.
 
