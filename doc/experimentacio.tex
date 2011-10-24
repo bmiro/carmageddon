@@ -5,6 +5,30 @@
 \subsection{Se\lgem ecció de la generació de l'estat inicial}
 
 \subsection{Se\lgem ecció dels paràmetres del Simulated Anealing}
+Per a determinar els paràmetres que obtenen un millor resultat per a l'execució de l'algorisme \emph{simulated annealing},
+hem executat reiterades vegades l'algorisme amb diferents parametres per a \texttt{lambda} i \texttt{k}, concretament s'ha fet amb
+\texttt{[0.1,0.01,0.001,0.0001]} i \texttt{[1,5,25,125]} repectivament, fixant el nombre d'iteracions en 2000.
+
+El millor resultat s'ha obtingut amb els parametres [p1] [p2], com indica el seguent grafic.
+
+(GRAFIC)
+
+Fixats aquests dos paràmetres en els valors que han obtingut millor resultat, s'ha ajustat el nombre d'iteracions executant diverses 
+vegades l'algorisme amb un nombre diferent d'iteracions. Es pot veure en el seguent gràfic el millor valor per al nombre d'iteracions.
+
+
+
+(GRAFIC)
+
+Aleshores, podem comparar els resultats obtinguts amb simulated Annealing i Hill climbing.
+
+Per una banda pot observar que el simulated Annealing obté un resultat menys costós en termes de nombre de quilometres de la solucio,
+ pero amb un cost temporal mes elevat.
+
+(GRAFIC)
+
+(GRAFIC)
+
 
 \subsection{Observació de l'evolució temporal del Hill Climbing}
 
