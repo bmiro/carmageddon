@@ -170,8 +170,22 @@ def test2_Inits(operatorSet="1"):
   
 
 def test3_SimulatedAnnealingParams():
-  print "Test 3"
+  lK = [1,5,25,125]
+  ll = [0.1,0.01,0.001,0.0001]
 
+  for kParameter in lK:
+    for lParameter in ll:
+      lcost = []
+      for i in xrange(10):  
+	s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
+	c = Carmageddon(s, "km", "1")
+	finalState = c.run('hillClimbing',kParameter,lParameter,100)
+	lcost.append(c.printableHeuristic(finalState))
+      print "Average solution cost for params k = "+str(kParameter)+", lambda = "+str(lParameter)+" :"
+      print "\t",reduce(lambda x, y: x + y, lcost)/len(lcost)
+      print ""
+      
+       
 def test4_TemporalEvolution(operatorSet="1", initDistrib="fullFirst"):
   print "Starting test at: ", datetime.now()
   
@@ -238,7 +252,7 @@ if __name__ == "__main__":
     print "\t # Optimizer can be km or drv"
     print "\t # OperatorSet can be 1 or 2"
     print "\t # Algorism can be hillClimbing or simulatedAnnealing"
-    print "\t Example: pypy carmageddon.py 200 100 allOneFirst km 1 hillClimbing"
+    print "\t Example: pypy prog.py 200 100 allOneFirst km 1 hillClimbing"
     print ""
     print "or"
     print "\t python carmageddon.py configfile.cfg Optimizer OperatorSet Algorism"
@@ -246,7 +260,7 @@ if __name__ == "__main__":
     print "\t # Optimizer can be km or drv"
     print "\t # OperatorSet can be 1 or 2"
     print "\t # Algorism can be hillClimbing or simulatedAnnealing"
-    print "\t Example: pypy carmageddon.py states.cfg drv 2 simulatedAnnealing"
+    print "\t Example: pypy prog.py states.cfg drv 2 simulatedAnnealing"
 
     exit()
     
