@@ -19,6 +19,7 @@ NP = 100
 ND = 100
 
 
+
 """ Returns the best operator """
 def test1_Operators():
   ############################################################################
@@ -41,7 +42,7 @@ def test1_Operators():
     tf = datetime.now()    
     op1Time.append(tf - to)
     # Discard outlayers
-    if True:
+    if finalState.isGood():
       op1Drivers.append(finalState.getNumDrivers())
       op1Heuristic.append(c.printableHeuristic(finalState))
     i += 1
@@ -63,7 +64,7 @@ def test1_Operators():
     tf = datetime.now()    
     op2Time.append(tf - to)
     # Discard outlayers
-    if True:
+    if finalState.isGood():
       op2Drivers.append(finalState.getNumDrivers())
       op2Heuristic.append(c.printableHeuristic(finalState))
     i += 1
