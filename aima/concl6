@@ -1,0 +1,8 @@
+D'aquests resultats observam que l'algorisme Hill Climbing troba millors solucions que el Simulated Annealing si disposa d'un temps similar.
+Suposam que aumentant el nombre d'iteracions del Simulated Annealing podriem aconseguir millors resultats que amb el Hill climbing.
+
+S'observa també que els dos heuristics funcionen com esperavem en el cas de Hill Climbing,(disminuint el nombre de km en un cas
+i el nombre de km i conductors en l'altre), pero en el Simulated Annealing s'obté un resultat similar.
+Es possible que aixo sigui degut a que els heuristics s'han ponderat utilitzat Hill Climbing.
+
+En aquest experiment sembla que ens decantariem en favor de Hill Climbing
