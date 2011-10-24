@@ -20,7 +20,7 @@ En cas que sigui un test amb diferents opcions per defecte s'executa amb la opci
 una millor execució. Per tal de canviar dites opcions s'ha d'editar el fitxer prog.py anant
 a la capçalera de la funció i canviant el paràmetre per defecte.
 
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[fontsize=\codeSize]{python}
 def test4_TemporalEvolution(operatorSet="1", initDistrib="allOneFirst"):
    ...
 \end{minted}
@@ -31,12 +31,13 @@ guardat i l'altre espeficicar tots els paràmetres.
 
 Els paràmetres per a fer una execució simple són:
 
-\begin{minted}[fontsize=\small]{bash}
+\begin{minted}[fontsize=\codeSize]{bash}
 pypy prog.py N M inicialitzacio heuristic conjuntOperadors algorismeCerca
+\end{minted}
 
 \small
 \begin{center}
-\begin{tabularx}{\textwidth}{llX}
+\begin{tabularx}{\textwidth}{l|lX}
 \textbf{parametre}  & \textbf{Valors} & \textbf{Descripció}\\
 \midrule
 N  & valor enter & Numero d'usuaris del servei\\
@@ -60,7 +61,7 @@ algorismeCerca & hillClimbing & Executa un Hill Climbing\\
 
 Els paràmetres per fer una execució des de un fitxer són:
 
-\begin{minted}[fontsize=\small]{bash}
+\begin{minted}[fontsize=\codeSize]{bash}
 pypy prog.py fitxer.cfg heursistic conjuntOperadors algorismeCerca
 \end{minted}
 
@@ -70,4 +71,7 @@ iguals a l'apartat anterior.
 \footnotetext{\url{http://python.org}}
 \footnotetext{El lloc oficial és \url{http://pypy.org/} però es pot
 trobar precompilat i empaquetat per Debian/Ubuntu a \url{https://launchpad.net/~pypy/+archive/ppa}}
+
+Després de qualsevol execució simple es printeja la comanda per imprimir el fitxer de log
+de manera formatada mostrant la ruta de cada conductor.
 
