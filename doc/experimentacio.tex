@@ -5,33 +5,46 @@ Per a realitzar l'experiment 1 ha fixat en nombre d'usuaris a 200 i el nombre de
 Posteriorment s'ha executat 10 cops amb cada un dels conjunts d'operadors.
 
 
-Els resultats son:
-        El conjunt d'operadors 1 produeix millor resultat que el conjunt 2.
-        Suposam que aixo es degut a que l'operador genera mes estats per a cada iteració.
+Els resultats són ja donats les mitjes són:
 
-        No hi ha diferencia significativa en el temps d'execució amb els dos conjunts d'operadors (comprovar).
-        Suposam que aquest resultat es degut a que, encara que el conjunt d'operadors 2 genera menys estats
-        que el conjunt 1, les operacions son mes costoses.
+\begin{center}
+\begin{tabular}{l|cccc}
+         & Temps & Conductors & Distància & Estats (aprox)\\
+\hline
+Conjunt 1 & 0:02:14 & 98 & 1009304 & 9950 \\
+Conjunt 2 & 0:01:30 & 98 & 1113629 & 5200
+\end{tabular}
+\end{center}
 
 
+El conjunt d'operadors 1 produeix millor resultat que el conjunt 2.
+Suposam que aixo es degut a que l'operador genera mes estats (gairebé el doble) per a cada iteració i simplement a més estats per triar s'agafen més bons.
 
-        (TAULA AMB ELS RESULTATS)
+Es pot veure que el conjunt 2 es notablement més ràpid però no en la mateix proporció que els estats generats. Això es deu a que aquests estats
+son més costosos, entre d'altres coses perque un intercanvi implica dues operacions mentre que un canvi només una, entre d'altres detalls d'ambdos operadors.
+
 
 \subsection{Se\lgem ecció de la generació de l'estat inicial}
-per arealitzar l'experiment 2 s'ha fixat el nombre d'usuaris i el nombre de conductors com a lanterior experiment.                                                                                   
+Per realitzar l'experiment 2 s'ha fixat el nombre d'usuaris i el nombre de conductors com a l'anterior experiment.                                                                                   
 S'ha executat 10 cops amb cada estrategia de generació inicial.
                                                                                                                                                                                                      
-Els resultats son:                                                                                                                                                                                   
-        La estrategia de generació inicial (Repartir tots els conductors) produeix millors resultats.
-                                                                                                                                                                                                     
-        No existeix diferencia en el cost temporal de generacio de les solucions inicials, ja que                                                                                                    
-        ambdues estrategies son molt simples asimptoticament theta(n)                                                                                                                                
-                                                                                                                                                                                                     
+Els resultats són:
 
 
-        (TAULA AMB ELS RESULTATS)
-
-
+\begin{center}
+\begin{tabular}{l|ccc}
+         & Temps & Conductors & Distància\\
+\hline
+\emph{all one first} & 0:01:51 & 98 & 974543  \\
+\emph{full first} & 0:02:08 & 98 & 1030151 
+\end{tabular}
+\end{center}
+                                                                                                                                                                                  
+La estrategia de generació inicial \emph{all one first} produeix millors resultats tant en temps com distància,
+aquest fet es deu a que te els passatgers més repartits en contraposicó al \emph{full first} que els te
+condensants i tarda més en repartir-los de manera adequada. De fet no te gaire sentit que els conductors
+viatgin buits a l'inici ja que hem descartat el conjunt d'operadors que tal vegada haguessin pogut
+jugar un bon paper amb el \emph{full first}.
 
 \subsection{Se\lgem ecció dels paràmetres del Simulated Anealing}
 Per a determinar els paràmetres que obtenen un millor resultat per a l'execució de l'algorisme \emph{simulated annealing},
@@ -58,10 +71,8 @@ vegades l'algorisme amb un nombre diferent d'iteracions. Es pot veure (fig. \ref
 \end{figure}
 
 
+Aleshores, podem comparar els resultats obtinguts amb simulated Annealing i Hill climbing (fig. \ref{test3-gr3} i \ref{test3-gr4}).
 
-Aleshores, podem comparar els resultats obtinguts amb simulated Annealing i Hill climbing.
-
-Es pot observar (fig. \ref{test3-gr3} i \ref{test3-gr4}) que el Simulated Annealing obte millors resultats que el Hill Climbing. Per contra, te un temps d'execució molt mes elevat.
 
 \begin{figure}[H]
 \begin{center} 
@@ -78,8 +89,19 @@ Es pot observar (fig. \ref{test3-gr3} i \ref{test3-gr4}) que el Simulated Anneal
 \end{center}
 \end{figure}
 
+Es pot observar que el Simulated Annealing obte millors resultats que el Hill Climbing. Per contra, té un temps d'execució molt més elevat.
+
 
 \subsection{Observació de l'evolució temporal del Hill Climbing}
+Per a l'experiment 4 s'ha fixat el nombre d'usuaris i el nombre de conductors com a l'experiment inicial.
+En aquest cas, s'utilitza el conjunt d'operadors 1, i l'algorisme de generacio d'estats inicials \emph{all one first}.
+S'ha executat 10 vegades cada simulacio.
+
+Es pot observar com el temps d'execucio segueix clarament un patró quadràtic ascendent en funció del nombre d'usuaris
+del servei.
+
+
+
 
 \subsection{Se\lgem ecció dels valors de ponderació del segon heurístic}
 
