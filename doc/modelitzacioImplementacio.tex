@@ -1,6 +1,6 @@
 \section{Modelització del problema}
 La pràctica ha estat desenvolupada en \emph{Python} el qual te una estructura de dades molt optimitzada
-i integrada al llenguatge que és el diccionari\footnote{\url{http://docs.python.org/library/stdtypes.html#dict}}
+i integrada al llenguatge que és el diccionari\footnote{\url{http:\/\/docs.python.org\/library\/stdtypes.html\#dict}}
 el qual dona suport a la majoria d'estructura de dades de la pràctica.
 
 \subsection{Representació de les dades}
@@ -112,17 +112,116 @@ TODO diagrama
 S'han establert quatre operadors de transformació agrupats en dos conjunts. Així doncs en la fase d'experimentació
 es triara si l'agafa el conjunt 1 o el conjunt 2.
 
+En el codi és pot veure que els operadors són funcions que retornen un iterador \texttt{yield} en \emph{pyhton},
+de tal manera que així s'evita tenir-los tots en memòria i a cada crida de la funció es retorna el següent.
+
 \subsubsection{Conjunt 1}
+El conjunt 1 preten ser un conjunt minimalista de les operacions més bàsiques que podem fer amb el nostre plantejament
+de la pràctica.
 \subsubsection{Canvi de passatger de vehicle}
+Aquest operador senzillament canvia un passatger de un vehicle a un altre, això vol dir que si en un estat
+tenim $P$ passatgers i $C$ conductors podem generar un total de $P\times(C-1)$ estats successors.
+
+\begin{minted}[frame=lines, fontsize=\small]{python}
+def genPassengerSwitches(self, state):
+  #Gens all the passenger changes (gens at most nPassengers*nDrivers states)
+  for p in state.getPassengers():
+    currentDrv = state.whoPickuped(p)  
+    for d in state.getDrivers().iteritems():
+      if d[0] != currentDrv :
+	#Switch passenger to this driver
+	newState = copy(state)
+	newState.setDrivers(copy(state.getDrivers()))
+	newState.setPassengers(copy(state.getPassengers()))
+	newState.switchPassenger(p, d[0])
+	yield ("sw", newState)
+\end{minted}
+
+Cal notar que aquest operador com a efecte pot anar buidant un conductor fins que es quedi sense passatgers,
+cos útil quan també disposam del següent operador.
 
 \subsubsection{Eliminació d'un conductor buit}
+Aquest operador consisteix en e\lgem imiar un conductor que no transporta ningú i posar-lo com a passatger
+en un dels altres conductors. Així doncs si en un estat tenim $C$ conductors $B$ dels quals són buits
+podem generar $B*(C-1)$ estats.
+
+\begin{minted}[frame=lines, fontsize=\small]{python}
+def genSoftDriverDegradations(self, state):
+  #Gens all the empty driver deletions
+  for d in state.getDrivers().itervalues():
+    if d.isEmpty():
+      for carrier in state.getDrivers().iteritems():
+	if carrier[0] != d.getName():
+	  newState = copy(state)
+	  newState.setDrivers(copy(state.getDrivers()))
+	  newState.setPassengers(copy(state.getPassengers()))
+	  newState.degradateDriver(d.getName(), carrier[0])
+	  yield ("dgrd", newState)
+	  break
+\end{minted}
+
+En la so\lgem ució els passatgers que eren originalment conductors tenen el nom de la manera \texttt{PDnnnn},
+on s'ha substiutit el guió \texttt{P-nnnn} per una \emph{D} de \emph{driver}.
 
 \subsubsection{Conjunt 2}
-\subsubsection{Intercanvi de un passatger per un altre}
-de vehicles diferents
+A diferència del primer conjunt d'operadors aquest està format per operacions compostes.
+
+\subsubsection{Intercanvi d'un passatger per un altre}
+En aquest operador s'intercanvia un passatger per un altre que no sigui del mateix conductor.
+Així doncs si tenim $P$ passatgers i $F$ conductors no buits podem generar $P \times (F-1)$ estats. 
+
+\begin{minted}[frame=lines, fontsize=\small]{python}
+  def genPassengerSwaps(self, state):    
+    ltemp = list(state.getPassengers())
+    for p1 in ltemp:
+      for p2 in xrange(it,len(ltemp)):
+        newState = copy(state)
+        newState.setDrivers(copy(state.getDrivers()))
+        newState.setPassengers(copy(state.getPassengers()))
+        newState.swapPassengers(p1,ltemp[p2])
+        yield ("swap", newState)
+\end{minted}
+
+Hem de notar aque amb aquest operador no es buiden vehicles però tampoc se n'omplen de nous.
+Així doncs aquesta funció amb una inicialització \emph{full first} podria semblar que no ha de funcionar
+gaire bé ja que hi hauria tot un conjunt de conductors buits que sols es transportarien a ells mateixos.
 
 
 \subsubsection{Eliminació d'un conductor no buit}
+Aquest operador s'elimina un conductor qualsevol i es distribueixen els seus passatgers i ell mateix
+en diferents conductors de manera aleatoria.
+
+\begin{minted}[frame=lines, fontsize=\small]{python}
+  def genHardDriverDegradations(self, state):
+    #Gens all the driver deletions inserting it in the first not full driver.
+    for d in state.getDrivers().itervalues():
+      for carrier in state.getDrivers():
+        if carrier != d.getName():
+          newState = copy(state)
+          newState.setDrivers(copy(state.getDrivers()))
+          newState.setPassengers(copy(state.getPassengers()))
+          # Distribution of passengers in other drivers
+          for p in d.getPassengers():
+            for anotherDriver in newState.getDrivers():
+              if anotherDriver != d.getName():
+          newState.switchPassenger(p, anotherDriver)
+          # Puts the old driver as a passenger with the carrier driver.
+          newState.degradateDriver(d.getName(), carrier)
+          yield ("dgrd", newState)
+          break
+\end{minted}
+
+En principi pot semblar irracional llevar un conductor que podria estar ple però ha de ser l'heurístic
+que valori si realment aquell canvi ha valgut la pena.
+A l'apartat anterior es mencionava que aquest conjunt d'operadors podia no presentar bons resultats
+combinat amb una inicialització \emph{full first} ja que els conductors buits nomes es transportarien
+a ells mateixos. El cas es que amb aquest segon operador es dissolen aquests conductors saturats
+repartit a tothom per les demes ja siguin buits o plens. Tal vegada inicialment els resultats siguin
+mes dolents pero aquestes dissolucions donen mes moviment als passatgers que podrien acabar amb millors
+resultats.
+
+
+
 
 \subsection{Heurístic}
 Es disposa de dos heurístics l'un per minimitzar el numero total de kilòmetres recorreguts i l'altre per
