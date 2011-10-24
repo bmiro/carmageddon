@@ -35,9 +35,10 @@ def test1_Operators():
     finalState = c.run("hillClimbing")
     tf = datetime.now()    
     op1Time.append(tf - to)
-    
-    op1Drivers.append(finalState.getNumDrivers())
-    op1Heuristic.append(c.printableHeuristic(finalState))
+    # Discard outlayers
+    if finalState.isGood():
+      op1Drivers.append(finalState.getNumDrivers())
+      op1Heuristic.append(c.printableHeuristic(finalState))
     i += 1
    
   ################################### Set 2 ###################################
@@ -54,9 +55,10 @@ def test1_Operators():
     finalState = c.run("hillClimbing")
     tf = datetime.now()    
     op2Time.append(tf - to)
-    
-    op2Drivers.append(finalState.getNumDrivers())
-    op2Heuristic.append(c.printableHeuristic(finalState))
+    # Discard outlayers
+    if finalState.isGood():
+      op2Drivers.append(finalState.getNumDrivers())
+      op2Heuristic.append(c.printableHeuristic(finalState))
     i += 1
     
   
@@ -112,9 +114,10 @@ def test2_Inits(operatorSet="1"):
     finalState = c.run("hillClimbing")
     tf = datetime.now()    
     op1Time.append(tf - to)
-    
-    op1Drivers.append(finalState.getNumDrivers())
-    op1Heuristic.append(c.printableHeuristic(finalState))
+    # Discard outlayers
+    if finalState.isGood():
+      op1Drivers.append(finalState.getNumDrivers())
+      op1Heuristic.append(c.printableHeuristic(finalState))
     i += 1
    
   ################################# fullfirst ################################
@@ -131,9 +134,10 @@ def test2_Inits(operatorSet="1"):
     finalState = c.run("hillClimbing")
     tf = datetime.now()    
     op2Time.append(tf - to)
-    
-    op2Drivers.append(finalState.getNumDrivers())
-    op2Heuristic.append(c.printableHeuristic(finalState))
+    # Discard outlayers
+    if finalState.isGood():
+      op2Drivers.append(finalState.getNumDrivers())
+      op2Heuristic.append(c.printableHeuristic(finalState))
     i += 1
     
   ## Stats
@@ -198,7 +202,7 @@ def test3_SimulatedAnnealingParams():
 
       
        
-def test4_TemporalEvolution(operatorSet="1", initDistrib="fullFirst"):
+def test4_TemporalEvolution(operatorSet="1", initDistrib="allOneFirst"):
   print "Starting test at: ", datetime.now()
   
   N = 100
@@ -229,7 +233,7 @@ def test4_TemporalEvolution(operatorSet="1", initDistrib="fullFirst"):
 def test5_SecondHeuristicPonderation():
   pass
 
-def test6_HCvsSA(operatorSet="1", initDistrib="fullFirst", k=1, lam=0.001, lim=100):
+def test6_HCvsSA(operatorSet="1", initDistrib="allOneFirst", k=1, lam=0.001, lim=100):
   ############################################################################
   ############################## Test executions #############################
   ############################################################################
@@ -249,10 +253,11 @@ def test6_HCvsSA(operatorSet="1", initDistrib="fullFirst", k=1, lam=0.001, lim=1
     finalState = c.run("hillClimbing")
     tf = datetime.now()    
     hcKmTime.append(tf - to)
-    
-    hcKmDrivers.append(finalState.getNumDrivers())
-    hcKmDistance.append(finalState.getKm())
-    hcKmHeuristic.append(c.printableHeuristic(finalState))
+    # Discard outlayers
+    if finalState.isGood():
+      hcKmDrivers.append(finalState.getNumDrivers())
+      hcKmDistance.append(finalState.getKm())
+      hcKmHeuristic.append(c.printableHeuristic(finalState))
     i += 1
    
   ################################# HC - veh ################################
@@ -270,10 +275,11 @@ def test6_HCvsSA(operatorSet="1", initDistrib="fullFirst", k=1, lam=0.001, lim=1
     finalState = c.run("hillClimbing")
     tf = datetime.now()    
     hcVehTime.append(tf - to)
-    
-    hcVehDrivers.append(finalState.getNumDrivers())
-    hcVehDistance.append(finalState.getKm())
-    hcVehHeuristic.append(c.printableHeuristic(finalState))
+    # Discard outlayers
+    if finalState.isGood():
+      hcVehDrivers.append(finalState.getNumDrivers())
+      hcVehDistance.append(finalState.getKm())
+      hcVehHeuristic.append(c.printableHeuristic(finalState))
     i += 1
     
   ################################# SA - km ################################
@@ -291,10 +297,11 @@ def test6_HCvsSA(operatorSet="1", initDistrib="fullFirst", k=1, lam=0.001, lim=1
     finalState = c.run("simulatedAnnealing", k, lam, lim)
     tf = datetime.now()    
     saKmTime.append(tf - to)
-    
-    saKmDrivers.append(finalState.getNumDrivers())
-    saKmDistance.append(finalState.getKm())
-    saKmHeuristic.append(c.printableHeuristic(finalState))
+    # Discard outlayers
+    if finalState.isGood():
+      saKmDrivers.append(finalState.getNumDrivers())
+      saKmDistance.append(finalState.getKm())
+      saKmHeuristic.append(c.printableHeuristic(finalState))
     i += 1
     
   ################################# SA - veh ################################
@@ -312,10 +319,11 @@ def test6_HCvsSA(operatorSet="1", initDistrib="fullFirst", k=1, lam=0.001, lim=1
     finalState = c.run("simulatedAnnealing", k, lam, lim)
     tf = datetime.now()    
     saVehTime.append(tf - to)
-    
-    saVehDrivers.append(finalState.getNumDrivers())
-    saVehDistance.append(finalState.getKm())
-    saVehHeuristic.append(c.printableHeuristic(finalState))
+    # Discard outlayers
+    if finalState.isGood():
+      saVehDrivers.append(finalState.getNumDrivers())
+      saVehDistance.append(finalState.getKm())
+      saVehHeuristic.append(c.printableHeuristic(finalState))
     
   ## Stats
   hcKmAvrTime = reduce(lambda x, y: x + y, hcKmTime)/len(hcKmTime)
