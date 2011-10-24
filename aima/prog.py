@@ -431,11 +431,14 @@ if __name__ == "__main__":
     
   c = Carmageddon(s, optimizer, operatorSet)
   resul = c.run(alg)
+  
+  logFileName = "carmageddon-%s.log" % str(datetime.now()).replace(' ','_')
+  resul.saveToFile(logFileName)
    
   print resul
    
   print "Log file saved at carmageddon.log it can be open and parsed using the showLog.py util:\n"
-  print "\t\tpython showLog.py carmageddon.log\n"
+  print "\t\tpython showLog.py %s\n" % logFileName
 
   
   

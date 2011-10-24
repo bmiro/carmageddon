@@ -238,8 +238,8 @@ class State(object):
       d = self.__carmageddons[drv]
       ori = d.getOrigin()
       dst = d.getDestination()
-      line = "driver:\t" + d.getName() + "\t" + str(ori[X]) + "\t" + str(ori[Y])
-      line =                      line + "\t" + str(dst[X]) + "\t" + str(dst[Y]) + "\t"
+      line = "driver:\t" + d.getName() + "\t" + str(ori[0]) + "\t" + str(ori[0])
+      line =                      line + "\t" + str(dst[0]) + "\t" + str(dst[0]) + "\t"
       
       line = line + str(d.getMaxSpace()) + "\n"
       f.write(line)
@@ -253,8 +253,8 @@ class State(object):
       p = self.__passengers[pss][0]
       ori = p.getOrigin()
       dst = p.getDestination()
-      line = "passenger:\t" + p.getName() + "\t" + str(ori[X]) + "\t" + str(ori[Y])
-      line =                         line + "\t" + str(dst[X]) + "\t" + str(dst[Y]) + "\n"
+      line = "passenger:\t" + p.getName() + "\t" + str(ori[0]) + "\t" + str(ori[1])
+      line =                         line + "\t" + str(dst[0]) + "\t" + str(dst[1]) + "\n"
       f.write(line)
       
       
@@ -319,7 +319,7 @@ class State(object):
         for p in self.__carmageddons[c].getPassengers():
           s += "\t\t" + p + "\n"
           
-    s += "The amount of distance is " + str(self.getKm())
+    s += "\n\nThe amount of distance is " + str(self.getKm())
     s += " and there are " + str(self.getNumDrivers()) + " drivers\n\n"
     if self.getKm() > ANIMALADA:
       s += "\tTHIS IS A BAD RESULT!! THERE ARE DRIVERS THAT ARRIVES TOO LATE!!\n"
