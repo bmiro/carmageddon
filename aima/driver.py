@@ -7,12 +7,12 @@ from datetime import datetime
 
 # Macros for easy indexation of coor tuples.
 # i.e. a[X] -> xcoor
-MAX_KM = 3000000000
+INTMAX = 3000000000
 
 def distance(src, dst):
   return abs(src[0] - dst[0]) + abs(src[1] - dst[1])
 
-def distanceRara(src,dst):
+def distanceRara(src, dst):
   if src[1] == "fi":
     src = src[0]
   return abs(src[0] - dst[0]) + abs(src[1] - dst[1])
@@ -97,49 +97,52 @@ class Driver(Passenger):
 
     # Inserting all origin points
     for p in self.__passengers:
-      checkpoints[state.getPassengers()[p][0].getOrigin()] = state.getPassengers()[p][0].getDestination()
+      src = state.getPassengers()[p][0].getOrigin()
+      dst = state.getPassengers()[p][0].getDestination()
+      checkpoints[(p, src)] = dst
 
-    current = (self.getOrigin(), "DriverOrigin")
+    current = (self.getOrigin(), "DriverOrigin", self.getName())
     route.append(current)
     npass = 0
     routeDist = 0
-    #temp = datetime.now()
     while checkpoints or checkpointsDest:
       # Searching nearst point
-      dmin = MAX_KM
+      dmin = INTMAX
       nearest = None
 
-      for c in checkpointsDest.keys():
-	d = distance(current[0], c)
+      for (n, p) in checkpointsDest.iteritems():
+        d = distance(current[0], p)
         if d < dmin:
           dmin = d
-          nearest = c
+          nearest = p
+          name = n
 
       if npass < self.__maxSpace:
-        for c in checkpoints.keys():
-          d = distance(current[0], c)
-	  if d < dmin:
-	    dmin = d
-	    nearest = c
+        for (n, p) in checkpoints.keys():
+          d = distance(current[0], p)
+          if d < dmin:
+            dmin = d
+            nearest = p
+            name = n
 
-      if nearest in checkpoints:
-        checkpointsDest[checkpoints[nearest]] = True
-        checkpoints.pop(nearest)
+      if (name, nearest) in checkpoints:
+        checkpointsDest[name] = checkpoints[(name, nearest)]
+        checkpoints.pop((name, nearest))
         event = "PickupPassenger"
         npass += 1
       else:
         event = "LeavePassenger"
-        checkpointsDest.pop(nearest)
+        checkpointsDest.pop(name)
         npass -= 1
         
       routeDist += d
-      current = (nearest, event)
+      current = (nearest, event, name)
       route.append(current)
     
     #temp =  datetime.now() -temp
     #Driver.t += temp.microseconds
     
-    route.append((self.getDestination(), "DriverDestination"))
+    route.append((self.getDestination(), "DriverDestination", self.getName()))
     self.calculatedRouteWeight = routeDist + distance(route[-2][0], route[-1][0])
 
     return route
@@ -172,7 +175,7 @@ class Driver(Passenger):
     soltmp = []
     soltmp.append(lchecks[0])
 
-    self.permuta(lchecks,0,lmarques,soltmp,sol,len(lchecks),0,MAX_KM,self.getDestination()) 
+    self.permuta(lchecks,0,lmarques,soltmp,sol,len(lchecks),0,INTMAX,self.getDestination()) 
 
     sol = sol[-1]
 
@@ -221,10 +224,21 @@ class Driver(Passenger):
           soltmp.pop()
         lmarques[x] = False
 
-
   def getRouteWeight(self,state):
     if self.calculatedRouteWeight != None:
       return self.calculatedRouteWeight
 
     route = self.getRoute(state)
     return self.calculatedRouteWeight
+
+  def printRoute(self, state):
+    s = "Driver %s route:\n" % self.getName() 
+    route = self.getRoute(state)
+    print route[0]
+    for (point, event, name) in route:
+      if "Passenger" in event:
+        s += "\t\t" + event + " " + name + " at point " + str(point) + "\n"
+      else:
+        s += "\t\t" + event + " at point " + str(point) + "\n"
+    s += "This driver covers %f km\n" % (self.getRouteWeight(state)/1000.0)
+    return s

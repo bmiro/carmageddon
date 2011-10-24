@@ -238,8 +238,8 @@ class State(object):
       d = self.__carmageddons[drv]
       ori = d.getOrigin()
       dst = d.getDestination()
-      line = "driver:\t" + d.getName() + "\t" + str(ori[0]) + "\t" + str(ori[0])
-      line =                      line + "\t" + str(dst[0]) + "\t" + str(dst[0]) + "\t"
+      line = "driver:\t" + d.getName() + "\t" + str(ori[0]) + "\t" + str(ori[1])
+      line =                      line + "\t" + str(dst[0]) + "\t" + str(dst[1]) + "\t"
       
       line = line + str(d.getMaxSpace()) + "\n"
       f.write(line)
@@ -301,7 +301,7 @@ class State(object):
 	print passengers
 	for p in passengers:
 	  self.__carmageddons[driver].pickupPassenger(p)
-	  self.__passengers[p][1] = driver
+	  self.__passengers[p] = (self.__passengers[p][0], driver)
 	
     f.close()
 
