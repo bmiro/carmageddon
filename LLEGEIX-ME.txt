@@ -1,0 +1,24 @@
+La pràctica requereix un itèrpret de python, es recomana el Pypy disponible a: http://pypy.org/.
+
+Per executar un Hill Climbing amb n=100, m=50, optimitzant la distància,
+amb el conjunt d'operadors 1 és fa aixi i la inicialització fullFirst:
+
+  pypy prog.py 100 50 fullFirst km 1 hillClimbing
+
+En cas de voler executar-se algun dels 7 tests, en l'exemple el 1:
+  
+  pypy prog.py 1
+
+Per veure la llista de opcions del programa i diferents paràmetres sols
+fa falte executar-lo sense paràmetres:
+
+  pypy prog.py
+
+A la documentació hi ha un apartat dedicat a l'explicació dels paràmetres
+i aquesta interficie consola. (Secció Manual d'usuari)
+
+
+Miquel Mas Fiol i Bartomeu Miró Mateu
+IA Quatrimestre de tardor UPC 2011
+
+

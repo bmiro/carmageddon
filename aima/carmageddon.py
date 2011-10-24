@@ -27,8 +27,6 @@ class Carmageddon(Problem):
     heuristic_dict = {"km" : self.heuristic_km, "veh" : self.heuristic_veh, "km_an":self.heuristic_km_annealing}
     self.value = heuristic_dict[h]
   
-
-  
   def run(self, alg="hillClimbing", k=None, lam=None, lim=None):
     if alg == "hillClimbing":
       return hill_climbing(self)
@@ -70,7 +68,6 @@ class Carmageddon(Problem):
 
   # Operator
   def genPassengerSwaps(self, state):    
-    it = 0
     ltemp = list(state.getPassengers())
     for p1 in ltemp:
       for p2 in xrange(it,len(ltemp)):
@@ -78,9 +75,7 @@ class Carmageddon(Problem):
         newState.setDrivers(copy(state.getDrivers()))
         newState.setPassengers(copy(state.getPassengers()))
         newState.swapPassengers(p1,ltemp[p2])
-        #if newState.getKm() <= MAX_KM:
         yield ("swap", newState)
-      it += 1
     
   # Operator
   def genPassengerSwitches(self, state):
@@ -90,17 +85,16 @@ class Carmageddon(Problem):
       
       for d in state.getDrivers().iteritems():
         if d[0] != currentDrv :
-	  #Switch passenger to this driver
+          #Switch passenger to this driver
           newState = copy(state)
           newState.setDrivers(copy(state.getDrivers()))
           newState.setPassengers(copy(state.getPassengers()))
           newState.switchPassenger(p, d[0])
-          #if newState.getKm() <= MAX_KM:
           yield ("sw", newState)
           
   # Operator
   def genSoftDriverDegradations(self, state):
-    #Gens all the driver deletions inserting it in the first not full driver.
+    #Gens all the empty driver deletions
     for d in state.getDrivers().itervalues():
       if d.isEmpty():
         for carrier in state.getDrivers().iteritems():
@@ -117,19 +111,19 @@ class Carmageddon(Problem):
     #Gens all the driver deletions inserting it in the first not full driver.
     for d in state.getDrivers().itervalues():
       for carrier in state.getDrivers():
-	if carrier != d.getName():
-	  newState = copy(state)
-	  newState.setDrivers(copy(state.getDrivers()))
-	  newState.setPassengers(copy(state.getPassengers()))
-	  # Distribution of passengers in other drivers
-	  for p in d.getPassengers():
-	    for anotherDriver in newState.getDrivers():
-	      if anotherDriver != d.getName():
-		newState.switchPassenger(p, anotherDriver)
-	  # Puts the old driver as a passenger with the carrier driver.
-	  newState.degradateDriver(d.getName(), carrier)
-	  yield ("dgrd", newState)
-	  break
+        if carrier != d.getName():
+          newState = copy(state)
+          newState.setDrivers(copy(state.getDrivers()))
+          newState.setPassengers(copy(state.getPassengers()))
+          # Distribution of passengers in other drivers
+          for p in d.getPassengers():
+            for anotherDriver in newState.getDrivers():
+              if anotherDriver != d.getName():
+          newState.switchPassenger(p, anotherDriver)
+          # Puts the old driver as a passenger with the carrier driver.
+          newState.degradateDriver(d.getName(), carrier)
+          yield ("dgrd", newState)
+          break
     
     
   def goal_test(self, state):

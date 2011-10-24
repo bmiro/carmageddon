@@ -8,7 +8,9 @@ from random import random, randint
 from re import match, split, compile
 
 MAX_KM = 30000
-ANIMALADA = 10000
+
+HUGE_VALUE = 10000
+
 PES_VEHICLE = 10000000
 
 class State(object):
@@ -157,7 +159,7 @@ class State(object):
     for p in self.__carmageddons.itervalues():
       incr = p.getRouteWeight(self)
       if incr > MAX_KM:
-        i += ANIMALADA*(incr-MAX_KM)
+        i += HUGE_VALUE*(incr-MAX_KM)
       i += incr
     return i
 
@@ -166,16 +168,17 @@ class State(object):
     for p in self.__carmageddons.itervalues():
       incr = p.getRouteWeight(self)
       if incr > MAX_KM:
-        i += ANIMALADA*(incr-MAX_KM)
-      i += incr
+        i += HUGE_VALUE*(incr-MAX_KM)
     return i
     
+  def isGood(self):
+    return self.getKm() < HUGE_VALUE
 
   ##########################################################
   #################### Operators Methods ###################
   ##########################################################
   """ Recives two key for each driver (degradated and carrier) """
-  def degradateDriver(self, degradatedDriver, carrierDriver): #TODO posar un nom mes guais
+  def degradateDriver(self, degradatedDriver, carrierDriver):
     if not self.__carmageddons[degradatedDriver].isEmpty():
       print "Trying to degradeta a not empty driver!" #TODO aixecar excepció
       return -1
@@ -248,7 +251,8 @@ class State(object):
       ori = d.getOrigin()
       dst = d.getDestination()
       line = "driver:\t" + d.getName() + "\t" + str(ori[0]) + "\t" + str(ori[1])
-      line =                      line + "\t" + str(dst[0]) + "\t" + str(dst[1]) + "\t"
+      line +=                          + "\t" + str(dst[0]) + "\t" + str(dst[1])
+      line += "\t"
       
       line = line + str(d.getMaxSpace()) + "\n"
       f.write(line)
@@ -263,7 +267,8 @@ class State(object):
       ori = p.getOrigin()
       dst = p.getDestination()
       line = "passenger:\t" + p.getName() + "\t" + str(ori[0]) + "\t" + str(ori[1])
-      line =                         line + "\t" + str(dst[0]) + "\t" + str(dst[1]) + "\n"
+      line +=                               "\t" + str(dst[0]) + "\t" + str(dst[1])
+      line += "\n"
       f.write(line)
       
       
@@ -273,9 +278,9 @@ class State(object):
       d = self.__carmageddons[drv]
       line = d.getName() + ":"
       for p in d.getPassengers():
-	line += "\t" + p
-      line += "\n"
-      f.write(line)
+        line += "\t" + p
+        line += "\n"
+        f.write(line)
     f.close()
     
     
@@ -288,37 +293,32 @@ class State(object):
     for line in f:
       m = drvRegex.match(line)
       if m:
-	self.__carmageddons[m.group("name")] = Driver(m.group("name"), \
-	                                       int(m.group("xo")), int(m.group("yo")), \
-	                                       int(m.group("xd")), int(m.group("yd")), \
-	                                       int(m.group("maxspace")))
-	self.__driverCount += 1
-	continue
+        self.__carmageddons[m.group("name")] = Driver(m.group("name"), \
+	                                    int(m.group("xo")), int(m.group("yo")), \
+	                                    int(m.group("xd")), int(m.group("yd")), \
+	                                    int(m.group("maxspace")))
+      self.__driverCount += 1
+      continue
 
       m = pssRegex.match(line)
       if m:
-	self.__passengers[m.group("name")] = (Passenger(m.group("name"), \
-	                                      int(m.group("xo")), int(m.group("yo")), \
-	                                      int(m.group("xd")), int(m.group("yd"))), None)
-	self.__passengerCount += 1
-	continue
+        self.__passengers[m.group("name")] = (Passenger(m.group("name"), \
+	                              int(m.group("xo")), int(m.group("yo")), \
+	                              int(m.group("xd")), int(m.group("yd"))), None)
+        self.__passengerCount += 1
+        continue
 	
       m = pckRegex.match(line)
       if m:
-	driver = m.group("driver")
-	passengers = split("\s+", line)[1:][:-1]
-	print passengers
-	for p in passengers:
-	  self.__carmageddons[driver].pickupPassenger(p)
-	  self.__passengers[p] = (self.__passengers[p][0], driver)
-	
+        driver = m.group("driver")
+        passengers = split("\s+", line)[1:][:-1]
+        print passengers
+        for p in passengers:
+          self.__carmageddons[driver].pickupPassenger(p)
+          self.__passengers[p] = (self.__passengers[p][0], driver)
     f.close()
 
   def __repr__(self):
-    #s = "Passenger info:\n"
-    #for p in self.__passengers:
-      #s += "\t" + p + " is pickuped by " + self.__passengers[p][1] + "\n"
-    
     s = "\nDrivers info:\n"
     for c in self.__carmageddons:
       s += "\t" + c + " pickups: \n"
@@ -330,7 +330,7 @@ class State(object):
           
     s += "\n\nThe amount of distance is " + str(self.getKm())
     s += " and there are " + str(self.getNumDrivers()) + " drivers\n\n"
-    if self.getKm() > ANIMALADA:
+    if not self.isGood():
       s += "\tTHIS IS A BAD RESULT!! THERE ARE DRIVERS THAT ARRIVES TOO LATE!!\n"
 
     return s
