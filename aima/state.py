@@ -172,7 +172,10 @@ class State(object):
     return i
     
   def isGood(self):
-    return self.getKm() < HUGE_VALUE
+    for d in self.getDrivers().itervalues():
+      if d.getRouteWeight(self) > MAX_KM:
+        return False
+    return True
 
   ##########################################################
   #################### Operators Methods ###################
