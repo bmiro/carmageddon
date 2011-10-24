@@ -1,0 +1,15 @@
+S'ha fixat en nombre d'usuaris a 200 i el nombre de conductors a 100
+S'ha executat 10 cops amb cada un dels conjunts d'operadors.
+
+
+Els resultats son:
+        El conjunt d'operadors 1 produeix millor resultat que el conjunt 2.
+        Suposam que aixo es degut a que l'operador genera mes estats per a cada iteració.
+
+        No hi ha diferencia significativa en el temps d'execució amb els dos conjunts d'operadors (comprovar).
+        Suposam que aquest resultat es degut a que, encara que el conjunt d'operadors 2 genera menys estats
+        que el conjunt 1, les operacions son mes costoses.
+
+
+
+        (TAULA AMB ELS RESULTATS)
