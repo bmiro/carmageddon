@@ -169,7 +169,6 @@ def test2_Inits(operatorSet="1"):
   return best
   
 
-<<<<<<< HEAD
 def test3_SimulatedAnnealingParams():
 #  lK = [1,5,25,125]
 #  ll = [0.1,0.01,0.001,0.0001]
@@ -187,7 +186,7 @@ def test3_SimulatedAnnealingParams():
 #      print ""
   lIt = [10,100,1000,100000]
   lcost2 = []
-  for it in xrange(2)
+  for it in xrange(2):
     for nIter in lIt:
       s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
       c = Carmageddon(s, "km", "1")
