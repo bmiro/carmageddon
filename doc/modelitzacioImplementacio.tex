@@ -21,15 +21,15 @@ el seu origen i destí. A més també té una capacitat màxima.
 Per altra banda el conductor també inclou una llista dels noms dels passatgers que transportarà
 durant tota la seva ruta.
 
-Per gestionar aquesta classe són necessaris diveros mètodes més complicats que simples \emph{settes} i \emph{gettes}.
+Per gestionar aquesta classe són necessaris diversos mètodes més complicats que simples \emph{setters} i \emph{getters}.
 En primer lloc hi ha una funció \texttt{pickupPassenger} per recollir un passatger, aquesta afegeix el passatger
 a la llista de passatgers a transportar. De manera complementària te \texttt{leavePassenger} per deixar un 
 passatger.
 
 Per tal de sabre quina és la ruta que fa el conductor hi ha la funció \texttt{getRoute} la qual
 fa una ordenació dels punts clau (\texttt{checkpoints}) per on es passa i registra a cada punt si es
-l'origen del condcutor, l'origen d'un passatger, el destí del passatger o el destí del condcutor. Així
-doncs un ruta tindria l'aspecte seguent: 
+l'origen del conductor, l'origen d'un passatger, el destí del passatger o el destí del conductor. Així
+doncs un ruta tindria l'aspecte següent: 
 
 \begin{minted}[frame=lines, fontsize=\codeSize]{python}
 
@@ -42,12 +42,12 @@ doncs un ruta tindria l'aspecte seguent:
 Associat a una ruta ens interessa sabre la distància que recorre, per això hi ha la funció \emph{getKm}
 que torna tal valor.
 
-En aquest punt s'ha de tenir amb compte com es generen les rutes ja que això infuleix directament en
-si un passatger pot ser tranportat o no.
+En aquest punt s'ha de tenir amb compte com es generen les rutes ja que això influeix directament en
+si un passatger pot ser transportat o no.
 
 La manera òptima en quan a recorregut seria fent un viatjant
-de comerç entre tots els punts per on s'ha de passar tinguent amb compte dos factors:
-Un cop s'agfa un passatger s'ha de introudir a la llista de punts el seu destí.
+de comerç entre tots els punts per on s'ha de passar tenint amb compte dos factors:
+Un cop s'agafa un passatger s'ha de introduïr a la llista de punts el seu destí.
 S'ha de vigilar de no agafar més passatgers del que pot transportar el vehicle
 abans de deixar-ne algun.
 
@@ -56,7 +56,7 @@ persones en una ruta la qual cosa suposen un total de 8 punts. Així i tot el c�
 es la funció més emprada durant l'execució i interessa minimitzar el seu cost.
 
 Per tal de simplificar-ho en lloc del viatjant de comerç es van cercant els punts més propers de
-manera imediata. Es pot observar que si el cotxe és ple primer es deixa algun dels passatgers
+manera immediata. Es pot observar que si el cotxe és ple primer es deixa algun dels passatgers
 abans d'anar a cercar-ne un de nou.
 
 \begin{minted}[frame=lines, fontsize=\codeSize]{python}
@@ -126,32 +126,32 @@ Donat també que hi ha poc punts i son molt dispersos aquesta aproximació, en e
 dona un resultat acceptable estalviant temps d'execució.
 
 El cost d'aquesta si $P$ fos el número de passatgers seria $((P+1) \times 2)^2$, el més u
-es per afegir els conductors i es multiplica per dos perque cada un té dos punts.
+es per afegir els conductors i es multiplica per dos perquè cada un té dos punts.
 
-No obstant en l'argorisme es van llevant els punts per on ja s'ha passat, per tant
+No obstant en l'algorisme es van llevant els punts per on ja s'ha passat, per tant
 en cada iteració el numero de punts pendents decreix. Per altra banda incialment nomes tenim
-visibilitat dels origens i anam afegint els destins a mesura que s'arriba els origens (a que alhora son trets).
-A tot això s'ha d'afegir que mai es tenen mes de 3 destins ja que sino significaria
-que el cotxe has escedit la seva capacitat.
+visibilitat dels orígens i anam afegint els destins a mesura que s'arriba els orígens (a que alhora son trets).
+A tot això s'ha d'afegir que mai es tenen mes de 3 destins ja que sinó significaria
+que el cotxe has excedit la seva capacitat.
 
 Així doncs el temps d'execució d'obtenir la ruta roman més que acceptable.
 
 \subsubsection{Ciutat}
-La citutat en si no requereix representació, no té perquè estar guardara en memòria ja que senzillament
+La ciutat en si no requereix representació, no té perquè estar guardara en memòria ja que senzillament
 es pot guardar a cada passatger i conductor el seu punt d'inici i de destí com dues tuples \emph{XY}.
 
 Per tant la so\lgem ució no és més que el conjunt de rutes dels conductors que formen part de l'estat.
 
 \subsubsection{Estat}
 L'estat ve determinat per un diccionari de conductors i un de passatgers (fig. \ref{diccionarisPssDrv}).
-Ambdós diccionars estan indexats per els noms de passatger i conductor respectivament però contenen coses diferents.
+Ambdós diccionaris estan indexats per els noms de passatger i conductor respectivament però contenen coses diferents.
 
 El diccionari de conductors conté un punter a cada objecte conductor mentre el diccionari
 de passatgers conté una tupla amb l'objecte del passatger i el nom del conductor que el transporta.
 
 El fet de tenir un diccionari de passatgers es informació redundant però així es pot sabre
 amb qui va un passatger en temps mig de $O(1)$ en lloc de $O((n_{passatgers} + n_{conductors})/2)$ 
-si haguéssim de recorrer tots els conductors i comprovar tots els passatgers que transporten.
+si haguéssim de recórrer tots els conductors i comprovar tots els passatgers que transporten.
 
 \begin{figure}[H]
 \begin{center}
@@ -164,10 +164,10 @@ si haguéssim de recorrer tots els conductors i comprovar tots els passatgers qu
 
 \subsection{Estat inicial}
 Per la generació de l'estat inicial s'han contemplat dues maneres de fer-ho. En cap de les dues es contempla
-la possiblitat de que algun passatger no sigui transportat per algun conductor. \textbf{Com a invariant durant
+la possibilitat de que algun passatger no sigui transportat per algun conductor. \textbf{Com a invariant durant
 tota l'execució tot passatger es transportat per algun conductor.}
 
-També en ambdós casos l'assignació d'un passatger a un conductor és aleatoria.
+També en ambdós casos l'assignació d'un passatger a un conductor és aleatòria.
 
 A continuació trobm les dues maneres d'inicialitzar el problema.
 
@@ -179,26 +179,15 @@ que el control de si el cotxe esta massa ple en algun instant es detectat per l'
 durant l'execució de la pràctica hi poden haver conductors que transportin més passatgers dels que
 caben al vehicle.
 
-% \begin{figure}[H]
-% \begin{center}\label{fullFirst}
-%  \includegraphics[width=0.6\textwidth]{figures/fullFirst.png}
-%  \caption{Inicialització full first}
-% \end{center}
-% \end{figure}
-
-
-Amb aquesta inicialització cap passatger queda sense transport, molt possiblement els condcutros escedeixin
-la seva distància màxima i gairebé sempre hi haurà conductors que no transportin ningu.
-Dit esces de la capacitat màxima es veura reflectit molt negativament a l'heurístic.
-
+Amb aquesta inicialització cap passatger queda sense transport, molt possiblement els conductors excedeixin
+la seva distància màxima i gairebé sempre hi haurà conductors que no transportin ningú.
+Dit escés de la capacitat màxima es veurà reflectit molt negativament a l'heurístic.
 
 \subsubsection{Evitant deixar conductors buits - \emph{allOneFirst}}
 L'altre alternativa plantejada per la inicialització és recórrer tots els passatgers i assignar-los a conductors
 de tal manera que no s'assigni un segon passatger a un conductor mentre hi hagin conductors buits.
-D'aqueta manera s'afavoreix que les rutes dels conductors siguin més curtes i que hagi més
+D'aquesta manera s'afavoreix que les rutes dels conductors siguin més curtes i que hagi més
 gent conduint.
-
-TODO diagrama
 
 \subsection{Operadors de transformació}
 S'han establert quatre operadors de transformació agrupats en dos conjunts. Així doncs en la fase d'experimentació
@@ -253,7 +242,7 @@ def genSoftDriverDegradations(self, state):
 \end{minted}
 
 En la so\lgem ució els passatgers que eren originalment conductors tenen el nom de la manera \texttt{PDnnnn},
-on s'ha substiutit el guió \texttt{P-nnnn} per una \emph{D} de \emph{driver}.
+on s'ha substituït el guió \texttt{P-nnnn} per una \emph{D} de \emph{driver}.
 
 \subsubsection{Conjunt 2}
 A diferència del primer conjunt d'operadors aquest està format per operacions compostes.
@@ -276,14 +265,14 @@ Així doncs si tenim $P$ passatgers i $F$ conductors no buits podem generar $P \
       it += 1
 \end{minted}
 
-Hem de notar aque amb aquest operador no es buiden vehicles però tampoc se n'omplen de nous.
+Hem de notar que amb aquest operador no es buiden vehicles però tampoc se n'omplen de nous.
 Així doncs aquesta funció amb una inicialització \emph{full first} podria semblar que no ha de funcionar
 gaire bé ja que hi hauria tot un conjunt de conductors buits que sols es transportarien a ells mateixos.
 
 
 \subsubsection{Eliminació d'un conductor no buit}
 Aquest operador s'elimina un conductor qualsevol i es distribueixen els seus passatgers i ell mateix
-en diferents conductors de manera aleatoria.
+en diferents conductors de manera aleatòria.
 
 \begin{minted}[frame=lines, fontsize=\codeSize]{python}
   def genHardDriverDegradations(self, state):
@@ -310,8 +299,8 @@ que valori si realment aquell canvi ha valgut la pena.
 A l'apartat anterior es mencionava que aquest conjunt d'operadors podia no presentar bons resultats
 combinat amb una inicialització \emph{full first} ja que els conductors buits nomes es transportarien
 a ells mateixos. El cas es que amb aquest segon operador es dissolen aquests conductors saturats
-repartit a tothom per les demes ja siguin buits o plens. Tal vegada inicialment els resultats siguin
-mes dolents pero aquestes dissolucions donen mes moviment als passatgers que podrien acabar amb millors
+repartit a tothom per les demés ja siguin buits o plens. Tal vegada inicialment els resultats siguin
+mes dolents però aquestes dissolucions donen mes moviment als passatgers que podrien acabar amb millors
 resultats.
 
 
@@ -325,15 +314,17 @@ Per fer tal cosa es multiplica el valor resultant de l'heurístic per una consta
 dimensions, donant lloc a una mala valoració que incita a descartar l'estat.
 
 Per el cas de la distància l'heurístic es senzillament la suma de totes les distàncies recorregudes per cada conductor.
-Si dit conductor s'escedeix del seu recorrecut (no arriba a temps) es multiplicat el seu valor per la constant de grans dimensions.
+Si dit conductor s'excedeix del seu recorregut (no arriba a temps) es multiplicat el seu valor per la constant de grans dimensions.
 
-En el cas de l'heurístic que combina distància i nombre de conductors s'ha de trobar una manera de combinar ambós valors.
+En el cas de l'heurístic que combina distància i nombre de conductors s'ha de trobar una manera de combinar ambdós valors.
 En la nostra implementació el que es fa es sumar ambdós valors multiplicant el numero de conductors per una constant que els hi
 doni més rellevància.
 
-TODO FORMULA DE L'HEURISTIC DELS CONDUCTORS
+\begin{minted}[frame=lines, fontsize=\codeSize]{python}
+  def heuristic_veh(self, node):
+    """Heuristic function"""
+    return -(node.state.getKm() + node.state.getNumDrivers()*PES_VEHICLE)
+\end{minted}
 
 Cal notar que el primer heurístic de forma co\lgem ateral també pot reduir el nombre de conductor si un d'aquests es proper
 a la ruta d'un altre ja que així no es compten a la suma total els kilòmetres del conductor que passa a ser passatger.
-
-L'estudi del valor que multiplica el número de conductors es fa al test 5.

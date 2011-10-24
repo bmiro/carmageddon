@@ -130,7 +130,30 @@ del servei.
 \end{figure}
 
 
-\subsection{Se\lgem ecció dels valors de ponderació del segon heurístic}
+\subsection{Comparació \emph{Hill Climbing} i \emph{Simulated Annealing} amb els dos heurístics}
+
+
+
+\begin{center}
+\begin{tabular}{l|llll}
+ & \multicolumn{2}{c}{Hill Climbing} & \multicolumn{2}{c}{Simulated Annealing}\\
+           & km       & veh       & km        & veh\\
+\hline
+temps      & 0:00:30  &  0:00:40  &  0:00:46  &  0:00:47\\
+disntacia  & 549300   & 556103    &  857856   & 891356\\
+conductors & 49       & 8         & 50        & 50\\
+heurístic  & 549300   & 386556103 & 857856    & 500891356
+\end{tabular}
+\end{center}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=0.6\textwidth]{figures/test6-gr1.jpg}
+ \label{test6-gr1}
+\caption{Compració HC vs SA}
+\end{center}
+\end{figure}
+
 
 \subsection{Se\lgem ecció del valor de \emph{M} per millor inicialització del problema}
 Per a realitzar l'eexperiment 7 s'ha se\lgem eccionat un problema de mida 50 usuaris, i s'ha provat per a totes les proporcions
