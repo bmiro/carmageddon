@@ -1,0 +1,70 @@
+
+
+
+Usage:
+If one parameter is given it executes the corresponding test, the parameter is an   integer form 1 to 7.
+
+If more parameters are given it will execute single
+Executing iteration  0  HC - KM
+Executing iteration  1  HC - KM
+Executing iteration  2  HC - KM
+Executing iteration  3  HC - KM
+Executing iteration  4  HC - KM
+Executing iteration  5  HC - KM
+Executing iteration  6  HC - KM
+Executing iteration  7  HC - KM
+Executing iteration  8  HC - KM
+Executing iteration  9  HC - KM
+Executing iteration  0  HC - VEH
+Executing iteration  1  HC - VEH
+Executing iteration  2  HC - VEH
+Executing iteration  3  HC - VEH
+Executing iteration  4  HC - VEH
+Executing iteration  5  HC - VEH
+Executing iteration  6  HC - VEH
+Executing iteration  7  HC - VEH
+Executing iteration  8  HC - VEH
+Executing iteration  9  HC - VEH
+Executing iteration  0  SA - KM
+Executing iteration  1  SA - KM
+Executing iteration  2  SA - KM
+Executing iteration  3  SA - KM
+Executing iteration  4  SA - KM
+Executing iteration  5  SA - KM
+Executing iteration  6  SA - KM
+Executing iteration  7  SA - KM
+Executing iteration  8  SA - KM
+Executing iteration  9  SA - KM
+Executing iteration  0  SA - VEH
+Executing iteration  0  SA - VEH
+Executing iteration  0  SA - VEH
+Executing iteration  0  SA - VEH
+Executing iteration  0  SA - VEH
+Executing iteration  0  SA - VEH
+Executing iteration  0  SA - VEH
+Executing iteration  0  SA - VEH
+Executing iteration  0  SA - VEH
+Executing iteration  0  SA - VEH
+		 Average results of "HC - KM" of operators
+	 Average time: 		  0:00:30.975285
+	 Average drivers:		  49
+	 Average distance:		  549300
+	 Average heuristic:		  549300
+		 Average results of "HC - VEH" of operators
+	 Average time: 		  0:00:40.770093
+	 Average drivers:		  38
+	 Average distance:		  556103
+	 Average heuristic:		  386556103
+
+
+
+		 Average results of "SA - KM" of operators
+	 Average time: 		  0:00:46.935207
+	 Average drivers:		  50
+	 Average distance:		  857856
+	 Average heuristic:		  857856
+		 Average results of "SA - VEH" of operators
+	 Average time: 		  0:00:47.120651
+	 Average drivers:		  50
+	 Average distance:		  891356
+	 Average heuristic:		  500891356
