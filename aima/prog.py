@@ -430,4 +430,12 @@ if __name__ == "__main__":
     s = State(cfgfile=argv[2])
     
   c = Carmageddon(s, optimizer, operatorSet)
-  print c.run(alg)
+  resul = c.run(alg)
+   
+  print resul
+   
+  print "Log file saved at carmageddon.log it can be open and parsed using the showLog.py util:\n"
+  print "\t\tpython showLog.py carmageddon.log\n"
+
+  
+  
