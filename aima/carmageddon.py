@@ -27,8 +27,6 @@ class Carmageddon(Problem):
     heuristic_dict = {"km" : self.heuristic_km, "veh" : self.heuristic_veh}
     self.value = heuristic_dict[h]
   
-
-  
   def run(self, alg="hillClimbing", k=None, lam=None, lim=None):
     if alg == "hillClimbing":
       return hill_climbing(self)

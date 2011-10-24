@@ -14,6 +14,8 @@ from datetime import datetime
 import prog
 
 ITERATIONS = 10
+NP = 100
+ND = 100
 
 """ Returns the best operator """
 def test1_Operators():
@@ -28,7 +30,7 @@ def test1_Operators():
   op1Heuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " of Set 1"
-    s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
+    s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution="allOneFirst")
     c = Carmageddon(s, "km", "1")
     
     to = datetime.now()
@@ -48,7 +50,7 @@ def test1_Operators():
   op2Heuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " of Set 2"
-    s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
+    s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution="allOneFirst")
     c = Carmageddon(s, "km", "2")
     
     to = datetime.now()
@@ -107,7 +109,7 @@ def test2_Inits(operatorSet="1"):
   op1Heuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " of all one first inicialization"
-    s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
+    s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution="allOneFirst")
     c = Carmageddon(s, "km", operatorSet)
     
     to = datetime.now()
@@ -127,7 +129,7 @@ def test2_Inits(operatorSet="1"):
   op2Heuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " of all one first inicialization"
-    s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="fullFirst")
+    s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution="fullFirst")
     c = Carmageddon(s, "km", operatorSet)
     
     to = datetime.now()
@@ -180,7 +182,7 @@ def test3_SimulatedAnnealingParams():
     for lParameter in ll:
       lcost = []
       for i in xrange(ITERATIONS):  
-        s = State(nPassengers=10, nMaxDrivers=10, initialDistribution="allOneFirst")
+        s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution="allOneFirst")
         c = Carmageddon(s, "km", "1")
         finalState = c.run('simulatedAnnealing',kParameter,lParameter,1000)
         lcost.append(c.printableHeuristic(finalState))
@@ -204,8 +206,8 @@ def test3_SimulatedAnnealingParams():
 def test4_TemporalEvolution(operatorSet="1", initDistrib="allOneFirst"):
   print "Starting test at: ", datetime.now()
   
-  N = 100
-  incn = 100
+  N = NP
+  incn = NP
   results = []
   for i in range(5):
     M = N/2
@@ -245,7 +247,7 @@ def test6_HCvsSA(operatorSet="1", initDistrib="allOneFirst", k=1, lam=0.001, lim
   hcKmHeuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " HC - KM"
-    s = State(nPassengers=10, nMaxDrivers=10, initialDistribution=initDistrib)
+    s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution=initDistrib)
     c = Carmageddon(s, "km", operatorSet)
     
     to = datetime.now()
@@ -267,7 +269,7 @@ def test6_HCvsSA(operatorSet="1", initDistrib="allOneFirst", k=1, lam=0.001, lim
   hcVehHeuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " HC - VEH"
-    s = State(nPassengers=10, nMaxDrivers=10, initialDistribution=initDistrib)
+    s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution=initDistrib)
     c = Carmageddon(s, "veh", operatorSet)
     
     to = datetime.now()
@@ -289,7 +291,7 @@ def test6_HCvsSA(operatorSet="1", initDistrib="allOneFirst", k=1, lam=0.001, lim
   saKmHeuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " SA - KM"
-    s = State(nPassengers=10, nMaxDrivers=10, initialDistribution=initDistrib)
+    s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution=initDistrib)
     c = Carmageddon(s, "km", operatorSet)
     
     to = datetime.now()
@@ -311,7 +313,7 @@ def test6_HCvsSA(operatorSet="1", initDistrib="allOneFirst", k=1, lam=0.001, lim
   saVehHeuristic = []
   for execution in range(ITERATIONS):
     print "Executing iteration ", i, " SA - VEH"
-    s = State(nPassengers=10, nMaxDrivers=10, initialDistribution=initDistrib)
+    s = State(nPassengers=NP, nMaxDrivers=ND, initialDistribution=initDistrib)
     c = Carmageddon(s, "veh", operatorSet)
     
     to = datetime.now()
