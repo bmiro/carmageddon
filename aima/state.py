@@ -306,11 +306,11 @@ class State(object):
     f.close()
 
   def __repr__(self):
-    s = "Passenger info:\n"
-    for p in self.__passengers:
-      s += "\t" + p + " is pickuped by " + self.__passengers[p][1] + "\n"
+    #s = "Passenger info:\n"
+    #for p in self.__passengers:
+      #s += "\t" + p + " is pickuped by " + self.__passengers[p][1] + "\n"
     
-    s += "\nDrivers info:\n"
+    s = "\nDrivers info:\n"
     for c in self.__carmageddons:
       s += "\t" + c + " pickups: \n"
       if self.__carmageddons[c].isEmpty():
@@ -318,6 +318,12 @@ class State(object):
       else:
         for p in self.__carmageddons[c].getPassengers():
           s += "\t\t" + p + "\n"
+          
+    s += "The amount of distance is " + str(self.getKm())
+    s += " and there are " + str(self.getNumDrivers()) + " drivers\n\n"
+    if self.getKm() > ANIMALADA:
+      s += "\tTHIS IS A BAD RESULT!! THERE ARE DRIVERS THAT ARRIVES TOO LATE!!\n"
+
     return s
 
 
