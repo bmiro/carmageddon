@@ -169,7 +169,7 @@ def test2_Inits(operatorSet="1"):
   return best
   
 
-def test3_SimulatedAnnealingParams():
+def test3_SimulatedAnnealingParams(initDistrib="fullFirst"):
   lK = [1,5,25,125]
   ll = [0.1,0.01,0.001,0.0001]
 
@@ -177,7 +177,7 @@ def test3_SimulatedAnnealingParams():
     for lParameter in ll:
       lcost = []
       for i in xrange(10):  
-	s = State(nPassengers=100, nMaxDrivers=100, initialDistribution="allOneFirst")
+	s = State(nPassengers=100, nMaxDrivers=100, initialDistribution=initDistrib)
 	c = Carmageddon(s, "km", "1")
 	finalState = c.run('hillClimbing',kParameter,lParameter,100)
 	lcost.append(c.printableHeuristic(finalState))
@@ -215,10 +215,139 @@ def test4_TemporalEvolution(operatorSet="1", initDistrib="fullFirst"):
   return results
 
 def test5_SecondHeuristicPonderation():
-  print "Test 5"
+  pass
 
-def test6_HCvsSA():
-  print "Test 6"
+def test6_HCvsSA(operatorSet="1", initDistrib="fullFirst", k=1, lam=0.001, lim=100):
+  ############################################################################
+  ############################## Test executions #############################
+  ############################################################################
+  
+  ################################ HC - km ###############################
+  i = 0
+  hcKmTime = []
+  hcKmDrivers = []
+  hcKmDistance = []
+  hcKmHeuristic = []
+  for execution in range(ITERATIONS):
+    print "Executing iteration ", i, " HC - KM"
+    s = State(nPassengers=10, nMaxDrivers=10, initialDistribution=initDistrib)
+    c = Carmageddon(s, "km", operatorSet)
+    
+    to = datetime.now()
+    finalState = c.run("hillClimbing")
+    tf = datetime.now()    
+    hcKmTime.append(tf - to)
+    
+    hcKmDrivers.append(finalState.getNumDrivers())
+    hcKmDistance.append(finalState.getKm())
+    hcKmHeuristic.append(c.printableHeuristic(finalState))
+    i += 1
+   
+  ################################# HC - veh ################################
+  i = 0
+  hcVehTime = []
+  hcVehDrivers = []
+  hcVehDistance = []
+  hcVehHeuristic = []
+  for execution in range(ITERATIONS):
+    print "Executing iteration ", i, " HC - VEH"
+    s = State(nPassengers=10, nMaxDrivers=10, initialDistribution=initDistrib)
+    c = Carmageddon(s, "veh", operatorSet)
+    
+    to = datetime.now()
+    finalState = c.run("hillClimbing")
+    tf = datetime.now()    
+    hcVehTime.append(tf - to)
+    
+    hcVehDrivers.append(finalState.getNumDrivers())
+    hcVehDistance.append(finalState.getKm())
+    hcVehHeuristic.append(c.printableHeuristic(finalState))
+    i += 1
+    
+  ################################# SA - km ################################
+  i = 0
+  saKmTime = []
+  saKmDrivers = []
+  saKmDistance = []
+  saKmHeuristic = []
+  for execution in range(ITERATIONS):
+    print "Executing iteration ", i, " SA - KM"
+    s = State(nPassengers=10, nMaxDrivers=10, initialDistribution=initDistrib)
+    c = Carmageddon(s, "km", operatorSet)
+    
+    to = datetime.now()
+    finalState = c.run("simulatedAnnealing", k, lam, lim)
+    tf = datetime.now()    
+    saKmTime.append(tf - to)
+    
+    saKmDrivers.append(finalState.getNumDrivers())
+    saKmDistance.append(finalState.getKm())
+    saKmHeuristic.append(c.printableHeuristic(finalState))
+    i += 1
+    
+  ################################# SA - veh ################################
+  i = 0
+  saVehTime = []
+  saVehDrivers = []
+  saVehDistance = []
+  saVehHeuristic = []
+  for execution in range(ITERATIONS):
+    print "Executing iteration ", i, " SA - VEH"
+    s = State(nPassengers=10, nMaxDrivers=10, initialDistribution=initDistrib)
+    c = Carmageddon(s, "veh", operatorSet)
+    
+    to = datetime.now()
+    finalState = c.run("simulatedAnnealing", k, lam, lim)
+    tf = datetime.now()    
+    saVehTime.append(tf - to)
+    
+    saVehDrivers.append(finalState.getNumDrivers())
+    saVehDistance.append(finalState.getKm())
+    saVehHeuristic.append(c.printableHeuristic(finalState))
+    
+  ## Stats
+  hcKmAvrTime = reduce(lambda x, y: x + y, hcKmTime)/len(hcKmTime)
+  hcKmAvrDrivers = reduce(lambda x, y: x + y, hcKmDrivers)/len(hcKmDrivers)
+  hcKmAvrDistance = reduce(lambda x, y: x + y, hcKmDistance)/len(hcKmDistance)
+  hcKmAvrHeuristic = reduce(lambda x, y: x + y, hcKmHeuristic)/len(hcKmHeuristic)
+  
+  hcVehAvrTime = reduce(lambda x, y: x + y, hcVehTime)/len(hcVehTime)
+  hcVehAvrDrivers = reduce(lambda x, y: x + y, hcVehDrivers)/len(hcVehDrivers)
+  hcVehAvrDistance = reduce(lambda x, y: x + y, hcVehDistance)/len(hcVehDistance)
+  hcVehAvrHeuristic = reduce(lambda x, y: x + y, hcVehHeuristic)/len(hcVehHeuristic)
+  
+  saKmAvrTime = reduce(lambda x, y: x + y, saKmTime)/len(saKmTime)
+  saKmAvrDrivers = reduce(lambda x, y: x + y, saKmDrivers)/len(saKmDrivers)
+  saKmAvrDistance = reduce(lambda x, y: x + y, saKmDistance)/len(saKmDistance)
+  saKmAvrHeuristic = reduce(lambda x, y: x + y, saKmHeuristic)/len(saKmHeuristic)
+  
+  saVehAvrTime = reduce(lambda x, y: x + y, saVehTime)/len(saVehTime)
+  saVehAvrDrivers = reduce(lambda x, y: x + y, saVehDrivers)/len(saVehDrivers)
+  saVehAvrDistance = reduce(lambda x, y: x + y, saVehDistance)/len(saVehDistance)
+  saVehAvrHeuristic = reduce(lambda x, y: x + y, saVehHeuristic)/len(saVehHeuristic)
+  
+  print "\t\t Average results of \"HC - KM\" of operators"
+  print "\t Average time: \t\t ", hcKmAvrTime
+  print "\t Average drivers:\t\t ", hcKmAvrDrivers
+  print "\t Average distance:\t\t ", hcKmAvrDistance
+  print "\t Average heuristic:\t\t ", hcKmAvrHeuristic
+  print "\t\t Average results of \"HC - VEH\" of operators"
+  print "\t Average time: \t\t ", hcVehAvrTime
+  print "\t Average drivers:\t\t ", hcVehAvrDrivers
+  print "\t Average distance:\t\t ", hcVehAvrDistance
+  print "\t Average heuristic:\t\t ", hcVehAvrHeuristic
+  print "\n\n"
+  print "\t\t Average results of \"SA - KM\" of operators"
+  print "\t Average time: \t\t ", saKmAvrTime
+  print "\t Average drivers:\t\t ", saKmAvrDrivers
+  print "\t Average distance:\t\t ", saKmAvrDistance
+  print "\t Average heuristic:\t\t ", saKmAvrHeuristic
+  print "\t\t Average results of \"SA - VEH\" of operators"
+  print "\t Average time: \t\t ", saVehAvrTime
+  print "\t Average drivers:\t\t ", saVehAvrDrivers
+  print "\t Average distance:\t\t ", saVehAvrDistance
+  print "\t Average heuristic:\t\t ", saVehAvrHeuristic  
+  
 
 def test7_MNproportion():
   print "Test 7"
@@ -249,7 +378,7 @@ if __name__ == "__main__":
     print "\t python carmageddon.py N M InitialDistribution Optimizer OperatorSet Algorism\n"
     print "\t # Where N M are integer that represents the number of users and the non-drivers"
     print "\t # InitialDistribution can be allOneFirst or fullFirst"
-    print "\t # Optimizer can be km or drv"
+    print "\t # Optimizer can be km or veh"
     print "\t # OperatorSet can be 1 or 2"
     print "\t # Algorism can be hillClimbing or simulatedAnnealing"
     print "\t Example: pypy prog.py 200 100 allOneFirst km 1 hillClimbing"
@@ -257,10 +386,10 @@ if __name__ == "__main__":
     print "or"
     print "\t python carmageddon.py configfile.cfg Optimizer OperatorSet Algorism"
     print "\t # Where configfile.cfg is a saved state"
-    print "\t # Optimizer can be km or drv"
+    print "\t # Optimizer can be km or veh"
     print "\t # OperatorSet can be 1 or 2"
     print "\t # Algorism can be hillClimbing or simulatedAnnealing"
-    print "\t Example: pypy prog.py states.cfg drv 2 simulatedAnnealing"
+    print "\t Example: pypy prog.py states.cfg veh 2 simulatedAnnealing"
 
     exit()
     
